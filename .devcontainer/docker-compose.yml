@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mdd-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: mdd-app
+    volumes:
+      - ../..:/workspaces:cached
+    env_file: "default.env"
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+  mdd-mongodb:
+    image: mongo
+    container_name: mdd-mongodb
+    env_file: "default.env"
+    volumes:
+      - mdd-data:/data/db
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 27017:27017
+
+  # mdd-kafka:
+  #   image: apache/kafka
+  #   container_name: mdd-kafka
+  #   env_file: "default.env"
+  #   ports:
+  #     - 9092:9092
+      
+volumes:
+  mdd-data:
