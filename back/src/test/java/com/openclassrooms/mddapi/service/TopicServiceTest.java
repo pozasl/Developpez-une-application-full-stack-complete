@@ -13,6 +13,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @ExtendWith(MockitoExtension.class)
 public class TopicServiceTest {
@@ -37,6 +38,17 @@ public class TopicServiceTest {
         Flux<Topic> topics = topicService.findAll();
         assertThat(topics.blockFirst()).isEqualTo(topic1);
         assertThat(topics.blockLast()).isEqualTo(topic2);
+    }
+
+    @Test
+    void findByRef_shoulReturnTopicMono() {
+        Topic topic = new Topic();
+        topic.setRef("java");
+        topic.setName("Java");
+
+        when(topicRepository.findByRef("java")).thenReturn(Mono.just(topic));
+        
+        assertThat(topicService.findByRef("java").block()).isEqualTo(topic);
     }
 
 }

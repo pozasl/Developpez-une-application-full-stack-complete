@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -21,6 +22,11 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Flux<Topic> findAll() {
         return topicRepository.findAll();
+    }
+
+    @Override
+    public Mono<Topic> findByRef(String ref) {
+        return topicRepository.findByRef(ref);
     }
     
 }

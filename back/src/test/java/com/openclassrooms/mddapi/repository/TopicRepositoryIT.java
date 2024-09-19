@@ -28,5 +28,10 @@ public class TopicRepositoryIT {
         assertThat(topics).hasSize(6);
     }
 
+    @Test
+    void withExistingRef_findByRef_shouldReturnTopic() {
+        Topic topic = repository.findByRef("java").block();
+        assertThat(topic.getName()).isEqualTo("Java");
+    }
     
 }

@@ -5,7 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.mddapi.model.Topic;
 
+import reactor.core.publisher.Mono;
+
 @Repository
 public interface TopicRepository extends ReactiveMongoRepository<Topic, String> {
+
+    Mono<Topic> findByRef(String ref);
 
 }

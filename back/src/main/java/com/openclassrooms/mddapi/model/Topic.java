@@ -15,7 +15,7 @@ public class Topic {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public String getRef() {
         return ref;
     }

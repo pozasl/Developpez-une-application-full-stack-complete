@@ -12,6 +12,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.TopicService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @WebFluxTest(TopicController.class)
 public class TopicControllerTest {
@@ -36,6 +37,22 @@ public class TopicControllerTest {
             .expectBody()
                 .jsonPath("@.[0].ref").isEqualTo("java")
                 .jsonPath("@.[0].name").isEqualTo("Java");
+    }
+
+    @Test
+    void withExistingTopicRef_findByRef_shouldReturnOk() throws Exception {
+
+        Topic topic = new Topic();
+        topic.setRef("java");
+        topic.setName("Java");
+
+        when(topicService.findByRef("java")).thenReturn(Mono.just(topic));
+        
+        webClient.get().uri("/api/topics/java").exchange()
+            .expectStatus().isOk()
+            .expectBody()
+                .jsonPath("@.ref").isEqualTo("java")
+                .jsonPath("@.name").isEqualTo("Java");
     }
     
 }
