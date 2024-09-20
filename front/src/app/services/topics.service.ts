@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Topic from '../models/Topic';
 
@@ -9,16 +9,15 @@ import Topic from '../models/Topic';
 export class TopicsService {
 
   private topicsPath = "/api/topics";
-  // private $topics = new BehaviorSubject<Topic[] | null>(null);
 
-  constructor(private htpp:HttpClient) { }
+  constructor(private http:HttpClient) { }
 
   getAllTopics():Observable<Topic[]> {
-    return this.htpp.get<Topic[]>(this.topicsPath);
+    return this.http.get<Topic[]>(this.topicsPath);
   }
 
   getTopicByRef(ref: String):Observable<Topic> {
-    return this.htpp.get<Topic>(this.topicsPath + "/" + ref);
+    return this.http.get<Topic>(this.topicsPath + "/" + ref);
   }
 
 }
