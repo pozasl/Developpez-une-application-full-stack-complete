@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Observable, take } from 'rxjs';
 import Topic from 'src/app/models/Topic';
 import { TopicsService } from 'src/app/services/topics.service';
@@ -7,7 +7,7 @@ import { TopicsService } from 'src/app/services/topics.service';
 @Component({
   selector: 'app-topics',
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [AsyncPipe],
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss']
 })
