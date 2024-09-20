@@ -13,21 +13,22 @@ import { TopicsService } from 'src/app/services/topics.service';
 })
 export class TopicsComponent implements OnInit {
   $topics!: Observable<Topic[]>;
-  ready!: Boolean;
 
   constructor(private topicService: TopicsService) { }
 
   ngOnInit(): void {
-    this.ready = false
     this.$topics = this.topicService.getAllTopics();
     this.$topics.pipe(take(1)).subscribe({
       next: () => {
         console.info("Topic data loaded");
-        this.ready = true
       },
       error: (e: Error) => {
         console.error(e.message)
       },
     });
+  }
+
+  subscribeToTopic(topicRef: String):void {
+    console.info(topicRef);
   }
 }
