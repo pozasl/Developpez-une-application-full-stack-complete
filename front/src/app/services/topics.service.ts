@@ -8,12 +8,17 @@ import Topic from '../models/Topic';
 })
 export class TopicsService {
 
-  private topicsUrl = "/api/topics";
-  private $topics = new BehaviorSubject<Topic[] | null>(nulll);
+  private topicsPath = "/api/topics";
+  // private $topics = new BehaviorSubject<Topic[] | null>(null);
 
   constructor(private htpp:HttpClient) { }
 
-  getAllTopics():Observable<Topic> {
-    return this.htpp.get<Topic[]>(this.topicsUrl)
+  getAllTopics():Observable<Topic[]> {
+    return this.htpp.get<Topic[]>(this.topicsPath);
   }
+
+  getTopicByRef(ref: String):Observable<Topic> {
+    return this.htpp.get<Topic>(this.topicsPath + "/" + ref);
+  }
+
 }
