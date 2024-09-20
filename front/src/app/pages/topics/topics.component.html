@@ -1,8 +1,18 @@
 <p>topics works!</p>
-<div>
-    <h2 class="topicName">Titre du thème</h2>
-    <p class="topicDescription">
-        Bla bla bla
-    </p>
-    <button>S'abonner</button>
-</div>
+<!-- @if($topics | async; as topics) {
+    <div>
+        <p>Topic list</p>
+    @for (topic of topics; track topic.ref) {
+        <div>
+            <h2 class="topicName">{{topic.name}}</h2>
+            <p class="topicDescription">
+                {{topic.description}}
+            </p>
+            <button>S'abonner</button>
+        </div>
+    }
+    </div>
+}
+@else {
+    <p>No topic</p>
+} -->
