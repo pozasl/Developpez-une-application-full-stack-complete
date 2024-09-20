@@ -7,7 +7,7 @@ import { TopicsComponent } from './pages/topics/topics.component';
 // to manage unauthenticated user to access private routes
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: '/topics', component: TopicsComponent }
+  { path: 'topics', component: TopicsComponent }
 ];
 
 @NgModule({
