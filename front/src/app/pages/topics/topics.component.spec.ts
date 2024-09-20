@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TopicsComponent } from './topics.component';
 import { TopicsService } from 'src/app/services/topics.service';
+import { Observable } from 'rxjs';
 
 describe('TopicsComponent', () => {
   let component: TopicsComponent;
@@ -29,7 +30,7 @@ describe('TopicsComponent', () => {
       ],
     })
     .compileComponents();
-
+    topicServiceSpy.getAllTopics.and.returnValue(new Observable(obs=>obs.next([topic1, topic2])))
     fixture = TestBed.createComponent(TopicsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

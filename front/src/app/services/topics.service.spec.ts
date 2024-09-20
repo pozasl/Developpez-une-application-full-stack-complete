@@ -20,7 +20,7 @@ describe('TopicsService', () => {
     description: 'Angular bla bla bla',
   }
 
-  const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+  const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -54,4 +54,18 @@ describe('TopicsService', () => {
     expect(topic).toEqual($topic);
     expect(httpClientSpy.get).toHaveBeenCalledWith("/api/topics/angular");
   });
+
+  it('should subscribe to a Topic', () => {
+    httpClientSpy.post.and.returnValue(new Observable(obs=>obs.next()));
+    service.subscribe("angular", "0123456789abcdef");
+    expect(httpClientSpy.post).toHaveBeenCalledWith("/api/topics/angular/subscribers", {id: "0123456789abcdef"});
+  });
+
+  it('should unsubscribe to a Topic', () => {
+    httpClientSpy.delete.and.returnValue(new Observable(obs=>obs.next()));
+    const topic: Observable<Topic> = service.getTopicByRef("angular");
+    service.unSubscribe("angular", "0123456789abcdef");
+    expect(httpClientSpy.delete).toHaveBeenCalledWith("/api/topics/angular/subscribers/0123456789abcdef");
+  });
+
 });

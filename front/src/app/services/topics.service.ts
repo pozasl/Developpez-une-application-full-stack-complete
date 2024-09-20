@@ -7,6 +7,7 @@ import Topic from '../models/Topic';
   providedIn: 'root',
 })
 export class TopicsService {
+  
 
   private topicsPath = "/api/topics";
 
@@ -18,6 +19,17 @@ export class TopicsService {
 
   getTopicByRef(ref: String):Observable<Topic> {
     return this.http.get<Topic>(this.topicsPath + "/" + ref);
+  }
+
+  subscribe(topicRef: string, userId: string):Observable<any> {
+    return this.http.post(
+      this.topicsPath + "/" + topicRef + "/subscribers",
+      {id: userId}
+    );
+  }
+
+  unSubscribe(topicRef: string, userId: string):Observable<any> {
+    return this.http.delete(this.topicsPath + "/" + topicRef + "/subscribers/" + userId);
   }
 
 }
