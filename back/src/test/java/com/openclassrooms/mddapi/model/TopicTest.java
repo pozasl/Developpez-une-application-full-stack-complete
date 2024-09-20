@@ -17,8 +17,10 @@ public class TopicTest {
         Topic topic = new Topic();
         topic.setRef("java");
         topic.setName("Java");
+        topic.setDescription("Java bla bla bla");
         assertThat(topic.getRef()).isEqualTo("java");
         assertThat(topic.getName()).isEqualTo("Java");
+        assertThat(topic.getDescription()).isEqualTo("Java bla bla bla");
     }
     
 }

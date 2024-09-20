@@ -37,7 +37,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    //browsers: ['Chrome'],
+    browsers: ['ChromeHeadlessCustom'],
+    customLaunchers: {
+      ChromeHeadlessCustom: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--user-data-dir=/tmp/chrome-test-profile',
+                '--disable-web-security']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });
