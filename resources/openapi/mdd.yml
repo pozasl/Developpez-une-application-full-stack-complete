@@ -565,7 +565,7 @@ components:
           type: string
         author_id:
           type: integer
-          format: int32
+          format: int64
     NewUser:
       required:
         - email
@@ -610,8 +610,10 @@ components:
           type: string
         created_at:
           type: string
+          format: date-time
         updated_at:
           type: string
+          format: date-time
     Topic:
       type: object
       properties:
@@ -641,8 +643,10 @@ components:
             $ref: '#/components/schemas/Reply'
         created_at:
           type: string
+          format: date-time
         updated_at:
           type: string
+          format: date-time
     Reply:
       type: object
       properties:
@@ -653,6 +657,7 @@ components:
           format: int64
         created_at:
           type: string
+          format: date-time
     TopicsCollection:
       type: object
       properties:
