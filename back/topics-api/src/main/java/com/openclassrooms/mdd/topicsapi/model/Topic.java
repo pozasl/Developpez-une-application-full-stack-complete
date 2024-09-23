@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.model;
+package com.openclassrooms.mdd.topicsapi.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

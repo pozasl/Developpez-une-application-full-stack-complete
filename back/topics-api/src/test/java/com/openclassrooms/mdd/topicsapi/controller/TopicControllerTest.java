@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.controller;
+package com.openclassrooms.mdd.topicsapi.controller;
 
 import static org.mockito.Mockito.when;
 
@@ -8,8 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.openclassrooms.mddapi.model.Topic;
-import com.openclassrooms.mddapi.service.TopicService;
+import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.service.TopicService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

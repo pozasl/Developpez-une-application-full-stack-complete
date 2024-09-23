@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.repository;
+package com.openclassrooms.mdd.topicsapi.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.test.context.TestPropertySource;
 
-import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.Topic;
 
 @DataMongoTest
 @TestPropertySource(locations = "classpath:application-test.properties")

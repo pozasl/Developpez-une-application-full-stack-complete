@@ -1,9 +1,9 @@
-package com.openclassrooms.mddapi.repository;
+package com.openclassrooms.mdd.topicsapi.repository;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.Topic;
 
 import reactor.core.publisher.Mono;
 

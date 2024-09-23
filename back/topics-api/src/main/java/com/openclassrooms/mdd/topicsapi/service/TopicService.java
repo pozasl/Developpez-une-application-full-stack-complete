@@ -1,6 +1,6 @@
-package com.openclassrooms.mddapi.service;
+package com.openclassrooms.mdd.topicsapi.service;
 
-import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.Topic;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

@@ -1,10 +1,10 @@
-package com.openclassrooms.mddapi.service;
+package com.openclassrooms.mdd.topicsapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.mddapi.model.Topic;
-import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.repository.TopicRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
