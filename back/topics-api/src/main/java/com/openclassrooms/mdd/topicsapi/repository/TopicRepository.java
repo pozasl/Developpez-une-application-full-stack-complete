@@ -3,13 +3,13 @@ package com.openclassrooms.mdd.topicsapi.repository;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
 
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface TopicRepository extends ReactiveMongoRepository<Topic, String> {
+public interface TopicRepository extends ReactiveMongoRepository<TopicEntity, String> {
 
-    Mono<Topic> findByRef(String ref);
+    Mono<TopicEntity> findByRef(String ref);
 
 }

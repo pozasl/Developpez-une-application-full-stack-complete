@@ -3,7 +3,7 @@ package com.openclassrooms.mdd.topicsapi.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("topics")
-public class Topic {
+public class TopicEntity {
 
     private String ref;
     private String name;

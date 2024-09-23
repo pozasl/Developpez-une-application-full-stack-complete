@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.test.context.TestPropertySource;
 
-import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
 
 @DataMongoTest
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -24,13 +24,13 @@ public class TopicRepositoryIT {
 
     @Test
     void findAll_shouldReturnTopics() {
-        List<Topic> topics = repository.findAll().collectList().block();
+        List<TopicEntity> topics = repository.findAll().collectList().block();
         assertThat(topics).hasSize(6);
     }
 
     @Test
     void withExistingRef_findByRef_shouldReturnTopic() {
-        Topic topic = repository.findByRef("java").block();
+        TopicEntity topic = repository.findByRef("java").block();
         assertThat(topic.getName()).isEqualTo("Java");
     }
     

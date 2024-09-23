@@ -1,14 +1,14 @@
 package com.openclassrooms.mdd.topicsapi.service;
 
-import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface TopicService {
 
-    Flux<Topic> findAll();
+    Flux<TopicEntity> findAll();
 
-    Mono<Topic> findByRef(String ref);
+    Mono<TopicEntity> findByRef(String ref);
 
 }

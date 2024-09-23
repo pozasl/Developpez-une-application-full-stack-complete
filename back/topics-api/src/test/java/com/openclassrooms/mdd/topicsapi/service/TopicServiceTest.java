@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
 import com.openclassrooms.mdd.topicsapi.repository.TopicRepository;
 
 import reactor.core.publisher.Flux;
@@ -26,23 +26,23 @@ public class TopicServiceTest {
 
     @Test
     void findAll_shoulReturnTopicsFlux() {
-        Topic topic1 = new Topic();
+        TopicEntity topic1 = new TopicEntity();
         topic1.setRef("java");
         topic1.setName("Java");
 
-        Topic topic2 = new Topic();
+        TopicEntity topic2 = new TopicEntity();
         topic2.setRef("angular");
         topic2.setName("Angular");
 
         when(topicRepository.findAll()).thenReturn(Flux.just(topic1, topic2));
-        Flux<Topic> topics = topicService.findAll();
+        Flux<TopicEntity> topics = topicService.findAll();
         assertThat(topics.blockFirst()).isEqualTo(topic1);
         assertThat(topics.blockLast()).isEqualTo(topic2);
     }
 
     @Test
     void findByRef_shoulReturnTopicMono() {
-        Topic topic = new Topic();
+        TopicEntity topic = new TopicEntity();
         topic.setRef("java");
         topic.setName("Java");
 

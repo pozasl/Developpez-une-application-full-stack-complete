@@ -8,13 +8,13 @@ public class TopicTest {
 
     @Test
     void itShouldInstantiateWithoutArgs() {
-        Topic topic = new Topic();
+        TopicEntity topic = new TopicEntity();
         assertThat(topic).isNotNull();
     }
 
     @Test
     void getterSetterShouldWork() {
-        Topic topic = new Topic();
+        TopicEntity topic = new TopicEntity();
         topic.setRef("java");
         topic.setName("Java");
         topic.setDescription("Java bla bla bla");

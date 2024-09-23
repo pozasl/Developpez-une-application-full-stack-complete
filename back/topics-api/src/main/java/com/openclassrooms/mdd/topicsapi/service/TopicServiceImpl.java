@@ -3,7 +3,7 @@ package com.openclassrooms.mdd.topicsapi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.mdd.topicsapi.model.Topic;
+import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
 import com.openclassrooms.mdd.topicsapi.repository.TopicRepository;
 
 import reactor.core.publisher.Flux;
@@ -20,12 +20,12 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Flux<Topic> findAll() {
+    public Flux<TopicEntity> findAll() {
         return topicRepository.findAll();
     }
 
     @Override
-    public Mono<Topic> findByRef(String ref) {
+    public Mono<TopicEntity> findByRef(String ref) {
         return topicRepository.findByRef(ref);
     }
     
