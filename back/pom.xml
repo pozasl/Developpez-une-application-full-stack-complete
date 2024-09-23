@@ -18,6 +18,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <oasFolder>${project.basedir}/../resources/openapi/</oasFolder>
     </properties>
 
     <modules>
@@ -25,11 +26,83 @@
         <module>topics-api</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>2.1.22</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.8.0</version>
+                <executions>
+                    <execution>
+                        <id>api-generation</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <configurationFile>${oasFolder}/config.json</configurationFile>
+                            <ignoreFileOverride>${oasFolder}/.openapi-generator-ignore</ignoreFileOverride>
+                            <inputSpec>${oasFolder}/mdd.yml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <generateApis>true</generateApis>
+                            <generateModels>true</generateModels>
+                            <supportingFilesToGenerate>
+                                ApiUtil.java
+                            </supportingFilesToGenerate>
+                            <additionalProperties>useSpringBoot3=true</additionalProperties>
+                            <!-- <apiPackage>com.openclassrooms.mdd</apiPackage>
+                            <useTags>true</useTags>
+                            <invokerPackage>com.openclassrooms.mdd</invokerPackage>
+                            <modelPackage>com.openclassrooms.mdd.model</modelPackage>
+                            <supportingFilesToGenerate>
+                                ApiUtil.java
+                            </supportingFilesToGenerate>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <generateApis>true</generateApis>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>true</generateModelDocumentation>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <detail>true</detail>
+                            <additionalProperties>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                            </additionalProperties>
+                            <configOptions>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <defaultInterfaces>false</defaultInterfaces>
+                                <reactive>true</reactive>
+                                <delegatePattern>true</delegatePattern>
+                                <responseWrapper>reactor.core.publisher.Mono</responseWrapper>
+                                 <useJakartaEe>true</useJakartaEe>
+                            </configOptions> -->
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

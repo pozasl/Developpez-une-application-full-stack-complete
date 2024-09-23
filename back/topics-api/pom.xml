@@ -8,13 +8,14 @@
 		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.openclassrooms</groupId>
-	<artifactId>mdd-api</artifactId>
+	<groupId>com.openclassrooms.mdd</groupId>
+	<artifactId>topics-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mdd-api</name>
+	<name>topics-api</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<oasFolder>${project.parent.basedir}/../resources/openapi/</oasFolder>
 	</properties>
 
     <dependencies>
