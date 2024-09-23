@@ -104,7 +104,7 @@ paths:
   /api/posts/{id}/replies:
     post:
       tags:
-        - message-controller
+        - posts-api
       summary: Post a new message
       operationId: createReply
       parameters:
@@ -155,7 +155,7 @@ paths:
   /api/auth/register:
     post:
       tags:
-        - auth-controller
+        - auth-api
       summary: Register a new User
       operationId: register
       requestBody:
@@ -204,7 +204,7 @@ paths:
   /api/auth/login:
     post:
       tags:
-        - auth-controller
+        - auth-api
       summary: Login an existing user
       operationId: login
       requestBody:
@@ -244,10 +244,155 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseMessage'
+  /api/subscriptions/user/{userid}/topics/{ref}:
+    post:
+      tags:
+        - subs-api
+      summary: Subscribe User to Topic
+      operationId: subscribeToTopic
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: ref
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicsCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+    delete:
+      tags:
+        - subs-api
+      summary:  Unsubscribe User to Topic
+      operationId: Unsubscribe
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: ref
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicsCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
+  /api/subscriptions/user/{userid}/:
+    get:
+      tags:
+        - subs-api
+      summary: Get user's subscriptions
+      operationId: getUserSubscriptions
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicsCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
   /api/user/{id}:
     get:
       tags:
-        - user-controller
+        - user-api
       summary: Get a User by its id
       operationId: getUserById
       parameters:
@@ -256,7 +401,7 @@ paths:
           required: true
           schema:
             type: integer
-            format: int32
+            format: int64
       responses:
         '200':
           description: OK
@@ -282,8 +427,98 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseMessage'
-        '409':
-          description: Conflict
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
+    put:
+      tags:
+        - user-api
+      summary: Update the User with id
+      operationId: updateRentalById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
+  /api/feeds/{userid}:
+    get:
+      tags:
+        - feeds-api
+      summary: Get the Posts from the user's feed
+      operationId: getUserFeed
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostsCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
           content:
             application/json:
               schema:
@@ -400,6 +635,10 @@ components:
         author_id:
           type: integer
           format: int64
+        replies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reply'
         created_at:
           type: string
         updated_at:
@@ -414,6 +653,13 @@ components:
           format: int64
         created_at:
           type: string
+    TopicsCollection:
+      type: object
+      properties:
+        rentals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
     PostsCollection:
       type: object
       properties:
@@ -421,13 +667,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
-    RepliesCollection:
-      type: object
-      properties:
-        rentals:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reply'
   securitySchemes:
     Authorization:
       type: http
