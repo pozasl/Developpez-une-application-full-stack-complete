@@ -71,7 +71,12 @@
                             <supportingFilesToGenerate>
                                 ApiUtil.java
                             </supportingFilesToGenerate>
-                            <additionalProperties>useSpringBoot3=true</additionalProperties>
+                            <additionalProperties>
+                                <additionalProperty>useSpringBoot3=true</additionalProperty>
+                                <additionalProperty>useAbstractClasses=false</additionalProperty>
+                            </additionalProperties>
+                            <output>${project.build.directory}/generated-sources/</output> 
+                            <addCompileSourceRoot>true</addCompileSourceRoot>
                             <!-- <apiPackage>com.openclassrooms.mdd</apiPackage>
                             <useTags>true</useTags>
                             <invokerPackage>com.openclassrooms.mdd</invokerPackage>
