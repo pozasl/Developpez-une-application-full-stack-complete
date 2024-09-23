@@ -19,9 +19,19 @@ services:
     env_file: "default.env"
     volumes:
       - mdd-data:/data/db
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./mongo-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 27017:27017
+
+  mdd-postgres:
+  image: postgres
+  container_name: mdd-postgres
+  env_file: "default.env"
+  volumes:
+    - mdd-data-postgres:/var/lib/postgresql/data
+    - ./postgres-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  ports:
+    - 5432:5432
 
   # mdd-kafka:
   #   image: apache/kafka
@@ -32,3 +42,4 @@ services:
       
 volumes:
   mdd-data:
+  mdd-data-postgres:
