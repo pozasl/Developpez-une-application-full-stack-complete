@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:1-18-bullseye
-RUN apt update && apt install openjdk-11-jdk -y
+RUN apt update && apt install openjdk-17-jdk -y
 # install chrome
 RUN curl -fSsL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg >> /dev/null
 # Add google chrome repository
