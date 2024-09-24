@@ -1,4 +1,4 @@
-package com.openclassrooms.users_api;
+package com.openclassrooms.mdd.users_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
