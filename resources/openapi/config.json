@@ -9,5 +9,6 @@
     "useTags": true,
     "useGzipFeature" : true,
     "jakarta": true,
-    "reactive": true
+    "reactive": true,
+    "delegatePattern": true
 }
