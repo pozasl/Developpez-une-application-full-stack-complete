@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mdd.api.TopicsApi;
+import com.openclassrooms.mdd.api.TopicsApiDelegate;
 import com.openclassrooms.mdd.api.model.Topic;
 import com.openclassrooms.mdd.topicsapi.mapper.TopicMapper;
 import com.openclassrooms.mdd.topicsapi.service.TopicService;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class TopicController implements TopicsApi{
+public class TopicController implements TopicsApiDelegate{
 
     private TopicService topicService;
     private TopicMapper topicMapper;
