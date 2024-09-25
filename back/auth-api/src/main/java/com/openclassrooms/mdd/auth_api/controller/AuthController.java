@@ -1,6 +1,8 @@
 package com.openclassrooms.mdd.auth_api.controller;
 
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,22 +21,26 @@ import reactor.core.publisher.Mono;
 @RestController
 public class AuthController implements AuthApiDelegate{
 
-    private AuthenticationManager authenticationManager;
+    private ReactiveAuthenticationManager authenticationManager;
     private JwtService jwtService;
     private UserService userService;
 
-    AuthController(AuthenticationManager authenticationManager) {
+    @Autowired
+    AuthController(ReactiveAuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+        this.userService = userService;
     }
 
     @PostMapping
     Mono<ResponseMessage> register(@Valid @RequestBody NewUser newUser ) {
-        return null;
+        return userService.createUser(newUser).then(Mono.just(new ResponseMessage().message("Account created")));
     }
 
     @PostMapping
     Mono<JwtInfo> login(@Valid @RequestBody AuthInfo authInfo ) {
-        return null;
+        return authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(authInfo.getEmail(), authInfo.getPassword())
+        ).flatMap(auth ->Mono.just(new JwtInfo().token(jwtService.generateToken(auth))));
     }
-    
 }
