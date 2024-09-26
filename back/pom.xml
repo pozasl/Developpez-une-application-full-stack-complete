@@ -22,6 +22,7 @@
     </properties>
 
     <modules>
+        <module>common</module>
         <module>api-gateway</module>
         <module>topics-api</module>
         <module>users-api</module>
