@@ -14,6 +14,7 @@ import com.openclassrooms.mdd.users_api.mapper.UserMapper;
 import com.openclassrooms.mdd.users_api.mapper.UserMapperImpl;
 import com.openclassrooms.mdd.users_api.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
@@ -29,6 +30,7 @@ public class UserController implements UsersApiDelegate {
     }
 
     @GetMapping("/api/user/{id}")
+    @SecurityRequirement(name = "Authorization")
     public Mono<User> getUserById(@PathVariable Long id) {
         return userMapper.toModel(
             userService.findById(id))
@@ -37,6 +39,7 @@ public class UserController implements UsersApiDelegate {
     }
 
     @PutMapping("/api/user/{id}")
+    @SecurityRequirement(name = "Authorization")
     public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody NewUser newUser) {
         return userMapper.toModel(
             userService.updateUser(id, userMapper.toEntity(newUser))
