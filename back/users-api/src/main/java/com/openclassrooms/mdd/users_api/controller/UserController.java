@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mdd.api.UsersApi;
 import com.openclassrooms.mdd.api.UsersApiDelegate;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
