@@ -12,6 +12,7 @@ import com.openclassrooms.mdd.api.model.AuthInfo;
 import com.openclassrooms.mdd.api.model.JwtInfo;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.ResponseMessage;
+import com.openclassrooms.mdd.auth_api.configuration.UserDetailsReactiveAuthenticationManager;
 import com.openclassrooms.mdd.auth_api.service.JwtService;
 import com.openclassrooms.mdd.auth_api.service.UserService;
 
@@ -26,18 +27,18 @@ public class AuthController implements AuthApiDelegate{
     private UserService userService;
 
     @Autowired
-    AuthController(ReactiveAuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
+    AuthController(UserDetailsReactiveAuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/api/auth/register")
     Mono<ResponseMessage> register(@Valid @RequestBody NewUser newUser ) {
         return userService.createUser(newUser).then(Mono.just(new ResponseMessage().message("Account created")));
     }
 
-    @PostMapping
+    @PostMapping("/api/auth/login")
     Mono<JwtInfo> login(@Valid @RequestBody AuthInfo authInfo ) {
         return authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(authInfo.getEmail(), authInfo.getPassword())
