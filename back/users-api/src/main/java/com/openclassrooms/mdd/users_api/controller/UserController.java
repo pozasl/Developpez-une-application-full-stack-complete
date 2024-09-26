@@ -1,6 +1,9 @@
 package com.openclassrooms.mdd.users_api.controller;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,10 +43,14 @@ public class UserController implements UsersApiDelegate {
 
     @PutMapping("/api/user/{id}")
     @SecurityRequirement(name = "Authorization")
-    public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody NewUser newUser) {
-        return userMapper.toModel(
-            userService.updateUser(id, userMapper.toEntity(newUser))
-        );
+    public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody NewUser newUser, @AuthenticationPrincipal Jwt jwt) {
+        if (jwt.getClaim("userId").equals(id))
+        {
+            return userMapper.toModel(
+                userService.updateUser(id, userMapper.toEntity(newUser))
+            );
+        }
+        else return Mono.error(new AccessDeniedException("Unauthorized access"));
     }
     
     
