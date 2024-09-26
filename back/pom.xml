@@ -18,12 +18,14 @@
 
     <properties>
         <java.version>17</java.version>
-        <oasFolder>${project.basedir}/../resources/openapi/</oasFolder>
+        <commonResourcesFolder>${project.basedir}/../resources</commonResourcesFolder>
     </properties>
 
     <modules>
         <module>api-gateway</module>
         <module>topics-api</module>
+        <module>users-api</module>
+        <module>auth-api</module>
     </modules>
 
     <dependencies>
@@ -45,6 +47,11 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${commonResourcesFolder}/certs</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -62,9 +69,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <configurationFile>${oasFolder}/config.json</configurationFile>
-                            <ignoreFileOverride>${oasFolder}/.openapi-generator-ignore</ignoreFileOverride>
-                            <inputSpec>${oasFolder}/mdd.yml</inputSpec>
+                            <configurationFile>${commonResourcesFolder}/openapi/config.json</configurationFile>
+                            <ignoreFileOverride>${commonResourcesFolder}/openapi/.openapi-generator-ignore</ignoreFileOverride>
+                            <inputSpec>${commonResourcesFolder}/openapi/mdd.yml</inputSpec>
                             <generatorName>spring</generatorName>
                             <generateApis>true</generateApis>
                             <generateModels>true</generateModels>
@@ -77,34 +84,6 @@
                             </additionalProperties>
                             <output>${project.build.directory}/generated-sources/</output> 
                             <addCompileSourceRoot>true</addCompileSourceRoot>
-                            <!-- <apiPackage>com.openclassrooms.mdd</apiPackage>
-                            <useTags>true</useTags>
-                            <invokerPackage>com.openclassrooms.mdd</invokerPackage>
-                            <modelPackage>com.openclassrooms.mdd.model</modelPackage>
-                            <supportingFilesToGenerate>
-                                ApiUtil.java
-                            </supportingFilesToGenerate>
-                            <generateSupportingFiles>true</generateSupportingFiles>
-                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
-                            <generateApis>true</generateApis>
-                            <generateApiTests>false</generateApiTests>
-                            <generateModelTests>false</generateModelTests>
-                            <generateModels>true</generateModels>
-                            <generateModelDocumentation>true</generateModelDocumentation>
-                            <generateApiDocumentation>true</generateApiDocumentation>
-                            <detail>true</detail>
-                            <additionalProperties>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </additionalProperties>
-                            <configOptions>
-                                <dateLibrary>java8</dateLibrary>
-                                <interfaceOnly>true</interfaceOnly>
-                                <defaultInterfaces>false</defaultInterfaces>
-                                <reactive>true</reactive>
-                                <delegatePattern>true</delegatePattern>
-                                <responseWrapper>reactor.core.publisher.Mono</responseWrapper>
-                                 <useJakartaEe>true</useJakartaEe>
-                            </configOptions> -->
                         </configuration>
                     </execution>
                 </executions>
