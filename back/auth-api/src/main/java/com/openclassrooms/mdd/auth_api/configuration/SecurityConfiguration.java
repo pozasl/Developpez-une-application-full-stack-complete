@@ -3,7 +3,6 @@ package com.openclassrooms.mdd.auth_api.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,14 +28,12 @@ import com.nimbusds.jose.proc.SecurityContext;
 public class SecurityConfiguration {
 
     private final RsaKeyProperties rsaKeys;
-    private final ReactiveAuthenticationManager authenticationManager;
 
     @Autowired
     public SecurityConfiguration(
             RsaKeyProperties rsaKeys,
             UserDetailsReactiveAuthenticationManager authenticationManager) {
         this.rsaKeys = rsaKeys;
-        this.authenticationManager = authenticationManager;
     }
 
     /**
