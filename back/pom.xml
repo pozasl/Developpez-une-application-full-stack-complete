@@ -47,11 +47,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>${commonResourcesFolder}/certs</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
