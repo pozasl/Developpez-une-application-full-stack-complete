@@ -69,6 +69,13 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+            <groupId>com.openclassrooms.mdd</groupId>
+            <artifactId>common</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+			<classifier>commonconf</classifier>
+        </dependency>
 	</dependencies>
 
 	<build>
