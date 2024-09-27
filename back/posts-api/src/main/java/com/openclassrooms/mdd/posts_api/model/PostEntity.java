@@ -1,6 +1,7 @@
 package com.openclassrooms.mdd.posts_api.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,5 +14,6 @@ public record PostEntity (
     String content,
     Date date,
     AuthorEntity author,
-    String topic
+    String topic,
+    List<ReplyEntity> replies
 ) {}
