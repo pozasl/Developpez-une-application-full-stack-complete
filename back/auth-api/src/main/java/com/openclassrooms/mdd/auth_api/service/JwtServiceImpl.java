@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
@@ -62,19 +61,5 @@ public class JwtServiceImpl implements JwtService {
         .build();
     return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
-
-  // @Override
-  // public String extractUsername(String token) {
-  //   return decoder.decode(token).getSubject();
-  // }
-
-  // @Override
-  // public boolean validate(String token, String username) {
-  //   return extractUsername(token).equals(username) && extractExpiration(token).isAfter(Instant.now());
-  // }
-
-  // private Instant extractExpiration(String token) {
-  //   return decoder.decode(token).getExpiresAt();
-  // }
   
 }

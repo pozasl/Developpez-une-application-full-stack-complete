@@ -12,8 +12,8 @@ import com.openclassrooms.mdd.api.model.AuthInfo;
 import com.openclassrooms.mdd.api.model.JwtInfo;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.ResponseMessage;
-import com.openclassrooms.mdd.auth_api.configuration.UserDetailsReactiveAuthenticationManager;
 import com.openclassrooms.mdd.auth_api.service.JwtService;
+import com.openclassrooms.mdd.auth_api.service.UserDetailsReactiveAuthenticationManager;
 import com.openclassrooms.mdd.auth_api.service.UserService;
 
 import jakarta.validation.Valid;
