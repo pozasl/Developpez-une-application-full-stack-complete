@@ -24,7 +24,7 @@ public interface PostRepository extends ReactiveMongoRepository<PostEntity, Stri
     Mono<Void> updatePostAuthorByAuthorUserId(Long userId, String userName);
 
     @Query("{ 'author.userId' : ?0 }")
-    @Update("{ '$push' : { 'author.replies' : '?1'} }")
-    void addReplyToPostId(PostEntity postEntity, ReplyEntity reply1);
+    @Update("{ '$push' : { 'replies' : '?1'} }")
+    Mono<Void> addReplyToPostId(PostEntity postEntity, ReplyEntity reply1);
 
 }

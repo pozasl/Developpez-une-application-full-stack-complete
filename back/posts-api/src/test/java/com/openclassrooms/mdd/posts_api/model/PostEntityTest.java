@@ -3,6 +3,7 @@ package com.openclassrooms.mdd.posts_api.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class PostEntityTest {
     Date date = new Date(0L);
     AuthorEntity bob = new AuthorEntity(1L, "Bob");
 
-    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java");
+    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
 
     @Test
     void testAuthor() {
@@ -30,7 +31,7 @@ public class PostEntityTest {
 
     @Test
     void testEquals() {
-        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java");
+        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
         assertThat(post).isEqualTo(post2);
     }
 

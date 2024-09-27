@@ -80,6 +80,10 @@ public class PostRepositoryTest {
     @Test
     void addReplyToPostId() {
         ReplyEntity reply1 = new ReplyEntity("Trop cool", new Date(1000L), alice);
-        postRepository.addReplyToPostId(posts.get(0), reply1);
+        Mono<Void> mono = postRepository.addReplyToPostId(posts.get(0), reply1);
+        mono.block();
+        postRepository.findById(posts.get(0).id()).as(StepVerifier::create)
+        .consumeNextWith(post -> assertThat(post.replies()).hasSize(1))
+        .verifyComplete();
     }
 }
