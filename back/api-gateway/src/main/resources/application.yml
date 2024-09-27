@@ -8,6 +8,14 @@ spring:
         uri: http://localhost:8081
         predicates:
         - Path=/api/topics/**
+      - id: user_route
+        uri: http://localhost:8082
+        predicates:
+        - Path=/api/user/**
+      - id: posts_route
+        uri: http://localhost:8083
+        predicates:
+        - Path=/api/posts/**
       - id: auth_route
         uri: http://localhost:8088
         predicates:
