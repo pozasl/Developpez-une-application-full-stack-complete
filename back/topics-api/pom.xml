@@ -3,18 +3,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.openclassrooms</groupId>
+		<artifactId>mdd-backend</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.openclassrooms</groupId>
-	<artifactId>mdd-api</artifactId>
+	<groupId>com.openclassrooms.mdd</groupId>
+	<artifactId>topics-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mdd-api</name>
+	<name>topics-api</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+		<commonResourcesFolder>${project.parent.basedir}/../resources</commonResourcesFolder>
 	</properties>
 
     <dependencies>
@@ -36,6 +37,13 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
         <scope>test</scope>
+        </dependency>
+
+		<dependency>
+            <groupId>com.openclassrooms.mdd</groupId>
+            <artifactId>common</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+			<classifier>commonconf</classifier>
         </dependency>
     </dependencies>
 

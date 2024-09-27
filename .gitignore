@@ -1,0 +1,2 @@
+resources/certs/*.pem
+back/**/certs/*.pem
