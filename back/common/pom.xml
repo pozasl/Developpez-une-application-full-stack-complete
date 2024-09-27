@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.openclassrooms.mdd</groupId>
 	<artifactId>common</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>common</name>
 	<description>MDD microservices common library and configuration</description>
 	<url/>
@@ -63,13 +63,20 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 				<executions>
 					<execution>
+						<phase>prepare-package</phase>
 						<goals>
-							<goal>repackage</goal>
+							<goal>jar</goal>
 						</goals>
+						<configuration>
+							<classifier>commonconf</classifier>
+							<excludes>
+								<exclude>**/*Application*</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
