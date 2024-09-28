@@ -41,8 +41,9 @@ public class PostRepositoryTest {
         Date date = new Date(0L);
         bob = new AuthorEntity(1L, "Bob");
         alice = new AuthorEntity(2L, "Alice");
+        ReplyEntity reply2 = new ReplyEntity("Nice one !", new Date(1000L), bob);
         PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
-        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, alice, "angular",  List.of());
+        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, alice, "angular",  List.of(reply2));
         postRepository.saveAll(List.of(post1,post2)).collectList().block();
         posts = postRepository.findAll().collectList().block();
     }
@@ -80,10 +81,13 @@ public class PostRepositoryTest {
     @Test
     void addReplyToPostId() {
         ReplyEntity reply1 = new ReplyEntity("Trop cool", new Date(1000L), alice);
-        Mono<Void> mono = postRepository.addReplyToPostId(posts.get(0), reply1);
-        mono.block();
-        postRepository.findById(posts.get(0).id()).as(StepVerifier::create)
-        .consumeNextWith(post -> assertThat(post.replies()).hasSize(1))
+        postRepository.addReplyToPostId(posts.get(0).id(), reply1)
+            .then(postRepository.findById(posts.get(0).id()))
+        .as(StepVerifier::create)
+        .consumeNextWith(post -> {
+            assertThat(post.replies()).hasSize(1);
+            assertThat(post.replies().get(0)).isEqualTo(reply1);
+        })
         .verifyComplete();
     }
 }

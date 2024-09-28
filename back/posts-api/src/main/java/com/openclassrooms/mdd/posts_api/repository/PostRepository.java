@@ -6,13 +6,12 @@ import org.springframework.data.mongodb.repository.Update;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
-import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface PostRepository extends ReactiveMongoRepository<PostEntity, String> {
+public interface PostRepository extends ReactiveMongoRepository<PostEntity, String>, ReplyPostRepository {
 
     Mono<PostEntity> findById(Long authorUserId);
 
@@ -22,9 +21,5 @@ public interface PostRepository extends ReactiveMongoRepository<PostEntity, Stri
     @Query("{ 'author.userId' : ?0 }")
     @Update("{ '$set' : { 'author.userName' : '?1'} }")
     Mono<Void> updatePostAuthorByAuthorUserId(Long userId, String userName);
-
-    @Query("{ 'author.userId' : ?0 }")
-    @Update("{ '$push' : { 'replies' : '?1'} }")
-    Mono<Void> addReplyToPostId(PostEntity postEntity, ReplyEntity reply1);
 
 }
