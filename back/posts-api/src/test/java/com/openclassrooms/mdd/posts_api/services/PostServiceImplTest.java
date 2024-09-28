@@ -1,6 +1,7 @@
 package com.openclassrooms.mdd.posts_api.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
@@ -59,5 +60,18 @@ public class PostServiceImplTest {
             .consumeErrorWith(e -> {
                 assertThat(e).isInstanceOf(NotFoundException.class);
             });
+    }
+
+    @Test
+    void withNewPost_create_shouldSavePost() {
+
+        when(postRepository.save(post)).thenReturn(Mono.just(post));
+        postService.create(post)
+            .as(StepVerifier::create)
+            .consumeNextWith(p -> {
+                assertThat(p).isEqualTo(post);
+                verify(postRepository).save(post);
+            })
+            .verifyComplete();
     }
 }

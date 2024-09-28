@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface PostService {
     Mono<PostEntity> getPostById(String id);
+    Mono<PostEntity> create(PostEntity postEntity);
 }
