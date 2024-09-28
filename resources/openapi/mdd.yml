@@ -630,10 +630,10 @@ components:
           type: string
     NewPost:
       required:
-        - description
-        - name
-        - price
-        - surface
+        - title
+        - content
+        - topic
+        - author
       type: object
       properties:
         title:
@@ -644,18 +644,22 @@ components:
           maxLength: 2000
           minLength: 0
           type: string
+        topic:
+          type: string
+        author:
+          $ref: '#/components/schemas/Author'
     NewReply:
       required:
         - message
+        - author
       type: object
       properties:
         message:
           maxLength: 2000
           minLength: 0
           type: string
-        author_id:
-          type: integer
-          format: int64
+        author:
+          $ref: '#/components/schemas/Author'
     NewUser:
       required:
         - email
@@ -713,6 +717,14 @@ components:
           type: string
         description:
           type: string
+    Author:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        userName:
+          type: string
     Post:
       type: object
       properties:
@@ -724,17 +736,13 @@ components:
           type: string
         content:
           type: string
-        author_id:
-          type: integer
-          format: int64
+        author:
+          $ref: '#/components/schemas/Author'
         replies:
           type: array
           items:
             $ref: '#/components/schemas/Reply'
         created_at:
-          type: string
-          format: date-time
-        updated_at:
           type: string
           format: date-time
     Reply:
