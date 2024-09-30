@@ -26,6 +26,7 @@
         <module>api-gateway</module>
         <module>topics-api</module>
         <module>posts-api</module>
+        <module>subscribtions-api</module>
         <module>users-api</module>
         <module>auth-api</module>
     </modules>
