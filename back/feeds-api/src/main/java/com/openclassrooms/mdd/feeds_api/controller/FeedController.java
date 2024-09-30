@@ -1,5 +1,7 @@
 package com.openclassrooms.mdd.feeds_api.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +23,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @SecurityRequirement(name = "Authorization")
-public class FeedController implements FeedsApiDelegate{
+public class FeedController implements FeedsApiDelegate {
 
     private FeedService feedService;
     private WebClient webClient;
@@ -35,20 +37,22 @@ public class FeedController implements FeedsApiDelegate{
     }
 
     @GetMapping("/api/feeds/{userid}")
-    Flux<Post> getUserFeed(@PathVariable Long userid, @AuthenticationPrincipal Jwt jwt, @RequestHeader("Authorization") String token) {
-        if (!jwt.getClaim("userId").equals(userid))
-        {
+    Flux<Post> getUserFeed(
+            @PathVariable Long userid,
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestHeader Map<String, String> headers) {
+        if (!jwt.getClaim("userId").equals(userid)) {
             return Flux.error(new AccessDeniedException("Unauthorized access"));
         }
         return feedService.findPostByUserId(userid)
-        .flatMapSequential(feedPost ->fetchPost(feedPost.getPostRef(), token));
+                .flatMapSequential(feedPost -> fetchPost(feedPost.getPostRef(), headers.get("Authorization")));
     }
 
     private Mono<Post> fetchPost(String postRef, String token) {
         String url = postServiceUrl + "/" + postRef;
         return webClient.get().uri(url)
-            .header("Authorization", token)
-            .retrieve().bodyToMono(Post.class);
+                .header("Authorization", token)
+                .retrieve().bodyToMono(Post.class);
     }
-    
+
 }
