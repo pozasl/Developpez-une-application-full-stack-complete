@@ -16,6 +16,10 @@ spring:
         uri: http://localhost:8083
         predicates:
         - Path=/api/posts/**
+      - id: subscribtions_route
+        uri: http://localhost:8084
+        predicates:
+        - Path=/api/subscribtions/**
       - id: auth_route
         uri: http://localhost:8088
         predicates:
