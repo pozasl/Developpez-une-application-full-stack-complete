@@ -1,4 +1,4 @@
-INSERT INTO feeds (user_id, postRef) VALUES (1, '12345678909876543210abcde0');
-INSERT INTO feeds (user_id, postRef) VALUES (1, '12345678909876543210abcde1');
-INSERT INTO feeds (user_id, postRef) VALUES (2, '12345678909876543210abcde2');
-INSERT INTO feeds (user_id, postRef) VALUES (2, '12345678909876543210abcde3');
+INSERT INTO feeds (user_id, post_ref) VALUES (1, '1234567890987654321abcd0');
+INSERT INTO feeds (user_id, post_ref) VALUES (1, '1234567890987654321abcd1');
+INSERT INTO feeds (user_id, post_ref) VALUES (2, '1234567890987654321abcd2');
+INSERT INTO feeds (user_id, post_ref) VALUES (2, '1234567890987654321abcd3');
