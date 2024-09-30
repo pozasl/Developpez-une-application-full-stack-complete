@@ -15,7 +15,7 @@ public class SubscribtionEntityTest {
     @BeforeEach
     void setup() {
         date = new Date(0L);
-        sub = new SubscribtionEntity(1L, "java", date);
+        sub = new SubscribtionEntity("12345678909876543210abcdef",1L, "java", date);
     }
 
     @Test
@@ -25,19 +25,19 @@ public class SubscribtionEntityTest {
 
     @Test
     void testEquals() {
-        SubscribtionEntity sub2 = new SubscribtionEntity(1L, "java", date);
+        SubscribtionEntity sub2 = new SubscribtionEntity("12345678909876543210abcdef", 1L, "java", date);
         assertThat(sub).isEqualTo(sub2);
     }
 
     @Test
     void testHashCode() {
-        int hashCode = 100900319;
+        int hashCode = 2089537254;
         assertThat(sub.hashCode()).isEqualTo(hashCode);
     }
 
     @Test
     void testToString() {
-        String str = "SubscribtionEntity[userId=1, topicRef=java, date=Thu Jan 01 00:00:00 UTC 1970]";
+        String str = "SubscribtionEntity[id=12345678909876543210abcdef, userId=1, topicRef=java, date=Thu Jan 01 00:00:00 UTC 1970]";
         assertThat(sub.toString()).isEqualTo(str);
     }
 
