@@ -330,10 +330,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseMessage'
-  /api/subscriptions/user/{userid}/topics/{ref}:
+  /api/subscribtions/user/{userid}/topics/{ref}:
     post:
       tags:
-        - subscriptions
+        - subscribtions
       summary: Subscribe User to Topic
       operationId: subscribeToTopic
       parameters:
@@ -381,7 +381,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
     delete:
       tags:
-        - subscriptions
+        - subscribtions
       summary:  Unsubscribe User to Topic
       operationId: Unsubscribe
       parameters:
@@ -429,12 +429,12 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
       security:
         - Authorization: []
-  /api/subscriptions/user/{userid}:
+  /api/subscribtions/user/{userid}/topics:
     get:
       tags:
-        - subscriptions
-      summary: Get user's subscriptions
-      operationId: getUserSubscriptions
+        - subscribtions
+      summary: Get user's subscribtions
+      operationId: getUserSubscribtions
       parameters:
         - name: userid
           in: path
