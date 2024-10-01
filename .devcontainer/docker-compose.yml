@@ -33,12 +33,11 @@ services:
     ports:
       - 5432:5432
 
-  # mdd-kafka:
-  #   image: apache/kafka
-  #   container_name: mdd-kafka
-  #   env_file: "default.env"
-  #   ports:
-  #     - 9092:9092
+  mdd-kafka:
+    image: apache/kafka
+    container_name: mdd-kafka
+    ports:
+      - 9092:9092
       
 volumes:
   mdd-data:
