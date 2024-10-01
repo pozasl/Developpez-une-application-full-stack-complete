@@ -24,7 +24,7 @@ public class ReactiveKafkaConfiguration {
     private String kafkaHost;
 
     @Bean
-    public ReceiverOptions<String, FeedPostModel> kafkaReceiver(@Value(value = "${topic.feeds.name}") String topic, KafkaProperties kafkaProperties) {
+    public ReceiverOptions<String, FeedPostModel> kafkaReceiverOptions(@Value(value = "${topic.feeds.name}") String topic, KafkaProperties kafkaProperties) {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost + ":9092");
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "mdd-feed-grp");
@@ -42,8 +42,8 @@ public class ReactiveKafkaConfiguration {
 
     @Bean
     public ReactiveKafkaConsumerTemplate<String, FeedPostModel> reactiveKafkaConsumer(
-            ReceiverOptions<String, FeedPostModel> kafaReceiverOptions) {
-        return new ReactiveKafkaConsumerTemplate<String, FeedPostModel>(kafaReceiverOptions);
+            ReceiverOptions<String, FeedPostModel> kafkaReceiverOptions) {
+        return new ReactiveKafkaConsumerTemplate<String, FeedPostModel>(kafkaReceiverOptions);
     }
 
 }
