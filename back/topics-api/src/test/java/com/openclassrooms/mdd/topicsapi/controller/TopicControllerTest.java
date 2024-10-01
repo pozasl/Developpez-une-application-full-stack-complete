@@ -1,14 +1,13 @@
 package com.openclassrooms.mdd.topicsapi.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.openclassrooms.mdd.api.model.Topic;
@@ -55,7 +54,13 @@ public class TopicControllerTest {
         when(topicService.findAll()).thenReturn(entitiesFlux);
         when(topicMapper.toModel(entitiesFlux)).thenReturn(Flux.just(topic));
         
-        webClient.get().uri("/api/topics").exchange()
+        webClient.mutateWith(
+                mockJwt().jwt(jwt -> jwt
+                    .claim("userId", 1)
+                    .claim("sub", "bob")
+                )
+            )
+            .get().uri("/api/topics").exchange()
             .expectStatus().isOk()
             .expectBody()
                 .jsonPath("@.[0].ref").isEqualTo("java")
@@ -71,7 +76,13 @@ public class TopicControllerTest {
         when(topicService.findByRef("java")).thenReturn(entityMono);
         when(topicMapper.toModel(entityMono)).thenReturn(Mono.just(topic));
         
-        webClient.get().uri("/api/topics/java").exchange()
+        webClient.mutateWith(
+                mockJwt().jwt(jwt -> jwt
+                    .claim("userId", 1)
+                    .claim("sub", "bob")
+                )
+            )
+            .get().uri("/api/topics/java").exchange()
             .expectStatus().isOk()
             .expectBody()
                 .jsonPath("@.ref").isEqualTo("java")
