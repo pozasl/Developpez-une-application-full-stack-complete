@@ -15,6 +15,7 @@ import com.openclassrooms.mdd.api.model.Post;
 import com.openclassrooms.mdd.posts_api.mapper.PostMapper;
 import com.openclassrooms.mdd.posts_api.mapper.PostMapperImpl;
 import com.openclassrooms.mdd.posts_api.services.PostService;
+import com.openclassrooms.mdd.posts_api.services.ReactiveProducerService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -25,10 +26,12 @@ public class PostController implements PostsApiDelegate{
 
     private PostService postService;
     private PostMapper postMapper;
+    private ReactiveProducerService producerService;
 
-    PostController(PostService postService, PostMapperImpl postMapper) {
+    PostController(PostService postService, PostMapperImpl postMapper, ReactiveProducerService producerService) {
         this.postService = postService;
         this.postMapper = postMapper;
+        this.producerService = producerService;
     }
 
     @GetMapping("/api/posts/{id}")
@@ -42,7 +45,9 @@ public class PostController implements PostsApiDelegate{
     Mono<Post> createPost(@Valid @RequestBody NewPost newPost, @AuthenticationPrincipal Jwt jwt) {
         if (jwt.getClaim("userId").equals(newPost.getAuthor().getUserId())) {
             return postService.create(postMapper.toEntity(newPost))
-            .map(postMapper::toModel);
+            .map(postMapper::toModel)
+            .doOnNext(post -> producerService.send(post))
+            ;
         }
         else return Mono.error(new AccessDeniedException("Can't post with another user's id"));
         
