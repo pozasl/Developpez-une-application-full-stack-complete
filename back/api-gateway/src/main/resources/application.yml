@@ -21,7 +21,7 @@ spring:
         predicates:
         - Path=/api/feeds/**
       - id: feeds_route
-        uri: http://localhost:8084
+        uri: http://localhost:8085
         predicates:
         - Path=/api/subscribtions/**
       - id: auth_route
