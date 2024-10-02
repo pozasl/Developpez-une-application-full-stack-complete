@@ -28,7 +28,7 @@ public class AuthorEntityTest {
 
     @Test
     void testToString() {
-        String bobStr = "Author[userId=1, userName=Bob]";
+        String bobStr = "AuthorEntity[userId=1, userName=Bob]";
         assertThat(bob.toString()).isEqualTo(bobStr);
     }
 

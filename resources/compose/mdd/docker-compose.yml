@@ -1,0 +1,156 @@
+version: '3.8'
+
+services:
+  mdd-api-gateway:
+    image: mdd-api-gateway:0.0.1-SNAPSHOT
+    container_name: mdd-api-gateway
+    env_file: "default.env"
+    volumes:
+      - ./props/api-gateway-application.yml:/application.yml
+    ports:
+      - 8080:8080
+    networks:
+      - frontend
+      - backend
+  
+  mdd-auth-api:
+    image: mdd-auth-api:0.0.1-SNAPSHOT
+    container_name: mdd-auth-api
+    env_file: "default.env"
+    volumes:
+      - ./props/auth-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-postgres:
+        condition: service_started
+
+  mdd-users-api:
+    image: mdd-users-api:0.0.1-SNAPSHOT
+    container_name:  mdd-users-api
+    env_file: "default.env"
+    volumes:
+      - ./props/users-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-postgres:
+        condition: service_started
+
+  mdd-topics-api:
+    image: mdd-topics-api:0.0.1-SNAPSHOT
+    container_name: mdd-topics-api
+    env_file: "default.env"
+    volumes:
+      - ./props/topics-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-mongodb:
+        condition: service_started
+
+  mdd-posts-api:
+    image: mdd-posts-api:0.0.1-SNAPSHOT
+    container_name: mdd-posts-api
+    env_file: "default.env"
+    volumes:
+      - ./props/posts-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-mongodb:
+        condition: service_started
+
+  mdd-subs-api:
+    image: mdd-subs-api:0.0.1-SNAPSHOT
+    container_name: mdd-subs-api
+    env_file: "default.env"
+    volumes:
+      - ./props/subs-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-mongodb:
+        condition: service_started
+
+  mdd-feeds-api:
+    image: mdd-feeds-api:0.0.1-SNAPSHOT
+    container_name: mdd-feeds-api
+    env_file: "default.env"
+    volumes:
+      - ./props/subsfeeds-api-application.properties:/application.properties
+    ports:
+      - 8080
+    networks:
+      - backend
+    depends_on:
+      mdd-postgres:
+        condition: service_started
+
+  mdd-mongodb:
+    image: mongo
+    container_name: mdd-mongodb-server
+    env_file: "default.env"
+    volumes:
+      - data-mongodb:/data/db
+      - ./init-db/mongo-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+
+  mdd-postgres:
+    image: postgres
+    container_name: mdd-postgres-server
+    env_file: "default.env"
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+      - ./init-db/postgres-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 5432
+    networks:
+      - backend
+
+  mdd-kafka:
+    image: apache/kafka
+    container_name: mdd-kafka-server
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://mdd-kafka:9092,CONTROLLER://mdd-kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://mdd-kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@mdd-kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    ports:
+      - 9092
+      - 9093
+    networks:
+      - backend
+      
+volumes:
+  data-mongodb:
+  data-postgres:
+
+networks:
+  frontend:
+    # Specify driver options
+    driver: bridge
+  backend:
+    # Use a custom driver
+    driver: bridge

@@ -28,6 +28,7 @@
         <module>posts-api</module>
         <module>subscribtions-api</module>
         <module>users-api</module>
+        <module>feeds-api</module>
         <module>auth-api</module>
     </modules>
 

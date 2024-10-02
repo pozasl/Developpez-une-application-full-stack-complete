@@ -37,7 +37,7 @@ public class PostEntityTest {
 
     @Test
     void testHashCode() {
-        int hashCode = -604461986;
+        int hashCode = -1558452381;
         assertThat(post.hashCode()).isEqualTo(hashCode);
     }
 
@@ -53,7 +53,7 @@ public class PostEntityTest {
 
     @Test
     void testToString() {
-        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[userId=1, userName=Bob], topic=java]";
+        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[userId=1, userName=Bob], topic=java, replies=[]]";
         assertThat(post.toString()).isEqualTo(postStr);
     }
 
