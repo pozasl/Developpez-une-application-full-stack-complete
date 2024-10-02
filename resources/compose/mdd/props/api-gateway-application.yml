@@ -1,0 +1,35 @@
+spring:
+  application:
+    name:api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: topics_route
+        uri: http://mdd-topics-api:8080
+        predicates:
+        - Path=/api/topics/**
+      - id: user_route
+        uri: http://mdd-users-api:8080
+        predicates:
+        - Path=/api/user/**
+      - id: posts_route
+        uri: http://mdd-posts-api:8080
+        predicates:
+        - Path=/api/posts/**
+      - id: subscribtions_route
+        uri: http://mdd-subs-api:8080
+        predicates:
+        - Path=/api/feeds/**
+      - id: feeds_route
+        uri: http://mdd-feeds-api:8080
+        predicates:
+        - Path=/api/subscribtions/**
+      - id: auth_route
+        uri: http://mdd-auth-api:8080
+        predicates:
+        - Path=/api/auth/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
