@@ -1,12 +1,16 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/debian
 {
-	"name": "Java 17 NodeJS 18 mongodb",
+	"name": "Java 17",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "mdd-app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"shutdownAction": "stopCompose"
+	"dockerComposeFile": ["../../docker-compose.yml"],
+  	"service": "mdd-back",
+	"shutdownAction": "none",
+  	"workspaceFolder": "/workspace/back",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+	"remoteEnv": { "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" }
 	// "features": {
 	// 	"ghcr.io/devcontainers/features/java:1": { "version": "17" },
     //     // To run MySQL container from devcontainer

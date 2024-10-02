@@ -1,12 +1,6 @@
 {
-    "/api/*": {
-        "target": "http://localhost:8080",
-        "secure": false,
-        "changeOrigin": true,
-        "logLevel": "debug"
-    },
-    "/upload/*": {
-        "target": "http://localhost:8080",
+    "/api/**": {
+        "target": "http://mdd-api-gateway:8080",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
