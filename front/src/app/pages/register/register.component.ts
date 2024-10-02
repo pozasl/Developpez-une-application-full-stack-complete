@@ -5,13 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatIconModule]
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatIconModule, ApiModule],
 })
 export class RegisterComponent {
   public hide = false;
@@ -24,11 +25,23 @@ export class RegisterComponent {
   });
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router
-  ) {}
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   public submit() {
+    const newUser: NewUser = this.form.value as NewUser;
+    this.authService.register(newUser).subscribe({
+      next: (response: ResponseMessage) => {
+        console.log(response);
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.log(err);
+        this.onError = true;
+      }
+    });
 
   }
 }
