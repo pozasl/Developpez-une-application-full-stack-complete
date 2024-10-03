@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
-import { ApiModule, AuthInfo, AuthService, JwtInfo, NewUser, ResponseMessage, User, UsersService } from 'src/app/core/modules/openapi';
+import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 import { first, mergeMap} from 'rxjs';
 
@@ -18,7 +18,7 @@ import { first, mergeMap} from 'rxjs';
   imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule]
 })
 export class LoginComponent {
-  public hide = false;
+  public hide = true;
   public onError = false;
 
   public form = this.fb.group({
@@ -40,8 +40,8 @@ export class LoginComponent {
       first(),
       mergeMap(jwtInfo => {
         if (jwtInfo && jwtInfo.token && jwtInfo.userId) {
-          localStorage.setItem('token', jwtInfo.token);
           console.log("got token", jwtInfo.token);
+          this.sessionService.token = jwtInfo.token;
           return this.usersService.getUserById(jwtInfo.userId);
         }
         throw new Error("Empty jwt token recieved");

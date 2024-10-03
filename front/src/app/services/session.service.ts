@@ -9,6 +9,7 @@ export class SessionService {
 
   public logged = false;
   public user: User | undefined;
+  public token: String | undefined;
 
   private loggedSubject = new BehaviorSubject<boolean>(this.logged);
 
@@ -23,7 +24,7 @@ export class SessionService {
   }
 
   public logOut(): void {
-    localStorage.removeItem('token');
+    this.token = undefined;
     this.user = undefined;
     this.logged = false;
     this.next();
