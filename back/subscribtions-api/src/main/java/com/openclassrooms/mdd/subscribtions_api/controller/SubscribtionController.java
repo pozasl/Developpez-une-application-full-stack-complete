@@ -41,19 +41,21 @@ public class SubscribtionController implements SubscribtionsApiDelegate{
         this.webClient = webClient;
     }
 
-    @PostMapping("/api/subscriptions/user/{userid}/topics/{ref}")
+    @PostMapping("/api/subscribtions/user/{userid}/topics/{ref}")
     Mono<ResponseMessage> subscribeToTopic(@PathVariable Long userid, @PathVariable String ref, @AuthenticationPrincipal Jwt jwt) {
         if (!jwt.getClaim("userId").equals(userid)) {
             return Mono.error(new AccessDeniedException("Can't subscribe another user"));
         }
+        // TODO: check if already subscribed
         return subService.subscribeUserToTopic(userid, ref).then(Mono.just(new ResponseMessage().message("Subscribtion succeeded")));
     }
 
-    @DeleteMapping("/api/subscriptions/user/{userid}/topics/{ref}")
+    @DeleteMapping("/api/subscribtions/user/{userid}/topics/{ref}")
     Mono<ResponseMessage> unsubscribe(@PathVariable Long userid, @PathVariable String ref, @AuthenticationPrincipal Jwt jwt) {
         if (!jwt.getClaim("userId").equals(userid)) {
             return Mono.error(new AccessDeniedException("Can't unsubscribe another user"));
         }
+        // TODO: check if already subscribed
         return subService.unsubscribeUserToTopic(userid, ref).then(Mono.just(new ResponseMessage().message("Subscribtion removed")));
     }
 
@@ -61,15 +63,20 @@ public class SubscribtionController implements SubscribtionsApiDelegate{
     Flux<Topic> getUserSubscribtions(@PathVariable Long userid,
         @AuthenticationPrincipal Jwt jwt,
         @RequestHeader Map<String, String> headers) {
+        String tokenBearer = headers.get("Authorization");
+        System.out.printf("token Bearer = %s%n", tokenBearer);
         if (!jwt.getClaim("userId").equals(userid)) {
             return Flux.error(new AccessDeniedException("Can't see another user subs"));
         }
         return subService.findSubsByUserId(userid)
-            .flatMapSequential(sub -> fetchTopic(sub.topicRef(), headers.get("Authorization")));
+            .flatMapSequential(sub -> fetchTopic(sub.topicRef(), tokenBearer));
     }
 
     private Mono<Topic> fetchTopic(String topicRef, String token) {
         String url = topicServiceUrl + "/" + topicRef;
+        System.out.println("=====================================");
+        System.out.println(token);
+        System.out.println("=====================================");
         return webClient.get().uri(url)
             .header("Authorization", token)
             .retrieve().bodyToMono(Topic.class);

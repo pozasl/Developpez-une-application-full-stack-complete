@@ -54,7 +54,7 @@ public class JwtServiceImpl implements JwtService {
     JwtClaimsSet claims = JwtClaimsSet.builder()
         .issuer("MDD")
         .issuedAt(now)
-        .expiresAt(now.plus(1, ChronoUnit.HOURS))
+        .expiresAt(now.plus(24, ChronoUnit.HOURS))
         .subject(userDetails.getEmail())
         .claim("scope", scope)
         .claim("userId", userDetails.getId())
