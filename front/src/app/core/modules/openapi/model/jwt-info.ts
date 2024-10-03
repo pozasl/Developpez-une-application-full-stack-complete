@@ -12,5 +12,6 @@
 
 export interface JwtInfo { 
     token?: string;
+    userId?: number;
 }
 
