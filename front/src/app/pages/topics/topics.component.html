@@ -7,7 +7,9 @@
             <p class="topicDescription">
                 {{topic.description}}
             </p>
-            <button (click)="subscribeToTopic(topic.ref)">S'abonner</button>
+            @if(topic.ref) {
+                <button (click)="subscribeToTopic(topic.ref)">S'abonner</button>
+            }
         </div>
     }
     </div>
