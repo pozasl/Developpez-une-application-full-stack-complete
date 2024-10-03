@@ -23,3 +23,11 @@ This library is `@angular/material`, it's one of the most famous in the angular 
 Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
 
 Good luck!
+
+## Generate OpenAPI Angular client source code
+
+From the `front` directory
+
+```bash
+npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript-angular -o src/app/core/modules/openapi --additional-properties fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model
+```
