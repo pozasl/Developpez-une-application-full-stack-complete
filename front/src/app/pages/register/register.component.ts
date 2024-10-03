@@ -3,7 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
 
@@ -12,10 +13,10 @@ import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/m
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatIconModule, ApiModule],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule],
 })
 export class RegisterComponent {
-  public hide = false;
+  public hide = true;
   public onError = false;
 
   public form = this.fb.group({
