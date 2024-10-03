@@ -16,12 +16,14 @@ export class SessionService {
     return this.loggedSubject.asObservable();
   }
 
-  public logIn(user: User):void {
+  public logIn(user: User): void {
     this.user = user;
     this.logged = true;
     this.next();
   }
-  public logOut():void {
+
+  public logOut(): void {
+    localStorage.removeItem('token');
     this.user = undefined;
     this.logged = false;
     this.next();
