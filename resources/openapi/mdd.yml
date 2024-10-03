@@ -682,6 +682,9 @@ components:
       properties:
         token:
           type: string
+        userId:
+          type: integer
+          format: int64
     AuthInfo:
       required:
         - email

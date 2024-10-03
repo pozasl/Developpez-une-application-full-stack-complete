@@ -12,6 +12,7 @@ import com.openclassrooms.mdd.api.model.AuthInfo;
 import com.openclassrooms.mdd.api.model.JwtInfo;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.ResponseMessage;
+import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 import com.openclassrooms.mdd.auth_api.service.JwtService;
 import com.openclassrooms.mdd.auth_api.service.UserDetailsReactiveAuthenticationManager;
 import com.openclassrooms.mdd.auth_api.service.UserService;
@@ -42,6 +43,12 @@ public class AuthController implements AuthApiDelegate{
     Mono<JwtInfo> login(@Valid @RequestBody AuthInfo authInfo ) {
         return authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(authInfo.getEmail(), authInfo.getPassword())
-        ).flatMap(auth ->Mono.just(new JwtInfo().token(jwtService.generateToken(auth))));
+        ).flatMap(auth ->{
+            UserDetailEntity user = (UserDetailEntity) auth.getPrincipal();
+            return Mono.just(new JwtInfo()
+                .token(jwtService.generateToken(auth))
+                .userId(user.getId())
+            );
+        });
     }
 }
