@@ -19,11 +19,11 @@ spring:
       - id: subscribtions_route
         uri: http://mdd-subs-api:8080
         predicates:
-        - Path=/api/feeds/**
+        - Path=/api/subscribtions/**
       - id: feeds_route
         uri: http://mdd-feeds-api:8080
         predicates:
-        - Path=/api/subscribtions/**
+        - Path=/api/feeds/**
       - id: auth_route
         uri: http://mdd-auth-api:8080
         predicates:
