@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Observable, take } from 'rxjs';
+import { concat, filter, first, map, mergeMap, Observable, take, zip } from 'rxjs';
 import { SubscribtionsService, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -14,6 +14,8 @@ import { SessionService } from 'src/app/services/session.service';
 export class TopicsComponent implements OnInit {
   $topics!: Observable<Topic[]>;
 
+  private userId: number | null = null;
+
   constructor(
     private topicService: TopicsService,
     private subsService: SubscribtionsService,
@@ -21,8 +23,37 @@ export class TopicsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.$topics = this.topicService.getAllTopics();
-    this.$topics.pipe(take(1)).subscribe({
+    if (this.sessionService.user && this.sessionService.user.id)
+    {
+      this.userId = this.sessionService.user.id
+      this.loadUnsubscribedTopics(this.userId);
+    }
+  }
+
+  subscribeToTopic(ref: string):void {
+    console.info(ref);
+    if (this.userId && ref) {
+      this.subsService.subscribeToTopic(this.userId, ref)
+      .subscribe({
+        next: msg => {
+          console.log(msg);
+          if (this.userId)
+            this.loadUnsubscribedTopics(this.userId)
+        },
+        error: console.error
+    });
+    }
+  }
+
+  private loadUnsubscribedTopics(userId: number) {
+    this.$topics = zip(
+      this.topicService.getAllTopics(),
+      this.subsService.getUserSubscribtions(userId)
+    ).pipe(
+      first(),
+      map(([topics,subs]) => topics.filter((t)=> subs.indexOf(t) < 0))
+    );
+    this.$topics.pipe(first()).subscribe({
       next: () => {
         console.info("Topic data loaded");
       },
@@ -30,19 +61,6 @@ export class TopicsComponent implements OnInit {
         console.error(e.message)
       },
     });
-  }
 
-  subscribeToTopic(ref: string):void {
-    console.info(ref);
-    const userId = this.sessionService.user?.id
-    if (userId && ref) {
-      this.subsService.subscribeToTopic(userId, ref)
-      .subscribe({
-        next: msg => {
-          console.log(msg);
-        },
-        error: console.error
-    });
-    }
   }
 }
