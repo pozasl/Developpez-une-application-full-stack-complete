@@ -12,7 +12,6 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
-import { NewUser } from '../model/models';
 import { ResponseMessage } from '../model/models';
 import { User } from '../model/models';
 
@@ -36,8 +35,8 @@ export interface UsersServiceInterface {
      * Update the User with id
      * 
      * @param id 
-     * @param newUser 
+     * @param user 
      */
-    updateUserById(id: number, newUser?: NewUser, extraHttpRequestParams?: any): Observable<User>;
+    updateUserById(id: number, user?: User, extraHttpRequestParams?: any): Observable<User>;
 
 }
