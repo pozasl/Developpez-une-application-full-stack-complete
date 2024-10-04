@@ -38,6 +38,7 @@ public class UserEntity {
     @Size(max=255)
     private String email;
 
+    @NonNull
     @NotBlank
     @Size(max=255)
     private String password;

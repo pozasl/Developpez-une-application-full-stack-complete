@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.google.common.net.HttpHeaders;
 import com.openclassrooms.mdd.api.SubscribtionsApiDelegate;
-import com.openclassrooms.mdd.api.model.Post;
 import com.openclassrooms.mdd.api.model.ResponseMessage;
 import com.openclassrooms.mdd.api.model.Topic;
 import com.openclassrooms.mdd.subscribtions_api.service.SubscribtionService;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

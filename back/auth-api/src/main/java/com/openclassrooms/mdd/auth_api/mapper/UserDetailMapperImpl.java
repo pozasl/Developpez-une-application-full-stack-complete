@@ -1,4 +1,4 @@
-package com.openclassrooms.mdd.users_api.mapper;
+package com.openclassrooms.mdd.auth_api.mapper;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -7,33 +7,20 @@ import java.time.ZoneOffset;
 
 import org.springframework.stereotype.Component;
 
-import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
-import com.openclassrooms.mdd.users_api.model.UserEntity;
-
-import reactor.core.publisher.Mono;
+import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 
 @Component
-public class UserMapperImpl implements UserMapper{
+public class UserDetailMapperImpl implements UserDetailMapper{
 
     @Override
-    public User toModel(UserEntity userEntity) {
+    public User toUserModel(UserDetailEntity userEntity) {
         return new User()
             .id(userEntity.getId())
             .name(userEntity.getName())
             .email(userEntity.getEmail())
             .createdAt(convertDate(userEntity.getCreatedAt()))
             .updatedAt(convertDate(userEntity.getUpdatedAt()));
-    }
-
-    @Override
-    public UserEntity toEntity(NewUser newUser) {
-        return new UserEntity(newUser.getName(), newUser.getEmail(), newUser.getPassword());
-    }
-
-    @Override
-    public Mono<User> toModel(Mono<UserEntity> userEntity) {
-        return userEntity.map(this::toModel);
     }
 
     /**
