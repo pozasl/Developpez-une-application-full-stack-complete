@@ -9,7 +9,7 @@ import com.openclassrooms.mdd.users_api.repository.UserRepository;
 import reactor.core.publisher.Mono;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
@@ -23,10 +23,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Mono<UserEntity> updateUser(Long id, UserEntity newUser) {
-        newUser.setId(id);
-        return this.userRepository.existsById(id)
-            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new NotFoundException()));
+    public Mono<UserEntity> updateUser(UserEntity user) {
+        return this.userRepository.findById(user.getId())
+        .flatMap(oldUser -> {
+            // We only change username and email
+            oldUser.setName(user.getName());
+            oldUser.setEmail(user.getEmail());
+            return userRepository.save(oldUser);
+        })
+        .switchIfEmpty(Mono.error(new NotFoundException()));
     }
 
 }

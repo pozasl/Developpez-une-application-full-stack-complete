@@ -20,8 +20,8 @@ public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    private UserEntity bob = new UserEntity("bob", "bob@test.com", "pass4321");
-    private UserEntity alice = new UserEntity("alice", "alice@test.com", "pass1234");
+    private UserEntity bob = new UserEntity("bob", "bob@test.com");
+    private UserEntity alice = new UserEntity("alice", "alice@test.com");
 
     @Test
     void findAll_ShouldReturnUsers() {

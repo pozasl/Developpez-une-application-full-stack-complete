@@ -1,6 +1,5 @@
 package com.openclassrooms.mdd.users_api.mapper;
 
-import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
 import com.openclassrooms.mdd.users_api.model.UserEntity;
 
@@ -12,6 +11,6 @@ public interface UserMapper {
 
     Mono<User> toModel(Mono<UserEntity> userEntity);
 
-    UserEntity toEntity(NewUser newUser);
+    UserEntity toEntity(User user);
     
 }

@@ -31,7 +31,7 @@ public class UserEntityTest {
     }
 
     void itShouldInstantiateWithNeededArgs() {
-        assertThat(new UserEntity("bob","bob@test.com", "pass4321")).isNotNull();
+        assertThat(new UserEntity("bob","bob@test.com")).isNotNull();
     }
 
     void itShouldInstantiateWithArgs() {

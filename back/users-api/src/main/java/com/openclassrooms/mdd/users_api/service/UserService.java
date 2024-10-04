@@ -7,5 +7,5 @@ public interface UserService {
 
     Mono<UserEntity> findById(Long id);
 
-    Mono<UserEntity> updateUser(Long id, UserEntity user);
+    Mono<UserEntity> updateUser(UserEntity user);
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mdd.api.UsersApiDelegate;
-import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
 import com.openclassrooms.mdd.users_api.mapper.UserMapper;
 import com.openclassrooms.mdd.users_api.mapper.UserMapperImpl;
@@ -43,11 +42,13 @@ public class UserController implements UsersApiDelegate {
 
     @PutMapping("/api/user/{id}")
     @SecurityRequirement(name = "Authorization")
-    public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody NewUser newUser, @AuthenticationPrincipal Jwt jwt) {
-        if (jwt.getClaim("userId").equals(id))
+    public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody User user, @AuthenticationPrincipal Jwt jwt) {
+        // TODO: Admin override
+        // Prevents editing other users's informations
+        if (jwt.getClaim("userId").equals(id) && id.equals(user.getId()))
         {
             return userMapper.toModel(
-                userService.updateUser(id, userMapper.toEntity(newUser))
+                userService.updateUser(userMapper.toEntity(user))
             );
         }
         else return Mono.error(new AccessDeniedException("Unauthorized access"));
