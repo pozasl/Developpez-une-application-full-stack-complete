@@ -37,6 +37,13 @@ public class JwtServiceImpl implements JwtService {
     return createToken(userDetails, scope, this.encoder);
   }
 
+  public String generateTokenFromUserdetail(UserDetailEntity userDetails) {
+    String scope = userDetails.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.joining(" "));
+    return createToken(userDetails, scope , this.encoder);
+  }
+
   /**
    * Create a JWT Token.
    *
