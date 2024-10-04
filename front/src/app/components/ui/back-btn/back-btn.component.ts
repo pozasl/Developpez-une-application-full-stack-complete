@@ -15,4 +15,5 @@ export class BackBtnComponent {
   public goBack() {
     this.location.back()
   }
+  
 }
