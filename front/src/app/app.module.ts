@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +16,7 @@ import { jwtInterceptor } from './interceptors/jwt.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatToolbarModule
   ],
   providers: [
     provideHttpClient(withInterceptors([jwtInterceptor])),
