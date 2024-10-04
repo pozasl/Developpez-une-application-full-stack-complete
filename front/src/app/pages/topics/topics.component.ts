@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { concat, filter, first, map, mergeMap, Observable, take, zip } from 'rxjs';
+import { first, map, Observable, zip } from 'rxjs';
 import { SubscribtionsService, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -23,25 +23,24 @@ export class TopicsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.sessionService.user && this.sessionService.user.id)
-    {
+    if (this.sessionService.user && this.sessionService.user.id) {
       this.userId = this.sessionService.user.id
       this.loadUnsubscribedTopics(this.userId);
     }
   }
 
-  subscribeToTopic(ref: string):void {
+  subscribeToTopic(ref: string): void {
     console.info(ref);
     if (this.userId && ref) {
       this.subsService.subscribeToTopic(this.userId, ref)
-      .subscribe({
-        next: msg => {
-          console.log(msg);
-          if (this.userId)
-            this.loadUnsubscribedTopics(this.userId)
-        },
-        error: console.error
-    });
+        .subscribe({
+          next: msg => {
+            console.log(msg);
+            if (this.userId)
+              this.loadUnsubscribedTopics(this.userId)
+          },
+          error: console.error
+        });
     }
   }
 
@@ -51,7 +50,9 @@ export class TopicsComponent implements OnInit {
       this.subsService.getUserSubscribtions(userId)
     ).pipe(
       first(),
-      map(([topics,subs]) => topics.filter((t)=> subs.indexOf(t) < 0))
+      map(
+        ([topics, subs]) => topics.filter(
+          t => subs.map(s => s.ref).indexOf(t.ref) < 0))
     );
     this.$topics.pipe(first()).subscribe({
       next: () => {
