@@ -330,6 +330,101 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseMessage'
+  /api/auth/me:
+    put:
+      tags:
+        - auth
+      summary: Update user credentials
+      operationId: updateMe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMe'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
+    get:
+      tags:
+        - auth
+      summary: get user credentials
+      operationId: getMe
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+      security:
+        - Authorization: []
   /api/subscribtions/user/{userid}/topics/{ref}:
     post:
       tags:
@@ -676,6 +771,8 @@ components:
           minLength: 0
           type: string
         password:
+          maxLength: 255
+          minLength: 6
           type: string
     JwtInfo:
       type: object
@@ -685,6 +782,24 @@ components:
         userId:
           type: integer
           format: int64
+    NewMe:
+      required:
+        - email
+        - name
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+        email:
+          maxLength: 255
+          minLength: 0
+          type: string
+        password:
+          maxLength: 255
+          minLength: 6
+          type: string
     AuthInfo:
       required:
         - email
