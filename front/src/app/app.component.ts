@@ -23,10 +23,5 @@ export class AppComponent implements OnInit{
       filter(e => e instanceof NavigationStart),
       map(e => e.url != '/'));
   }
-
-  public logout():void {
-    this.sessionService.logOut();
-    this.router.navigate(['']);
-  } 
   
 }
