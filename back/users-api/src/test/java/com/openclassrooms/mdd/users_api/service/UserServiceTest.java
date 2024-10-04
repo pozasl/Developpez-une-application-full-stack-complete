@@ -54,11 +54,11 @@ public class UserServiceTest {
 
     @Test
     void withKnownUserId_updateUser_shouldSaveAndreturnUpdatedUserBoby() {
-        UserEntity boby = new UserEntity(1L, "boby", "boby@test.com", null, date, date);
+        UserEntity boby = new UserEntity("boby", "boby@test.com", "pass4321");
         UserEntity bobySaved = new UserEntity(1L, "boby", "boby@test.com", "pass4321", date, date);
-        when(userRepository.findById(1L)).thenReturn(Mono.just(bob));
+        when(userRepository.existsById(1L)).thenReturn(Mono.just(true));
         when(userRepository.save(any())).thenReturn(Mono.just(bobySaved));
-        userService.updateUser(boby)
+        userService.updateUser(1L, boby)
             .as(StepVerifier::create)
             .consumeNextWith(user -> {
                 assertThat(user).isEqualTo(bobySaved);
@@ -69,11 +69,11 @@ public class UserServiceTest {
 
     @Test
     void withUnknownUserId_UpdateUser_shouldThrowNotFoundException() {
-        UserEntity boby = new UserEntity(9999L, "boby", "boby@test.com", null, date, date);
-        when(userRepository.findById(9999L)).thenReturn(Mono.empty());
-        userService.updateUser(boby)
+        UserEntity boby = new UserEntity("boby", "boby@test.com", "pass4321");
+        when(userRepository.existsById(9999L)).thenReturn(Mono.just(false));
+        userService.updateUser(9999L, boby)
             .as(StepVerifier::create)
             .consumeErrorWith(e -> assertThat(e).isInstanceOf(NotFoundException.class));
-        verify(userRepository).findById(9999L);
+        verify(userRepository).existsById(9999L);
     }
 }

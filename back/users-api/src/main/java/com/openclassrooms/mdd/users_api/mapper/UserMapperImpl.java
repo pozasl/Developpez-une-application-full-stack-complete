@@ -7,6 +7,7 @@ import java.time.ZoneOffset;
 
 import org.springframework.stereotype.Component;
 
+import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
 import com.openclassrooms.mdd.users_api.model.UserEntity;
 
@@ -26,8 +27,8 @@ public class UserMapperImpl implements UserMapper{
     }
 
     @Override
-    public UserEntity toEntity(User user) {
-        return new UserEntity(user.getId(), user.getName(), user.getEmail(), null, user.getCreatedAt().toLocalDateTime(), user.getUpdatedAt().toLocalDateTime());
+    public UserEntity toEntity(NewUser newUser) {
+        return new UserEntity(newUser.getName(), newUser.getEmail(), newUser.getPassword());
     }
 
     @Override
