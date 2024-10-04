@@ -63,20 +63,17 @@ public class SubscribtionController implements SubscribtionsApiDelegate{
     Flux<Topic> getUserSubscribtions(@PathVariable Long userid,
         @AuthenticationPrincipal Jwt jwt,
         @RequestHeader Map<String, String> headers) {
-        String tokenBearer = headers.get("Authorization");
-        System.out.printf("token Bearer = %s%n", tokenBearer);
+        String tokenBearer =  (headers.get("Authorization") != null) ? headers.get("Authorization") : headers.get("authorization");
         if (!jwt.getClaim("userId").equals(userid)) {
             return Flux.error(new AccessDeniedException("Can't see another user subs"));
         }
+        // Sometimes headers key are converted to lower case by proxy
         return subService.findSubsByUserId(userid)
             .flatMapSequential(sub -> fetchTopic(sub.topicRef(), tokenBearer));
     }
 
     private Mono<Topic> fetchTopic(String topicRef, String token) {
         String url = topicServiceUrl + "/" + topicRef;
-        System.out.println("=====================================");
-        System.out.println(token);
-        System.out.println("=====================================");
         return webClient.get().uri(url)
             .header("Authorization", token)
             .retrieve().bodyToMono(Topic.class);
