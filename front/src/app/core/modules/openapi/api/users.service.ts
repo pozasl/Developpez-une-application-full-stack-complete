@@ -38,7 +38,7 @@ import {
 })
 export class UsersService implements UsersServiceInterface {
 
-    protected basePath = ;
+    protected basePath = '';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

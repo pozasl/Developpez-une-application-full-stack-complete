@@ -14,8 +14,10 @@ import { Observable }                                        from 'rxjs';
 
 import { AuthInfo } from '../model/models';
 import { JwtInfo } from '../model/models';
+import { NewMe } from '../model/models';
 import { NewUser } from '../model/models';
 import { ResponseMessage } from '../model/models';
+import { User } from '../model/models';
 
 
 import { Configuration }                                     from '../configuration';
@@ -25,6 +27,12 @@ import { Configuration }                                     from '../configurat
 export interface AuthServiceInterface {
     defaultHeaders: HttpHeaders;
     configuration: Configuration;
+
+    /**
+     * get user credentials
+     * 
+     */
+    getMe(extraHttpRequestParams?: any): Observable<User>;
 
     /**
      * Login an existing user
@@ -39,5 +47,12 @@ export interface AuthServiceInterface {
      * @param newUser 
      */
     register(newUser: NewUser, extraHttpRequestParams?: any): Observable<ResponseMessage>;
+
+    /**
+     * Update user credentials
+     * 
+     * @param newMe 
+     */
+    updateMe(newMe: NewMe, extraHttpRequestParams?: any): Observable<JwtInfo>;
 
 }

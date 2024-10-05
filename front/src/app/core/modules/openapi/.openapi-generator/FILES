@@ -22,6 +22,7 @@ model/auth-info.ts
 model/author.ts
 model/jwt-info.ts
 model/models.ts
+model/new-me.ts
 model/new-post.ts
 model/new-reply.ts
 model/new-user.ts

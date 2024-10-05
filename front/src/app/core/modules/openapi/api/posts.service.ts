@@ -40,7 +40,7 @@ import {
 })
 export class PostsService implements PostsServiceInterface {
 
-    protected basePath = ;
+    protected basePath = '';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
