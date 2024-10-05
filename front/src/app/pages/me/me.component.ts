@@ -23,15 +23,17 @@ import { Router } from '@angular/router';
 })
 export class MeComponent implements OnInit{
   public onError: Boolean = false;
+  public hide: Boolean = true;
+  private userId!: number;
   public user!: User;
   public $topics!: Observable<Topic[]>;
 
   public form = this.fb.group({
     name: ['', [Validators.required, Validators.required]],
     email: ['', [Validators.required, Validators.email]],
+    password: [''],
   });
 
-  private userId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -50,6 +52,7 @@ export class MeComponent implements OnInit{
         this.user = u;
         this.form.value.name = u.name;
         this.form.value.email = u.email;
+        this.form.value.password = "";
       });
       this.getTopics();
     }
@@ -59,10 +62,13 @@ export class MeComponent implements OnInit{
    * Submit user's informations modification
    */
   public submit() {
+    const pass: string = this.form.value.password ? this.form.value.password : ""
     if (this.form.value.name && this.form.value.email) {
-      let newUser: User = {...this.user};
-      newUser.name = this.form.value.name;
-      newUser.email = this.form.value.email;
+      const newUser: NewUser = {
+        name: this.form.value.name,
+        email: this.form.value.email,
+        password : pass
+      };
       this.usersService.updateUserById(this.userId, newUser).pipe(first()).subscribe( u => {
         this.user = u;
       });
