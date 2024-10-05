@@ -2,16 +2,18 @@
 ## Tech stack
 
 Frontend
+* Node 22
 * Angular 18
 * Material-angular
 
 Backend
-* Spring-boot3
+* Java 17
+* Spring-boot 3.3.4
 * Spring-Cloud Gateway
 * Webflux
-* PostgreSQL
-* MongoDB
-* Kafka
+* PostgreSQL 17.0
+* MongoDB 8.0
+* Kafka 3.8
 
 ## Building
 
