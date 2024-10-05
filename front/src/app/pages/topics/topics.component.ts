@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { first, map, Observable, zip } from 'rxjs';
+import { map, Observable, take, zip } from 'rxjs';
 import { SubscribtionsService, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -49,12 +49,12 @@ export class TopicsComponent implements OnInit {
       this.topicService.getAllTopics(),
       this.subsService.getUserSubscribtions(userId)
     ).pipe(
-      first(),
+      take(1),
       map(
         ([topics, subs]) => topics.filter(
           t => subs.map(s => s.ref).indexOf(t.ref) < 0))
     );
-    this.$topics.pipe(first()).subscribe({
+    this.$topics.subscribe({
       next: () => {
         console.info("Topic data loaded");
       },

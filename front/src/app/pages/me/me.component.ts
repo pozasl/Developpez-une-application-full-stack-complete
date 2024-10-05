@@ -5,7 +5,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiModule, UsersService, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
-import { first, Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
 import { BackBtnComponent } from 'src/app/components/ui/back-btn/back-btn.component';
 import { AsyncPipe } from '@angular/common';
@@ -48,7 +48,7 @@ export class MeComponent implements OnInit{
     if ( this.sessionService.user && this.sessionService.user.id)
     {
       this.userId = this.sessionService.user.id;
-      this.usersService.getUserById(this.userId).pipe(first()).subscribe( u => {
+      this.usersService.getUserById(this.userId).pipe(take(1)).subscribe( u => {
         this.user = u;
         this.form.value.name = u.name;
         this.form.value.email = u.email;
@@ -69,7 +69,7 @@ export class MeComponent implements OnInit{
         email: this.form.value.email,
         password : pass
       };
-      this.usersService.updateUserById(this.userId, newUser).pipe(first()).subscribe( u => {
+      this.usersService.updateUserById(this.userId, newUser).pipe(take(1)).subscribe( u => {
         this.user = u;
       });
     }

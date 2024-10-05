@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ export class RegisterComponent {
 
   public submit() {
     const newUser: NewUser = this.form.value as NewUser;
-    this.authService.register(newUser).subscribe({
+    this.authService.register(newUser).pipe(take(1)).subscribe({
       next: (response: ResponseMessage) => {
         console.log(response);
         this.router.navigate(['/login']);

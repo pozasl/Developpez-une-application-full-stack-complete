@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '../core/modules/openapi';
-import { BehaviorSubject,  first,  map,  merge,  mergeMap, Observable, of, take, tap } from 'rxjs';
+import { BehaviorSubject, map, mergeMap, Observable, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class SessionService {
 
   public $logged(): Observable<boolean> {
     const loggedObs = this.loggedSubject.asObservable();
-    return this.resuming ? loggedObs : this.$resume().pipe(first(), mergeMap(() => loggedObs));
+    return this.resuming ? loggedObs : this.$resume().pipe(take(1), mergeMap(() => loggedObs));
   }
 
   public $resume() {

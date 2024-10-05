@@ -8,7 +8,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
-import { first, mergeMap} from 'rxjs';
+import { first, mergeMap, take} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent {
   public submit() {
     const authInfo: AuthInfo = this.form.value as AuthInfo;
     this.authService.login(authInfo).pipe(
-      first(),
+      take(1),
       mergeMap(jwtInfo => {
         if (jwtInfo && jwtInfo.token && jwtInfo.userId) {
           console.log("got token", jwtInfo.token);
