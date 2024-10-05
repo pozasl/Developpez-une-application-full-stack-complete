@@ -2,7 +2,7 @@
     @if($showNav | async) {
         <mat-toolbar color="secondary" fxLayout="row" fxLayoutAlign="space-between center">
             <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
-            @if($logged | async) {
+            @if($isLogged() | async) {
                 <span routerLink="posts" class="link">Articles</span>
                 <span routerLink="topics" class="link">Thèmes</span>
                 <span routerLink="me" class="link">Account</span>
