@@ -4,8 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiModule, UsersService, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
-import { Observable, take } from 'rxjs';
+import { ApiModule, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
+import { mergeMap, Observable, take, tap } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
 import { BackBtnComponent } from 'src/app/components/ui/back-btn/back-btn.component';
 import { AsyncPipe } from '@angular/common';
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   templateUrl: './me.component.html',
   styleUrl: './me.component.scss'
 })
-export class MeComponent implements OnInit{
+export class MeComponent implements OnInit {
   public onError: Boolean = false;
   public hide: Boolean = true;
   private userId!: number;
@@ -34,28 +34,17 @@ export class MeComponent implements OnInit{
     password: [''],
   });
 
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private usersService: UsersService,
     private sessionService: SessionService,
     private subsService: SubscribtionsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if ( this.sessionService.user && this.sessionService.user.id)
-    {
-      this.userId = this.sessionService.user.id;
-      this.usersService.getUserById(this.userId).pipe(take(1)).subscribe( u => {
-        this.user = u;
-        this.form.value.name = u.name;
-        this.form.value.email = u.email;
-        this.form.value.password = "";
-      });
-      this.getTopics();
-    }
+    this.loadUserData();
+    this.getTopics();
   }
 
   /**
@@ -67,10 +56,28 @@ export class MeComponent implements OnInit{
       const newUser: NewUser = {
         name: this.form.value.name,
         email: this.form.value.email,
-        password : pass
+        password: pass
       };
-      this.usersService.updateUserById(this.userId, newUser).pipe(take(1)).subscribe( u => {
-        this.user = u;
+      this.authService.updateMe(newUser).pipe(
+        tap({
+          next: jwt => {
+            if (jwt.token) {
+              this.sessionService.token = jwt.token;
+            }
+            else {
+              console.log("No new token");
+            }
+          },
+          error: console.log
+        }),
+        mergeMap(jwt => this.authService.getMe()),
+        take(1),
+      ).subscribe({
+        next: user => {
+          this.sessionService.logIn(user);
+          this.loadUserData();
+        },
+        error: console.log
       });
     }
   }
@@ -87,18 +94,33 @@ export class MeComponent implements OnInit{
   }
 
   /**
+   * Logout an send back to home pahe
+   */
+  public logout(): void {
+    this.sessionService.logOut();
+    this.router.navigate(['']);
+  }
+
+  /**
+   * Load user's data and fill the form with
+   */
+  private loadUserData() {
+    if (this.sessionService.user && this.sessionService.user.id) {
+      this.user = this.sessionService.user;
+      this.userId = this.sessionService.user.id;
+      this.form.setValue({
+        name: this.user.name || "",
+        email: this.user.email || "",
+        password: ''
+      })
+    }
+  }
+
+  /**
    * Get user's subscribed topics
    */
   private getTopics() {
     this.$topics = this.subsService.getUserSubscribtions(this.userId);
   }
-
-  /**
-   * 
-   */
-  public logout():void {
-    this.sessionService.logOut();
-    this.router.navigate(['']);
-  } 
 
 }
