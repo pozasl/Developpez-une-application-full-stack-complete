@@ -49,12 +49,12 @@ export class TopicsComponent implements OnInit {
       this.topicService.getAllTopics(),
       this.subsService.getUserSubscribtions(userId)
     ).pipe(
-      take(1),
       map(
         ([topics, subs]) => topics.filter(
-          t => subs.map(s => s.ref).indexOf(t.ref) < 0))
+          t => subs.map(s => s.ref).indexOf(t.ref) < 0)
+        ),
     );
-    this.$topics.subscribe({
+    this.$topics.pipe(take(1)).subscribe({
       next: () => {
         console.info("Topic data loaded");
       },
