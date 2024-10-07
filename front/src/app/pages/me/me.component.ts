@@ -10,6 +10,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { BackBtnComponent } from 'src/app/components/ui/back-btn/back-btn.component';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { emptyOrMinSizeValidators } from 'src/app/shared/validators/emptyOrMinSizeValidators';
 
 /**
  * User's informations page with subscribed topics
@@ -31,7 +32,7 @@ export class MeComponent implements OnInit {
   public form = this.fb.group({
     name: ['', [Validators.required, Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: [''],
+    password: ['', [emptyOrMinSizeValidators(6)]],
   });
 
   constructor(
@@ -48,10 +49,10 @@ export class MeComponent implements OnInit {
   }
 
   /**
-   * Submit user's informations modification
+   * Submit user's informations modification and refresh session with a new token
    */
   public submit() {
-    const pass: string = this.form.value.password ? this.form.value.password : ""
+    const pass: string = this.form.value.password ? this.form.value.password : ''
     if (this.form.value.name && this.form.value.email) {
       const newUser: NewUser = {
         name: this.form.value.name,
