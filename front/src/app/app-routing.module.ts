@@ -10,16 +10,18 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MeComponent } from './pages/me/me.component';
 import { FeedComponent } from './pages/feed/feed.component';
 import { PostComponent } from './pages/post/post.component';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [UnauthGuard] },
-  { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [UnauthGuard] },
-  { path: 'topics', component: TopicsComponent,  canActivate: [AuthGuard] },
-  { path: 'feed', component: FeedComponent,  canActivate: [AuthGuard] },
-  { path: 'post', component: PostComponent,  canActivate: [AuthGuard] },
-  { path: 'me', component: MeComponent,  canActivate: [AuthGuard] },
-  { path: '404', component: NotFoundComponent},
+  { path: '', title: 'Accueil', component: HomeComponent, canActivate: [UnauthGuard] },
+  { path: 'login', title: 'Connection', component: LoginComponent, canActivate: [UnauthGuard] },
+  { path: 'register', title: 'Inscription', component: RegisterComponent, canActivate: [UnauthGuard] },
+  { path: 'topics', title: 'Thèmes', component: TopicsComponent,  canActivate: [AuthGuard] },
+  { path: 'feed', title: 'Mes articles', component: FeedComponent,  canActivate: [AuthGuard] },
+  { path: 'post/:id', title: 'Article', component: PostDetailComponent,  canActivate: [AuthGuard] },
+  { path: 'post', title: 'Nouvel article', component: PostComponent,  canActivate: [AuthGuard] },
+  { path: 'me', title: 'Mon compte', component: MeComponent,  canActivate: [AuthGuard] },
+  { path: '404', title: 'Introuvable', component: NotFoundComponent},
   { path: '**', redirectTo: '404'}
 ];
 
