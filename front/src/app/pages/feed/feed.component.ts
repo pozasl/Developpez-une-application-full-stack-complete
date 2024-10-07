@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { FeedsService, Post } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -30,9 +30,15 @@ export class FeedComponent implements OnInit{
       this.loadFeed();
     }
   }
-
+  
   private loadFeed() {
     this.$feed = this.feedsService.getUserFeed(this.userId);
+    this.$feed.pipe(take(1)).subscribe({
+      next: (posts) => {
+        console.log("loaded feed's posts",posts);
+      },
+      error : console.error
+    })
   }
 
 }
