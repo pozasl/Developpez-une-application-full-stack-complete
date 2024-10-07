@@ -35,6 +35,8 @@ From **back/common**
 
 ### Build all packages
 
+You should have MongoDB & PostgreSQL configured and running to run the integration tests.
+
 From **back** folder:
 
 ```bash
