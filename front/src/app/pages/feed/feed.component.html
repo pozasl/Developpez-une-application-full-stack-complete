@@ -3,7 +3,7 @@
     @if($feed | async; as feed) {
         <div class="posts">
             @for(post of feed; track post.id) {
-                <mat-card>
+                <mat-card [routerLink]="'/post/' + post.id">
                     <mat-card-header>{{post.title}}</mat-card-header>
                         <mat-card-content fxLayout="column">
                             {{post.created_at}} {{post.author?.userName}}

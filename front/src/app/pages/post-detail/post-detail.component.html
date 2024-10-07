@@ -1,1 +1,41 @@
-<p>post-detail works!</p>
+<div class="post m3">
+    @if(post) {
+    <mat-card>
+        <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button routerLink="/feed">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1>{{post.title}}</h1>
+            </div>
+        </mat-card-title>
+        <mat-card-content>
+            {{post.created_at}} {{post.author?.userName}} {{post.topic}}
+        </mat-card-content>
+        <mat-card-content>
+            {{post.content}}
+        </mat-card-content>
+        <mat-card-content>
+            <h2>Commentaires :</h2>
+        </mat-card-content>
+        @for(reply of post.replies; track reply) {
+        <mat-card-content>
+            <span>{{reply.author?.userName}}</span>
+            <p>{{reply.content}}</p>
+        </mat-card-content>
+        }
+        <mat-card-content>
+            <form class="mt2" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+                <mat-form-field appearance="outline" fxFlex>
+                    <textarea matInput rows="3" formControlName="message"></textarea>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+                        <mat-icon>arrow</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    }
+</div>

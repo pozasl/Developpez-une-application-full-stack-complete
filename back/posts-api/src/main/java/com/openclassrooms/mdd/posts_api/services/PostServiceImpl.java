@@ -38,21 +38,21 @@ public class PostServiceImpl implements PostService{
     public Mono<PostEntity> create(PostEntity postEntity) {
 
         return postRepository.save(postEntity)
-        .flatMap(post -> {
-            System.out.println(post.toString());
-            return authorRepository.findByUserId(post.author().userId())
-            .switchIfEmpty(authorRepository.save(post.author()))
-            .flatMap(author -> {
-                System.out.println("1 -> " + author.toString());
-                AuthorEntity updatedAuthor = addPostIdToAuthorPosts(post.id(), author);
-                System.out.println("2 -> " + updatedAuthor.toString());
-                return authorRepository.save(updatedAuthor);
-            })
-            .map((a) -> {
-                System.out.println("3 -> " + a.toString());
-                return post;
+            .flatMap(post -> {
+                System.out.println(post.toString());
+                return authorRepository.findByUserId(post.author().userId())
+                .switchIfEmpty(authorRepository.save(post.author()))
+                .flatMap(author -> {
+                    System.out.println("1 -> " + author.toString());
+                    AuthorEntity updatedAuthor = addPostIdToAuthorPosts(post.id(), author);
+                    System.out.println("2 -> " + updatedAuthor.toString());
+                    return authorRepository.save(updatedAuthor);
+                })
+                .map((a) -> {
+                    System.out.println("3 -> " + a.toString());
+                    return post;
+                });
             });
-        });
     }
 
     /**
@@ -65,6 +65,9 @@ public class PostServiceImpl implements PostService{
     public Mono<PostEntity> addReplyToPostId(String id, ReplyEntity reply) {
         return postRepository.findById(id)
             .switchIfEmpty(Mono.error(new NotFoundException()))
+            .flatMap(p -> {
+                return postRepository.addReplyToPostId(id, reply).then(postRepository.findById(id));
+            })
             .flatMap(post -> {
                 System.out.println(post.toString());
                 return authorRepository.findByUserId(post.author().userId())
@@ -111,11 +114,11 @@ public class PostServiceImpl implements PostService{
      * @return
      */
     private AuthorEntity addPostIdToAuthorRepliedPost(String postId, AuthorEntity author) {
-        if(author.posts().contains(postId)) {
+        if(author.replies().contains(postId)) {
             return author;
         }       
         List<String> postIds = Stream.concat(
-            author.posts().stream(),
+            author.replies().stream(),
             Stream.of(postId)
         ).collect(Collectors.toList());
         return new AuthorEntity(
