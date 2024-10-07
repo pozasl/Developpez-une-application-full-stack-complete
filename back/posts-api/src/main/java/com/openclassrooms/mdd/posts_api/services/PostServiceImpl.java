@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService{
         return postRepository.save(postEntity)
         .flatMap(post -> {
             System.out.println(post.toString());
-            return authorRepository.findById(post.author().id())
+            return authorRepository.findByUserId(post.author().userId())
             .switchIfEmpty(authorRepository.save(post.author()))
             .flatMap(author -> {
                 System.out.println("1 -> " + author.toString());
@@ -65,19 +65,21 @@ public class PostServiceImpl implements PostService{
     public Mono<PostEntity> addReplyToPostId(String id, ReplyEntity reply) {
         return postRepository.findById(id)
             .switchIfEmpty(Mono.error(new NotFoundException()))
-            .flatMap((post) -> {
-            post.replies().add(reply);
-            return postRepository.save(post)
-            .flatMap(p -> {
-                return authorRepository.findById(post.author().id())
+            .flatMap(post -> {
+                System.out.println(post.toString());
+                return authorRepository.findByUserId(post.author().userId())
                 .switchIfEmpty(authorRepository.save(post.author()))
-                .flatMap( author -> {
+                .flatMap(author -> {
+                    System.out.println("1 -> " + author.toString());
                     AuthorEntity updatedAuthor = addPostIdToAuthorRepliedPost(post.id(), author);
+                    System.out.println("2 -> " + updatedAuthor.toString());
                     return authorRepository.save(updatedAuthor);
                 })
-                .then(Mono.just(post));
+                .map((a) -> {
+                    System.out.println("3 -> " + a.toString());
+                    return post;
+                });
             });
-        });
     }
 
     /**
