@@ -17,7 +17,6 @@ import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
 import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -29,9 +28,13 @@ public class PostRepositoryTest {
     private PostRepository postRepository;
 
     @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
     private ReactiveMongoTemplate template;
 
     private List<PostEntity> posts;
+    private List<AuthorEntity> authors;
 
     AuthorEntity bob;
     AuthorEntity alice;
@@ -39,11 +42,12 @@ public class PostRepositoryTest {
     @BeforeEach
     void setup() {
         Date date = new Date(0L);
-        bob = new AuthorEntity(1L, "Bob");
-        alice = new AuthorEntity(2L, "Alice");
-        ReplyEntity reply2 = new ReplyEntity("Nice one !", new Date(1000L), bob);
-        PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
-        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, alice, "angular",  List.of(reply2));
+        bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
+        alice = new AuthorEntity("123456789098765432100002", 2L, "Alice", List.of(), List.of());
+        authors = authorRepository.saveAll(List.of(bob, alice)).collectList().block();
+        ReplyEntity reply2 = new ReplyEntity("Nice one !", new Date(1000L), authors.get(0));
+        PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(0), "java", List.of());
+        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(1), "angular",  List.of(reply2));
         postRepository.saveAll(List.of(post1,post2)).collectList().block();
         posts = postRepository.findAll().collectList().block();
     }
@@ -51,6 +55,7 @@ public class PostRepositoryTest {
     @AfterEach
     void teardown() {
         template.dropCollection("posts").block();
+        template.dropCollection("authors").block();
     }
 
     @Test
@@ -58,23 +63,6 @@ public class PostRepositoryTest {
         Mono<PostEntity> postMono = postRepository.findById(posts.get(0).id());
         postMono.as(StepVerifier::create)
         .consumeNextWith(post -> assertThat(post).isEqualTo(posts.get(0)))
-        .verifyComplete();
-    }
-
-    @Test
-    void testFindByAuthorUserId() {
-        Flux<PostEntity> postsFlux = postRepository.findByAuthorUserId(2L);
-        postsFlux.as(StepVerifier::create)
-        .consumeNextWith(post -> assertThat(post).isEqualTo(posts.get(1)))
-        .verifyComplete();
-    }
-
-    @Test
-    void testUpdatePostAuthorByAuthorUserId() {
-        Mono<Void> mono = postRepository.updatePostAuthorByAuthorUserId(1L, "Boby");
-        mono.block();
-        postRepository.findById(posts.get(0).id()).as(StepVerifier::create)
-        .consumeNextWith(post -> assertThat(post.author().userName()).isEqualTo("Boby"))
         .verifyComplete();
     }
 

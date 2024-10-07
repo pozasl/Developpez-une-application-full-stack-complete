@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class PostEntityTest {
 
     Date date = new Date(0L);
-    AuthorEntity bob = new AuthorEntity(1L, "Bob");
+    AuthorEntity bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
 
     PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
 
@@ -37,7 +37,7 @@ public class PostEntityTest {
 
     @Test
     void testHashCode() {
-        int hashCode = -1558452381;
+        int hashCode = -1132066118;
         assertThat(post.hashCode()).isEqualTo(hashCode);
     }
 
@@ -53,7 +53,7 @@ public class PostEntityTest {
 
     @Test
     void testToString() {
-        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[userId=1, userName=Bob], topic=java, replies=[]]";
+        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[id=123456789098765432100001, userId=1, userName=Bob, posts=[], replies=[]], topic=java, replies=[]]";
         assertThat(post.toString()).isEqualTo(postStr);
     }
 
