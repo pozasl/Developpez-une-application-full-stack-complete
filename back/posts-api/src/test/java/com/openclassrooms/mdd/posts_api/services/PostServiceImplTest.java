@@ -17,6 +17,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
+import com.openclassrooms.mdd.posts_api.repository.AuthorRepository;
 import com.openclassrooms.mdd.posts_api.repository.PostRepository;
 
 import reactor.core.publisher.Mono;
@@ -28,6 +29,9 @@ public class PostServiceImplTest {
     @Mock
     private PostRepository postRepository;
 
+    @Mock
+    private AuthorRepository authorRepository;
+
     @InjectMocks
     private PostServiceImpl postService;
 
@@ -35,9 +39,11 @@ public class PostServiceImplTest {
 
     private String postId = "12345678909876543210abcdef";
 
+    private AuthorEntity bob;
+
     @BeforeEach
     void setup() {
-        AuthorEntity bob = new AuthorEntity(1L, "Bob");
+        bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
         post = new PostEntity(postId, "Hello world", "Hello world bla bla bla", new Date(), bob, "java", List.of());
     }
 
@@ -64,8 +70,27 @@ public class PostServiceImplTest {
 
     @Test
     void withNewPost_create_shouldSavePost() {
-
+        AuthorEntity bobWithPost = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(post.id()), List.of());
         when(postRepository.save(post)).thenReturn(Mono.just(post));
+        when(authorRepository.findById("123456789098765432100001")).thenReturn(Mono.just(bob));
+        when(authorRepository.save(bob)).thenReturn(Mono.just(bob));
+        when(authorRepository.save(bobWithPost)).thenReturn(Mono.just(bobWithPost));
+        postService.create(post)
+            .as(StepVerifier::create)
+            .consumeNextWith(p -> {
+                assertThat(p).isEqualTo(post);
+                verify(postRepository).save(post);
+            })
+            .verifyComplete();
+    }
+
+    @Test
+    void withNewPostAndNewAuthor_create_shouldSavePostAndAddItsIdtoAuthorPosts() {
+        AuthorEntity bobWithPost = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(post.id()), List.of());
+        when(postRepository.save(post)).thenReturn(Mono.just(post));
+        when(authorRepository.findById("123456789098765432100001")).thenReturn(Mono.empty());
+        when(authorRepository.save(bob)).thenReturn(Mono.just(bob));
+        when(authorRepository.save(bobWithPost)).thenReturn(Mono.just(bobWithPost));
         postService.create(post)
             .as(StepVerifier::create)
             .consumeNextWith(p -> {
