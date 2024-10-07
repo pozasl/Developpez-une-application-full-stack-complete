@@ -8,11 +8,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Author } from './author';
 
 
 export interface Reply { 
     content?: string;
-    author_id?: number;
+    author?: Author;
     created_at?: string;
 }
 
