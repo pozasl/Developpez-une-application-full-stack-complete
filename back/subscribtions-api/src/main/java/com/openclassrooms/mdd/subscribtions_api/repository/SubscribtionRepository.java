@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface SubscribtionRepository extends ReactiveMongoRepository<SubscribtionEntity, String>{
 
-    @Query("{ 'topic.ref' : ?0 }")
+    @Query("{ 'topicRef' : ?0 }")
     Flux<SubscribtionEntity> findByTopicRef(String topicRef);
 
     Flux<SubscribtionEntity> findByUserId(Long userId);
