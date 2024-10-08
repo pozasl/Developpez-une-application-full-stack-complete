@@ -740,7 +740,7 @@ components:
           minLength: 0
           type: string
         topic:
-          type: string
+          $ref: '#/components/schemas/Topic'
         author:
           $ref: '#/components/schemas/Author'
     NewReply:
@@ -851,7 +851,7 @@ components:
         title:
           type: string
         topic:
-          type: string
+          $ref: '#/components/schemas/Topic'
         content:
           type: string
         author:
