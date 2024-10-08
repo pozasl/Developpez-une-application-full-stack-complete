@@ -18,11 +18,11 @@ public class ReactiveProducerService {
         this.reactiveKafkaProducer = reactiveKafkaProducer;
     }
 
-    public void send(Author feedPost) {
+    public void send(Author author) {
         String topicName = "authors";
-        log.info("send to topic={}, {}={},", topicName, Author.class.getSimpleName(), feedPost);
-        reactiveKafkaProducer.send(topicName, feedPost)
-                .doOnSuccess(senderResult -> log.info("sent {} offset : {}", feedPost, senderResult.recordMetadata().offset()))
+        log.info("send to topic={}, {}={},", topicName, Author.class.getSimpleName(), author);
+        reactiveKafkaProducer.send(topicName, author)
+                .doOnSuccess(senderResult -> log.info("sent {} offset : {}", author, senderResult.recordMetadata().offset()))
                 .subscribe();
     }
 }
