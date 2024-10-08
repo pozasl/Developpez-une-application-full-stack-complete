@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
@@ -9,7 +9,7 @@ import { SessionService } from 'src/app/services/session.service';
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, MatCardModule],
+  imports: [RouterLink, AsyncPipe, MatCardModule, DatePipe],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss'
 })

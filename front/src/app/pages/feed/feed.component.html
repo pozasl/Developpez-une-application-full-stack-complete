@@ -6,7 +6,7 @@
                 <mat-card [routerLink]="'/post/' + post.id">
                     <mat-card-header>{{post.title}}</mat-card-header>
                         <mat-card-content fxLayout="column">
-                            {{post.created_at}} {{post.author?.userName}}
+                            {{post.created_at | date}} {{post.author?.userName}}
                         </mat-card-content>
                         <mat-card-content fxLayout="column">
                             {{post.content}}

@@ -1,4 +1,5 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +18,7 @@ import { SessionService } from 'src/app/services/session.service';
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatSelectModule],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatSelectModule, DatePipe],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss'
 })
