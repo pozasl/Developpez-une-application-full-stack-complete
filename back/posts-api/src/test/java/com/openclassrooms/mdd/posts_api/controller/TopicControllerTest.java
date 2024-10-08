@@ -1,4 +1,4 @@
-package com.openclassrooms.mdd.topicsapi.controller;
+package com.openclassrooms.mdd.posts_api.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
@@ -11,9 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.openclassrooms.mdd.api.model.Topic;
-import com.openclassrooms.mdd.topicsapi.mapper.TopicMapper;
-import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
-import com.openclassrooms.mdd.topicsapi.service.TopicService;
+import com.openclassrooms.mdd.posts_api.mapper.TopicMapper;
+import com.openclassrooms.mdd.posts_api.model.TopicEntity;
+import com.openclassrooms.mdd.posts_api.services.TopicService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -35,13 +35,8 @@ public class TopicControllerTest {
 
     @BeforeEach
     void setup() {
-        topicEntity = new TopicEntity();
-        topicEntity.setRef("java");
-        topicEntity.setName("Java");
-        topicEntity.setDescription("Java's description");
-
+        topicEntity = new TopicEntity("java", "Java", "Java's description");
         topic = new Topic().ref("java").name("Java").description("Java's description");
-
         when(topicMapper.toModel(topicEntity)).thenReturn(topic);
     }
 

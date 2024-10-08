@@ -11,8 +11,9 @@ public class PostEntityTest {
 
     Date date = new Date(0L);
     AuthorEntity bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
+    TopicEntity topic = new TopicEntity("java", "Java", null);
 
-    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
+    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, topic, List.of());
 
     @Test
     void testAuthor() {
@@ -31,7 +32,7 @@ public class PostEntityTest {
 
     @Test
     void testEquals() {
-        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
+        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, topic, List.of());
         assertThat(post).isEqualTo(post2);
     }
 
@@ -59,6 +60,6 @@ public class PostEntityTest {
 
     @Test
     void testTopic() {
-        assertThat(post.topic()).isEqualTo("java");
+        assertThat(post.topic()).isEqualTo(topic);
     }
 }

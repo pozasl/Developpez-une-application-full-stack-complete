@@ -14,6 +14,6 @@ public record PostEntity (
     String content,
     Date date,
     AuthorEntity author,
-    String topic,
+    TopicEntity topic,
     List<ReplyEntity> replies
 ) {}

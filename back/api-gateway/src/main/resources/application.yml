@@ -13,7 +13,7 @@ spring:
         predicates:
         - Path=/api/user/**
       - id: posts_route
-        uri: http://localhost:8083
+        uri: http://localhost:8081
         predicates:
         - Path=/api/posts/**
       - id: subscribtions_route

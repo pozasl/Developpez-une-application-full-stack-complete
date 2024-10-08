@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +20,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
 import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
+import com.openclassrooms.mdd.posts_api.model.TopicEntity;
 import com.openclassrooms.mdd.posts_api.repository.AuthorRepository;
 import com.openclassrooms.mdd.posts_api.repository.PostRepository;
 
@@ -46,12 +46,14 @@ public class PostServiceImplTest {
     private AuthorEntity bob;
 
     private Date date;
+    private TopicEntity topic;
 
     @BeforeEach
     void setup() {
         date = new Date();
+        topic = new TopicEntity("java", "Java", null);
         bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
-        post = new PostEntity(postId, "Hello world", "Hello world bla bla bla", date, bob, "java", List.of());
+        post = new PostEntity(postId, "Hello world", "Hello world bla bla bla", date, bob, topic, List.of());
     }
 
     @Test
@@ -111,7 +113,7 @@ public class PostServiceImplTest {
     void withNewReplyAndNewAuthor_addReplyToPostId_shouldSavePostWithReplyAndAddPostToAuthorRepliedPosts() {
         AuthorEntity bobWithReply = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of(post.id()));
         ReplyEntity reply = new ReplyEntity(postId, date, bob);
-        PostEntity postWithReply = new PostEntity(postId, "Hello world", "Hello world bla bla bla", date, bob, "java", List.of(reply));
+        PostEntity postWithReply = new PostEntity(postId, "Hello world", "Hello world bla bla bla", date, bob, topic, List.of(reply));
         when(postRepository.findById(postId)).thenReturn(Mono.just(post), Mono.just(postWithReply));
         when(postRepository.addReplyToPostId(postId, reply)).thenReturn(Mono.just(UpdateResult.acknowledged(1, null, null)));
         when(authorRepository.findByUserId(1L)).thenReturn(Mono.empty());

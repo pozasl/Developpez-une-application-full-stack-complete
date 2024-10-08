@@ -1,4 +1,4 @@
-package com.openclassrooms.mdd.topicsapi.controller;
+package com.openclassrooms.mdd.posts_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mdd.api.TopicsApiDelegate;
 import com.openclassrooms.mdd.api.model.Topic;
-import com.openclassrooms.mdd.topicsapi.mapper.TopicMapper;
-import com.openclassrooms.mdd.topicsapi.service.TopicService;
+import com.openclassrooms.mdd.posts_api.mapper.TopicMapper;
+import com.openclassrooms.mdd.posts_api.services.TopicService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import reactor.core.publisher.Flux;

@@ -16,6 +16,7 @@ import org.springframework.test.context.TestPropertySource;
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
 import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
+import com.openclassrooms.mdd.posts_api.model.TopicEntity;
 
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -38,6 +39,9 @@ public class PostRepositoryTest {
 
     AuthorEntity bob;
     AuthorEntity alice;
+    TopicEntity topic1;
+    TopicEntity topic2;
+
 
     @BeforeEach
     void setup() {
@@ -45,9 +49,11 @@ public class PostRepositoryTest {
         bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
         alice = new AuthorEntity("123456789098765432100002", 2L, "Alice", List.of(), List.of());
         authors = authorRepository.saveAll(List.of(bob, alice)).collectList().block();
+        topic1 = new TopicEntity("java", "Java", null);
+        topic2 = new TopicEntity("angular", "Angular", null);
         ReplyEntity reply2 = new ReplyEntity("Nice one !", new Date(1000L), authors.get(0));
-        PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(0), "java", List.of());
-        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(1), "angular",  List.of(reply2));
+        PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(0), topic1, List.of());
+        PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(1), topic2,  List.of(reply2));
         postRepository.saveAll(List.of(post1,post2)).collectList().block();
         posts = postRepository.findAll().collectList().block();
     }
