@@ -3,6 +3,8 @@ package com.openclassrooms.mdd.feeds_api.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,10 +26,13 @@ public class FeedServiceImplTest {
     @InjectMocks
     FeedServiceImpl feedService;
 
+    private LocalDateTime date;
+
     @Test
     void testFindPostByUserId() {
-        FeedPostEntity feed1 = new FeedPostEntity(1L, "1234567890987654321abcd0");
-        FeedPostEntity feed2 = new FeedPostEntity(1L, "1234567890987654321abcd1");
+        date = LocalDateTime.now();
+        FeedPostEntity feed1 = new FeedPostEntity(1L, "1234567890987654321abcd0", date);
+        FeedPostEntity feed2 = new FeedPostEntity(1L, "1234567890987654321abcd1", date);
         when(feedRepository.findByUserId(1L)).thenReturn(Flux.just(feed1, feed2));
         feedService.findPostByUserId(1L).as(StepVerifier::create)
             .consumeNextWith(feed -> assertThat(feed).isEqualTo(feed1))

@@ -2,6 +2,8 @@ package com.openclassrooms.mdd.feeds_api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,13 +24,16 @@ import reactor.test.StepVerifier;
 public class FeedRepositoryTest {
     @Autowired
     private FeedRepository feedRepository;
+
     private FeedPostEntity feedPost1;
     private FeedPostEntity feedPost2;
+    private LocalDateTime date;
 
     @BeforeEach
     void setup() {
-        feedPost1 = new FeedPostEntity( 2L,"1234567890987654321abcd2");
-        feedPost2 = new FeedPostEntity(2L, "1234567890987654321abcd3");
+        date = LocalDateTime.of(2016, 6, 22, 19, 10, 25);
+        feedPost1 = new FeedPostEntity( 2L,"1234567890987654321abcd2", date);
+        feedPost2 = new FeedPostEntity(2L, "1234567890987654321abcd3", date);
     }
 
     @Test

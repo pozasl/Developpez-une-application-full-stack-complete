@@ -1,5 +1,7 @@
 package com.openclassrooms.mdd.feeds_api.model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -21,5 +23,9 @@ public class FeedPostEntity {
     @NonNull
     @Column(value ="post_ref")
     private String postRef;
+
+    @NonNull
+    @Column(value ="created_at")
+    LocalDateTime createdAt;
     
 }
