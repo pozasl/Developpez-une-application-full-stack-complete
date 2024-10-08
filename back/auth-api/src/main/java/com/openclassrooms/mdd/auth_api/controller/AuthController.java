@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mdd.api.AuthApiDelegate;
 import com.openclassrooms.mdd.api.model.AuthInfo;
+import com.openclassrooms.mdd.api.model.Author;
 import com.openclassrooms.mdd.api.model.JwtInfo;
 import com.openclassrooms.mdd.api.model.NewMe;
 import com.openclassrooms.mdd.api.model.NewUser;
@@ -20,6 +21,7 @@ import com.openclassrooms.mdd.api.model.User;
 import com.openclassrooms.mdd.auth_api.mapper.UserDetailMapper;
 import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 import com.openclassrooms.mdd.auth_api.service.JwtService;
+import com.openclassrooms.mdd.auth_api.service.ReactiveProducerService;
 import com.openclassrooms.mdd.auth_api.service.UserDetailsReactiveAuthenticationManager;
 import com.openclassrooms.mdd.auth_api.service.UserService;
 
@@ -34,13 +36,21 @@ public class AuthController implements AuthApiDelegate{
     private JwtService jwtService;
     private UserService userService;
     private UserDetailMapper userDetailMapper;
+    private ReactiveProducerService producerService;
 
     @Autowired
-    AuthController(UserDetailsReactiveAuthenticationManager authenticationManager, JwtService jwtService, UserService userService, UserDetailMapper userDetailMapper) {
+    AuthController(
+        UserDetailsReactiveAuthenticationManager authenticationManager,
+        JwtService jwtService,
+        UserService userService,
+        UserDetailMapper userDetailMapper,
+        ReactiveProducerService producerService
+    ) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userService = userService;
         this.userDetailMapper = userDetailMapper;
+        this.producerService = producerService;
     }
 
     @PostMapping("/api/auth/register")
@@ -85,7 +95,9 @@ public class AuthController implements AuthApiDelegate{
                         jwtInfo.setUserId(updatedUser.getId());
                         return jwtInfo;
                     }
-                );
+                ).doOnNext(post -> producerService.send(
+                    new Author().userId(user.getId()).userName(user.getUsername())
+                ));
 
         });
     }
