@@ -45,7 +45,7 @@ public class PostRepositoryImpl implements ReplyPostRepository{
     public Mono<UpdateResult> findAndUpdatePostRepliesAuthorUserNameByPostId(String postId, Long userId, String userName) {
         Query query = Query.query(Criteria.where("id").is(postId));
         Update update = new Update().set("replies.$[reply].author.userName", userName);
-        update.filterArray("$[reply].author.userId", userId);
+        update.filterArray("reply.author.userId", userId);
         return template.updateMulti(query, update, PostEntity.class);
     }
 }
