@@ -46,15 +46,19 @@ public class PostRepositoryTest {
     @BeforeEach
     void setup() {
         Date date = new Date(0L);
+        //
         bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
         alice = new AuthorEntity("123456789098765432100002", 2L, "Alice", List.of(), List.of());
         authors = authorRepository.saveAll(List.of(bob, alice)).collectList().block();
+        //
         topic1 = new TopicEntity("java", "Java", null);
         topic2 = new TopicEntity("angular", "Angular", null);
+        //
         ReplyEntity reply2 = new ReplyEntity("Nice one !", new Date(1000L), authors.get(0));
         PostEntity post1 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(0), topic1, List.of());
         PostEntity post2 = new PostEntity(null,"Java in a Nutshell", "Java Bla bla bla", date, authors.get(1), topic2,  List.of(reply2));
         postRepository.saveAll(List.of(post1,post2)).collectList().block();
+        //
         posts = postRepository.findAll().collectList().block();
     }
 
@@ -82,6 +86,19 @@ public class PostRepositoryTest {
             assertThat(post.replies()).hasSize(1);
             assertThat(post.replies().get(0)).isEqualTo(reply1);
         })
+        .verifyComplete();
+    }
+
+    @Test
+    void findAndUpdatePostAuthorUserNameByAuthorUserId_shouldUpdatePostAuthorUsername() {
+        postRepository.findAndUpdatePostAuthorUserNameByAuthorUserId(1L, "Boby").as(StepVerifier::create)
+        .consumeNextWith(userId -> {
+            assertThat(userId).isEqualTo(1L);
+        })
+        .verifyComplete();
+        
+        postRepository.findById(posts.get(0).id()).as(StepVerifier::create)
+        .consumeNextWith(post -> assertThat(post.author().userName()).isEqualTo("Boby"))
         .verifyComplete();
     }
 }
