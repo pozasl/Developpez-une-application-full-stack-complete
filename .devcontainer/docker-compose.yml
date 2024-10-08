@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+
+  mdd-app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+    volumes:
+      # Mount the root folder that contains .git
+      - ..:/workspace:cached
+    env_file: "default.env"
+    command: sleep infinity
+
+  mdd-mongodb:
+    image: mongo
+    container_name: mdd-dev-mongodb
+    env_file: "default.env"
+    volumes:
+      - mdd-dev-data-mongo:/data/db
+      - ./mongo-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 27017
+    links:
+      - mdd-app
+
+  mdd-postgres:
+    image: postgres
+    container_name: mdd-dev-postgres
+    env_file: "default.env"
+    volumes:
+      - mdd-dev-data-postgres:/var/lib/postgresql/data
+      - ./postgres-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 5432
+    links:
+      - mdd-app
+
+  mdd-kafka:
+    image: apache/kafka
+    container_name: mdd-dev-kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://mdd-kafka:9092,CONTROLLER://mdd-kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://mdd-kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@mdd-kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    ports:
+      - 9092
+      - 9093
+    links:
+      - mdd-app
+      
+volumes:
+  mdd-dev-data-mongo:
+  mdd-dev-data-postgres:

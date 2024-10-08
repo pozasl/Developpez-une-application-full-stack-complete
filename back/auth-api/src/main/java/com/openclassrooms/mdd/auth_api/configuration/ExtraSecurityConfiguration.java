@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +42,17 @@ public class ExtraSecurityConfiguration extends SecurityConfiguration {
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeExchange(ex -> ex.anyExchange().permitAll())
+                .authorizeExchange(ex -> ex
+                .pathMatchers(
+                    "/api/auth/login",
+                    "/api/auth/register",
+                    "/v3/api-docs/**",
+                    "/webjars/swagger-ui/**"
+                ).permitAll()
+                .anyExchange().authenticated())
+                .oauth2ResourceServer((oauth2) -> oauth2
+				    .jwt(Customizer.withDefaults())
+			    )
                 .build();
     }
 

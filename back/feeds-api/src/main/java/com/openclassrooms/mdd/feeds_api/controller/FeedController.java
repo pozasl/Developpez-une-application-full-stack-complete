@@ -44,8 +44,10 @@ public class FeedController implements FeedsApiDelegate {
         if (!jwt.getClaim("userId").equals(userid)) {
             return Flux.error(new AccessDeniedException("Unauthorized access"));
         }
+        // Sometimes headers key are converted to lower case by proxy
+        String tokenBearer =  (headers.get("Authorization") != null) ? headers.get("Authorization") : headers.get("authorization");
         return feedService.findPostByUserId(userid)
-                .flatMapSequential(feedPost -> fetchPost(feedPost.getPostRef(), headers.get("Authorization")));
+                .flatMapSequential(feedPost -> fetchPost(feedPost.getPostRef(), tokenBearer));
     }
 
     private Mono<Post> fetchPost(String postRef, String token) {

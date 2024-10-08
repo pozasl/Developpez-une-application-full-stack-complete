@@ -1,6 +1,7 @@
 package com.openclassrooms.mdd.auth_api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +41,21 @@ public class UserServiceImpl implements UserService{
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         return userRepository.findByEmail(username).flatMap(user -> Mono.just(new UserDetailEntity(user)));
+    }
+
+    @Override
+    public Mono<UserDetailEntity> findByEmail(String email) {
+        return userRepository.findByEmail(email).flatMap(user -> Mono.just(new UserDetailEntity(user)));
+    }
+
+    @Override
+    public Mono<UserDetailEntity> updateUser(UserDetailEntity newUser, Boolean encodePass) {
+        if (encodePass)
+        {
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        }
+        return this.userRepository.existsById(newUser.getId())
+            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new NotFoundException()));
     }
     
 }

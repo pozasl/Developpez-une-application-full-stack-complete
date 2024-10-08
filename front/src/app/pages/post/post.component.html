@@ -1,0 +1,40 @@
+<div class="create m3">
+
+    <mat-card>
+        <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button routerLink="/rentals">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1>Créer un nouvel article</h1>
+            </div>
+        </mat-card-title>
+        <mat-card-content>
+            <form class="mt2" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+                <mat-form-field appearance="outline">
+                    <mat-label>Thème</mat-label>
+                    <mat-select ngDefaultControl formControlName="topic">
+                        @for(topic of $topics | async; track topic.ref) {
+                            <mat-option [value]="topic.ref">
+                                {{topic.name}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                  </mat-form-field>
+                <mat-form-field appearance="outline" class="" fxFlex>
+                    <mat-label>Titre</mat-label>
+                    <input matInput formControlName="title">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Contenu</mat-label>
+                    <textarea matInput rows="8" formControlName="content"></textarea>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+                        Créer
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

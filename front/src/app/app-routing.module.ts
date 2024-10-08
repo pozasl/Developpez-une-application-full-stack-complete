@@ -4,14 +4,25 @@ import { HomeComponent } from './pages/home/home.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AuthGuard } from './guards/auth.guards';
+import { UnauthGuard } from './guards/unauth.guards';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { MeComponent } from './pages/me/me.component';
+import { FeedComponent } from './pages/feed/feed.component';
+import { PostComponent } from './pages/post/post.component';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'topics', component: TopicsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: '', title: 'Accueil', component: HomeComponent, canActivate: [UnauthGuard] },
+  { path: 'login', title: 'Connection', component: LoginComponent, canActivate: [UnauthGuard] },
+  { path: 'register', title: 'Inscription', component: RegisterComponent, canActivate: [UnauthGuard] },
+  { path: 'topics', title: 'Thèmes', component: TopicsComponent,  canActivate: [AuthGuard] },
+  { path: 'feed', title: 'Mes articles', component: FeedComponent,  canActivate: [AuthGuard] },
+  { path: 'post/:id', title: 'Article', component: PostDetailComponent,  canActivate: [AuthGuard] },
+  { path: 'post', title: 'Nouvel article', component: PostComponent,  canActivate: [AuthGuard] },
+  { path: 'me', title: 'Mon compte', component: MeComponent,  canActivate: [AuthGuard] },
+  { path: '404', title: 'Introuvable', component: NotFoundComponent},
+  { path: '**', redirectTo: '404'}
 ];
 
 @NgModule({

@@ -10,7 +10,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
-  }
 }

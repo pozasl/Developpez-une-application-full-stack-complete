@@ -1,0 +1,16 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Java17 Node22",
+	"dockerComposeFile": ["docker-compose.yml"],
+	"service": "mdd-app",
+	"shutdownAction": "stopCompose",
+  	"workspaceFolder": "/workspace",
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": { "version": "17" },
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+	"postCreateCommand": " bash installChrome.sh",
+	"remoteEnv": { "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" }
+}
