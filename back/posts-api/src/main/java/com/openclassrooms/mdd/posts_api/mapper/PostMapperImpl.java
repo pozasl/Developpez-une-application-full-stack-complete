@@ -16,10 +16,12 @@ public class PostMapperImpl extends AbstractMapper implements PostMapper {
 
     private AuthorMapper authorMapper;
     private ReplyMapper replyMapper;
+    private TopicMapper topicMapper;
 
-    PostMapperImpl(AuthorMapper authorMapper, ReplyMapper replyMapper) {
+    PostMapperImpl(AuthorMapper authorMapper, ReplyMapper replyMapper, TopicMapper topicMapper) {
         this.authorMapper = authorMapper;
         this.replyMapper = replyMapper;
+        this.topicMapper = topicMapper;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class PostMapperImpl extends AbstractMapper implements PostMapper {
             newPost.getContent(),
             new Date(),
             authorMapper.toEntity(newPost.getAuthor()),
-            newPost.getTopic(),
+            topicMapper.toEntity(newPost.getTopic()),
             List.of());
     }
 
@@ -41,7 +43,7 @@ public class PostMapperImpl extends AbstractMapper implements PostMapper {
             .title(entity.title())
             .content(entity.content())
             .author(authorMapper.toModel(entity.author()))
-            .topic(entity.topic())
+            .topic(topicMapper.toModel(entity.topic()))
             .createdAt(convertDate(entity.date()))
             .replies(entity.replies().stream().map(replyMapper::toModel).collect(Collectors.toList()))
             ;

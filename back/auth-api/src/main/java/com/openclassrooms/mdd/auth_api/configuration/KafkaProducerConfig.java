@@ -1,4 +1,4 @@
-package com.openclassrooms.mdd.posts_api.configuration;
+package com.openclassrooms.mdd.auth_api.configuration;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.openclassrooms.mdd.api.model.Post;
+import com.openclassrooms.mdd.api.model.Author;
 
 import reactor.kafka.sender.SenderOptions;
 
@@ -22,13 +22,14 @@ public class KafkaProducerConfig {
     private String kafkaHost;
 
     @Bean
-    public ReactiveKafkaProducerTemplate<String, Post> reactiveKafkaProducer(KafkaProperties properties) {
+    public ReactiveKafkaProducerTemplate<String, Author> reactiveKafkaProducer(KafkaProperties properties) {
         // TODO: SSL or spring.kafka properties;
         Map<String, Object> props = properties.buildProducerProperties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost + ":9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        return new ReactiveKafkaProducerTemplate<String, Post>(SenderOptions.create(props));
+
+        return new ReactiveKafkaProducerTemplate<String, Author>(SenderOptions.create(props));
     }
     
 }

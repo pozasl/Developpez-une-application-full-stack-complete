@@ -1,9 +1,9 @@
-package com.openclassrooms.mdd.topicsapi.mapper;
+package com.openclassrooms.mdd.posts_api.mapper;
 
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mdd.api.model.Topic;
-import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
+import com.openclassrooms.mdd.posts_api.model.TopicEntity;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,9 +14,9 @@ public class TopicMapperImpl implements TopicMapper{
     @Override
     public Topic toModel(TopicEntity entity) {
         return new Topic()
-            .ref(entity.getRef())
-            .name(entity.getName())
-            .description(entity.getDescription());
+            .ref(entity.ref())
+            .name(entity.name())
+            .description(entity.description());
     }
 
     @Override
@@ -27,6 +27,11 @@ public class TopicMapperImpl implements TopicMapper{
     @Override
     public Flux<Topic> toModel(Flux<TopicEntity> entitiesFlux) {
         return entitiesFlux.map(entity ->this.toModel(entity));
+    }
+
+    @Override
+    public TopicEntity toEntity(Topic model) {
+        return new TopicEntity(model.getRef(), model.getName(), model.getDescription());
     }
    
 }

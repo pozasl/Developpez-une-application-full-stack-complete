@@ -11,8 +11,9 @@ public class PostEntityTest {
 
     Date date = new Date(0L);
     AuthorEntity bob = new AuthorEntity("123456789098765432100001", 1L, "Bob", List.of(), List.of());
+    TopicEntity topic = new TopicEntity("java", "Java", null);
 
-    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
+    PostEntity post = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, topic, List.of());
 
     @Test
     void testAuthor() {
@@ -31,13 +32,13 @@ public class PostEntityTest {
 
     @Test
     void testEquals() {
-        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, "java", List.of());
+        PostEntity post2 = new PostEntity("0123456789abcdef","Java in a Nutshell", "Java Bla bla bla", date, bob, topic, List.of());
         assertThat(post).isEqualTo(post2);
     }
 
     @Test
     void testHashCode() {
-        int hashCode = -1132066118;
+        int hashCode = -841182980;
         assertThat(post.hashCode()).isEqualTo(hashCode);
     }
 
@@ -53,12 +54,12 @@ public class PostEntityTest {
 
     @Test
     void testToString() {
-        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[id=123456789098765432100001, userId=1, userName=Bob, posts=[], replies=[]], topic=java, replies=[]]";
+        String postStr = "PostEntity[id=0123456789abcdef, title=Java in a Nutshell, content=Java Bla bla bla, date=Thu Jan 01 00:00:00 UTC 1970, author=AuthorEntity[id=123456789098765432100001, userId=1, userName=Bob, posts=[], replies=[]], topic=TopicEntity[ref=java, name=Java, description=null], replies=[]]";
         assertThat(post.toString()).isEqualTo(postStr);
     }
 
     @Test
     void testTopic() {
-        assertThat(post.topic()).isEqualTo("java");
+        assertThat(post.topic()).isEqualTo(topic);
     }
 }

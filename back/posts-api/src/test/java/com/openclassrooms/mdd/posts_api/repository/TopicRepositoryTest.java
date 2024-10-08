@@ -1,4 +1,4 @@
-package com.openclassrooms.mdd.topicsapi.repository;
+package com.openclassrooms.mdd.posts_api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,11 +10,11 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.test.context.TestPropertySource;
 
-import com.openclassrooms.mdd.topicsapi.model.TopicEntity;
+import com.openclassrooms.mdd.posts_api.model.TopicEntity;
 
 @DataMongoTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class TopicRepositoryIT {
+public class TopicRepositoryTest {
 
     @Autowired
     ReactiveMongoOperations operations;
@@ -31,7 +31,7 @@ public class TopicRepositoryIT {
     @Test
     void withExistingRef_findByRef_shouldReturnTopic() {
         TopicEntity topic = repository.findByRef("java").block();
-        assertThat(topic.getName()).isEqualTo("Java");
+        assertThat(topic.name()).isEqualTo("Java");
     }
     
 }
