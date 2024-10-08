@@ -22,6 +22,7 @@ export class PostComponent implements OnInit{
 
   public onError: boolean = false;
   public $topics!: Observable<Topic[]>;
+  private topicsMap!: Map<String, Topic>;
 
   private author!: Author;
   
@@ -52,7 +53,7 @@ export class PostComponent implements OnInit{
   public submit() {
     if (this.form.value.topic && this.form.value.title && this.form.value.content) {
       const post: NewPost = {
-        topic: this.form.value.topic,
+        topic: this.topicsMap.get(this.form.value.topic)!,
         title: this.form.value.title,
         content: this.form.value.content,
         author: this.author
@@ -77,6 +78,8 @@ export class PostComponent implements OnInit{
     ).subscribe({
       next: topics => {
         console.log("topics loaded", topics);
+        this.topicsMap = new Map<String, Topic>;
+        topics.forEach(topic => this.topicsMap.set(topic.ref!, topic));
       },
       error: e => {
         console.log(e);
