@@ -10,12 +10,13 @@
  */
 import { Author } from './author';
 import { Reply } from './reply';
+import { Topic } from './topic';
 
 
 export interface Post { 
     id?: string;
     title?: string;
-    topic?: string;
+    topic?: Topic;
     content?: string;
     author?: Author;
     replies?: Array<Reply>;

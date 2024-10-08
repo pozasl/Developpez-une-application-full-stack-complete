@@ -9,12 +9,13 @@
  * Do not edit the class manually.
  */
 import { Author } from './author';
+import { Topic } from './topic';
 
 
 export interface NewPost { 
     title: string;
     content: string;
-    topic: string;
+    topic: Topic;
     author: Author;
 }
 
