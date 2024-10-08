@@ -96,7 +96,7 @@ public class AuthController implements AuthApiDelegate{
                         return jwtInfo;
                     }
                 ).doOnNext(post -> producerService.send(
-                    new Author().userId(user.getId()).userName(user.getUsername())
+                    new Author().userId(user.getId()).userName(user.getName())
                 ));
 
         });
