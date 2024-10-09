@@ -1,6 +1,8 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { FeedsService, Post } from 'src/app/core/modules/openapi';
@@ -15,7 +17,7 @@ const enum Sort {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, MatCardModule, DatePipe],
+  imports: [RouterLink, AsyncPipe, MatCardModule, DatePipe, MatIconModule, MatButtonModule],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss'
 })

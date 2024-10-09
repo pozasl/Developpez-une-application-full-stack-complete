@@ -1,0 +1,37 @@
+
+.feed {
+    padding : 1em 2em 0 2em;
+}
+
+.feedBtnRow {
+    padding : 1em 0 1.5em 0;
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+}
+
+.feedBtnRow > span {
+    margin-left: auto;
+}
+
+.postList {
+    display:grid;
+    row-gap: 1em;
+    column-gap: 0.5em;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .postList {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.postList > .mat-mdc-card {
+    background-color: #eee;
+    border-width: 0px;
+}
+
+.postList > .mat-mdc-card-actions {
+    justify-content: center;
+}
