@@ -6,6 +6,12 @@ import { Observable, take } from 'rxjs';
 import { FeedsService, Post } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 
+
+const enum Sort {
+  ASC = 'asc',
+  DESC = 'desc'
+}
+
 @Component({
   selector: 'app-feed',
   standalone: true,
@@ -16,6 +22,7 @@ import { SessionService } from 'src/app/services/session.service';
 export class FeedComponent implements OnInit{
 
   public $feed!: Observable<Post[]>;
+  public sort = Sort.DESC
 
   private userId!: number;
 
@@ -30,9 +37,14 @@ export class FeedComponent implements OnInit{
       this.loadFeed();
     }
   }
+
+  public switchSort() {
+    this.sort = this.sort == Sort.DESC ? Sort.ASC : Sort.DESC
+    this.loadFeed();
+  }
   
   private loadFeed() {
-    this.$feed = this.feedsService.getUserFeed(this.userId);
+    this.$feed = this.feedsService.getUserFeed(this.userId, this.sort);
     this.$feed.pipe(take(1)).subscribe({
       next: (posts) => {
         console.log("loaded feed's posts",posts);

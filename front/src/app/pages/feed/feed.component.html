@@ -1,5 +1,6 @@
 <div class="center feed">
     <button mat-raised-button color="primary" [routerLink]="'/post'">Créer un article</button>
+    <button mat-raised-button (click)="switchSort()">{{ sort }}</button>
     @if($feed | async; as feed) {
         <div class="posts">
             @for(post of feed; track post.id) {
