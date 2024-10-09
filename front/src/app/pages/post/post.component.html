@@ -2,15 +2,13 @@
 
     <mat-card>
         <mat-card-title>
-            <div fxLayout="row" fxLayoutAlign="start center">
                 <button mat-icon-button routerLink="/rentals">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <h1>Créer un nouvel article</h1>
-            </div>
         </mat-card-title>
         <mat-card-content>
-            <form class="mt2" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+            <form class="mt2" [formGroup]="form" (ngSubmit)="submit()">
                 <mat-form-field appearance="outline">
                     <mat-label>Thème</mat-label>
                     <mat-select ngDefaultControl formControlName="topic">
@@ -29,7 +27,7 @@
                     <mat-label>Contenu</mat-label>
                     <textarea matInput rows="8" formControlName="content"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center">
+                <div>
                     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
                         Créer
                     </button>
