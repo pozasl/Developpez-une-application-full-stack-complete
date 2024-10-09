@@ -9,7 +9,7 @@ spring:
         predicates:
         - Path=/api/topics/**
       - id: user_route
-        uri: http://mdd-users-api:8080
+        uri: http://mdd-posts-api:8080
         predicates:
         - Path=/api/user/**
       - id: posts_route
