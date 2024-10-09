@@ -1,38 +1,34 @@
 <div class="app">
+  <mat-drawer-container class="sidenav-container" autosize>
+    <mat-drawer #drawer mode="over" position="end">
+      @if($isLogged() | async) {
+        <div class="sideNaveMenu">
+          <span routerLink="feed" class="link" (click)="drawer.toggle()">Articles</span>
+          <span routerLink="topics" class="link" (click)="drawer.toggle()">Thèmes</span>
+          <button mat-icon-button routerLink="me" (click)="drawer.toggle()">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      }
+    </mat-drawer>
     @if(showNav) {
-        <mat-toolbar class="mdd-toolbar" [class.hideSmallMedia]="hideSmallMedia ">
-            <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
-            @if($isLogged() | async) {
-                <span routerLink="feed" class="link toTheRight">Articles</span>
-                <span routerLink="topics" class="link">Thèmes</span>
-                <button mat-icon-button routerLink="me">
-                    <mat-icon>account_circle</mat-icon>
-                </button>
-                <button mat-icon-button class="navBtnMenu hideBigMedia">
-                    <mat-icon>menu</mat-icon>
-                </button>
-            }
-        </mat-toolbar>
-        @if($isLogged() | async) {
-        <mat-sidenav-container class="sidenav-container">
-
-            <mat-sidenav color="primary" #sidenav mode="over"  opened="false">
-              <div>
-                <span routerLink="feed" class="link">Articles</span>
-                <span routerLink="topics" class="link">Thèmes</span>
-                <button mat-icon-button routerLink="me">
-                  <mat-icon>user</mat-icon>
-                </button>
-              </div>
-            </mat-sidenav>
-            <!-- <mat-sidenav-content fxFlexFill>
-              Awesome content
-            </mat-sidenav-content> -->
-          </mat-sidenav-container>
-        }
+      <mat-toolbar class="mdd-toolbar" [class.hideSmallMedia]="hideSmallMedia ">
+          <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
+          @if($isLogged() | async) {
+              <span routerLink="feed" class="link toTheRight hideSmallMedia">Articles</span>
+              <span routerLink="topics" class="link hideSmallMedia">Thèmes</span>
+              <button mat-icon-button routerLink="me" class="hideSmallMedia">
+                  <mat-icon>account_circle</mat-icon>
+              </button>
+              <button mat-icon-button class="navBtnMenu hideBigMedia" (click)="drawer.toggle()">
+                  <mat-icon>menu</mat-icon>
+              </button>
+          }
+      </mat-toolbar>
     }
     <div>
         <router-outlet></router-outlet>
     </div>
+  </mat-drawer-container>
 </div>
 
