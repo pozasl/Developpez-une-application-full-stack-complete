@@ -64,6 +64,7 @@ export class PostDetailComponent implements OnInit{
       this.postsService.createReply(this.post.id ,  reply).pipe(take(1)).subscribe({
         next: response => {
           console.log(response);
+          this.loadPost();
         },
         error: e => {
           console.log(e);
