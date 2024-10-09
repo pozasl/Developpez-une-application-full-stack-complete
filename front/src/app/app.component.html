@@ -1,13 +1,35 @@
 <div class="app">
-    @if($showNav | async) {
-        <mat-toolbar color="secondary" fxLayout="row" fxLayoutAlign="space-between center">
+    @if(showNav) {
+        <mat-toolbar class="mdd-toolbar" [class.hideSmallMedia]="hideSmallMedia ">
             <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
             @if($isLogged() | async) {
                 <span routerLink="feed" class="link">Articles</span>
                 <span routerLink="topics" class="link">Thèmes</span>
-                <span routerLink="me" class="link">Account</span>
+                <button mat-icon-button routerLink="me">
+                    <mat-icon>user</mat-icon>
+                </button>
+                <button mat-icon-button class="navBtnMenu">
+                    <mat-icon>menu</mat-icon>
+                </button>
             }
         </mat-toolbar>
+        @if($isLogged() | async) {
+        <mat-sidenav-container class="sidenav-container">
+
+            <mat-sidenav color="primary" #sidenav mode="over"  opened="false">
+              <div>
+                <span routerLink="feed" class="link">Articles</span>
+                <span routerLink="topics" class="link">Thèmes</span>
+                <button mat-icon-button routerLink="me">
+                  <mat-icon>user</mat-icon>
+                </button>
+              </div>
+            </mat-sidenav>
+            <!-- <mat-sidenav-content fxFlexFill>
+              Awesome content
+            </mat-sidenav-content> -->
+          </mat-sidenav-container>
+        }
     }
     <div>
         <router-outlet></router-outlet>

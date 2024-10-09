@@ -9,13 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 import { first, mergeMap, take} from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule]
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ApiModule]
 })
 export class LoginComponent {
   public hide = true;

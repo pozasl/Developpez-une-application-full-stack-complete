@@ -9,7 +9,8 @@ import { filter, first, map, Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public $showNav!: Observable<boolean>;
+  public showNav!: boolean;
+  public hideSmallMedia!: boolean
   title = 'MDD';
 
   constructor(
@@ -19,10 +20,17 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.sessionService.resume();
-    this.$showNav = this.router.events.pipe(
+    
+    this.router.events.pipe(
       filter(e => e instanceof NavigationStart),
-      map(e => e.url != '/'));
+      map(e => e.url)).subscribe({next: url => {
+        // Don't show nav at homepage
+        this.showNav = url != "/";
+        // Add css class switch for media sized show condition
+        console.log(url)
+        this.hideSmallMedia = ["/login", "/register"].indexOf(url) >= 0;
+      }});
+
   }
 
   public $isLogged():Observable<boolean> {
