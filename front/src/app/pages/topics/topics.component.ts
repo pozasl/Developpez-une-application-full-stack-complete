@@ -3,11 +3,14 @@ import { AsyncPipe } from '@angular/common';
 import { map, Observable, take, zip } from 'rxjs';
 import { SubscribtionsService, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-topics',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, MatIconModule, MatButtonModule, MatCardModule],
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss']
 })
