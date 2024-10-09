@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule} from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
@@ -7,10 +8,10 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ApiModule, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
 import { mergeMap, Observable, take, tap } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
-import { BackBtnComponent } from 'src/app/components/ui/back-btn/back-btn.component';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { emptyOrMinSizeValidators } from 'src/app/shared/validators/emptyOrMinSizeValidators';
+import { MatButtonModule } from '@angular/material/button';
 
 /**
  * User's informations page with subscribed topics
@@ -18,7 +19,7 @@ import { emptyOrMinSizeValidators } from 'src/app/shared/validators/emptyOrMinSi
 @Component({
   selector: 'app-me',
   standalone: true,
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule, BackBtnComponent, AsyncPipe],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule, MatButtonModule, MatDividerModule, AsyncPipe],
   templateUrl: './me.component.html',
   styleUrl: './me.component.scss'
 })
