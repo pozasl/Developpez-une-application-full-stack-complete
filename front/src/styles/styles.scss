@@ -63,4 +63,15 @@ img.loginLogo {
   img.loginLogo {
       display: none;
   }
+  .hideBigMedia {
+    display: none !important; 
+  }
+}
+
+.mdc-text-field {
+  border-color: purple;
+}
+
+.toTheRight {
+  margin-left: auto;
 }

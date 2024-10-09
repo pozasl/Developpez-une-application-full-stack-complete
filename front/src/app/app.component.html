@@ -3,12 +3,12 @@
         <mat-toolbar class="mdd-toolbar" [class.hideSmallMedia]="hideSmallMedia ">
             <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
             @if($isLogged() | async) {
-                <span routerLink="feed" class="link">Articles</span>
+                <span routerLink="feed" class="link toTheRight">Articles</span>
                 <span routerLink="topics" class="link">Thèmes</span>
                 <button mat-icon-button routerLink="me">
-                    <mat-icon>user</mat-icon>
+                    <mat-icon>account_circle</mat-icon>
                 </button>
-                <button mat-icon-button class="navBtnMenu">
+                <button mat-icon-button class="navBtnMenu hideBigMedia">
                     <mat-icon>menu</mat-icon>
                 </button>
             }
