@@ -28,7 +28,8 @@ export interface FeedsServiceInterface {
      * Get the Posts from the user\&#39;s feed
      * 
      * @param userid 
+     * @param sort Sort order
      */
-    getUserFeed(userid: number, extraHttpRequestParams?: any): Observable<Array<Post>>;
+    getUserFeed(userid: number, sort?: 'asc' | 'desc', extraHttpRequestParams?: any): Observable<Array<Post>>;
 
 }

@@ -41,20 +41,6 @@ services:
       mdd-postgres:
         condition: service_started
 
-  mdd-topics-api:
-    image: mdd-topics-api:0.0.1-SNAPSHOT
-    container_name: mdd-topics-api
-    env_file: "default.env"
-    volumes:
-      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/topics-api-application.properties:/application.properties
-    ports:
-      - 8080
-    networks:
-      - backend
-    depends_on:
-      mdd-mongodb:
-        condition: service_started
-
   mdd-posts-api:
     image: mdd-posts-api:0.0.1-SNAPSHOT
     container_name: mdd-posts-api

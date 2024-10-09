@@ -1,5 +1,7 @@
 package com.openclassrooms.mdd.feeds_api.service;
 
+import java.time.LocalDateTime;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -45,6 +47,7 @@ public class ReactiveConsumerService implements CommandLineRunner{
                 FeedPostEntity entity = new FeedPostEntity();
                 entity.setUserId(feedPost.userId());
                 entity.setPostRef(feedPost.postRef());
+                entity.setCreatedAt(feedPost.createdAt().toLocalDateTime());
                 feedRepository.save(entity).subscribe((fp -> log.info("saved feedPost {}", fp)));
             })
             .doOnError(throwable -> log.error("something bad happened while consuming : {}", throwable.getMessage()))

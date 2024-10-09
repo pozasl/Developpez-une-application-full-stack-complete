@@ -681,6 +681,13 @@ paths:
           schema:
             type: integer
             format: int64
+        - in: query
+          name: sort
+          description: Sort order
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
       responses:
         '200':
           description: OK

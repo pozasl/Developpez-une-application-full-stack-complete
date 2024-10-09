@@ -11,4 +11,6 @@ import reactor.core.publisher.Flux;
 public interface FeedRepository extends R2dbcRepository<FeedPostEntity, Long>{
 
     Flux<FeedPostEntity>findByUserId(long userId);
+    Flux<FeedPostEntity>findByUserIdOrderByCreatedAtDesc(long userId);
+    Flux<FeedPostEntity>findByUserIdOrderByCreatedAtAsc(long userId);
 }
