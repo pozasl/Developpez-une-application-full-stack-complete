@@ -10,11 +10,12 @@ import { Observable, take } from 'rxjs';
 import { Author, NewPost, PostsService, ResponseMessage, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatSelectModule, AsyncPipe],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatSelectModule, AsyncPipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })

@@ -1,15 +1,13 @@
-<div class="create m3">
-
-    <mat-card>
-        <mat-card-title>
-                <button mat-icon-button routerLink="/rentals">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
+<button mat-icon-button routerLink="/topics">
+    <mat-icon>arrow_back</mat-icon>
+</button>
+<div class="login">
+    <div class="form-flex-container">
+                
                 <h1>Créer un nouvel article</h1>
-        </mat-card-title>
-        <mat-card-content>
+
             <form class="mt2" [formGroup]="form" (ngSubmit)="submit()">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="w100p">
                     <mat-label>Thème</mat-label>
                     <mat-select ngDefaultControl formControlName="topic">
                         @for(topic of $topics | async; track topic.ref) {
@@ -19,11 +17,11 @@
                         }
                     </mat-select>
                   </mat-form-field>
-                <mat-form-field appearance="outline" class="" fxFlex>
+                <mat-form-field appearance="outline" class="w100p">
                     <mat-label>Titre</mat-label>
                     <input matInput formControlName="title">
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex>
+                <mat-form-field appearance="outline" class="w100p">
                     <mat-label>Contenu</mat-label>
                     <textarea matInput rows="8" formControlName="content"></textarea>
                 </mat-form-field>
@@ -33,6 +31,5 @@
                     </button>
                 </div>
             </form>
-        </mat-card-content>
-    </mat-card>
+    </div>
 </div>
