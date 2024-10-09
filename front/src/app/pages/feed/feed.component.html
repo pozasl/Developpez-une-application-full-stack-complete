@@ -19,10 +19,10 @@
                 <mat-card-title class="topicName">
                     {{post.title}}
                 </mat-card-title>
-                <mat-card-subtitle>
-                    <span>{{post.created_at | date}}</span>
-                    <span>{{post.author?.userName}}</span>
-                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-header class="dateAuthor">
+                <span>{{post.created_at | date}}</span>
+                <span>{{post.author?.userName}}</span>
             </mat-card-header>
             <mat-card-content fxLayout="column">
                 {{post.content}}

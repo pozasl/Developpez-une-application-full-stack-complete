@@ -32,6 +32,12 @@
     border-width: 0px;
 }
 
-.postList > .mat-mdc-card-actions {
-    justify-content: center;
+
+.dateAuthor{
+    height: 2em;
+    align-items: start;
+}
+
+.dateAuthor > span{
+    flex: 1 1;
 }
