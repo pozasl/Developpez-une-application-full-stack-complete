@@ -15,7 +15,7 @@ import { take } from 'rxjs';
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule, MatButtonModule],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, ApiModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule],
 })
 export class RegisterComponent {
   public hide = true;
