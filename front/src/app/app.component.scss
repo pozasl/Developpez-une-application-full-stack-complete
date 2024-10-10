@@ -5,9 +5,30 @@ img.logo {
     background-color: white;
     border-bottom: solid 1px darkgrey;
 }
-span.link {
-    margin-right:1em;
+
+mat-nav-list.navLink {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+mat-nav-list.navLink > *{
+    margin: 0;
+    padding: 0 0.5em;
+    width:auto;
+    flex: 1 1 1
+}
+
+mat-nav-list.navLink mat-icon{
+    margin-top: 0.5em;
+    //padding-top: 0.5em;
+    //width:auto;
+    flex: 1 1 1
+}
+
+.navLink  a {
     font-size: medium;
+    cursor: pointer;
 }
 
 .navBtnMenu {
@@ -17,4 +38,25 @@ span.link {
 .sidenav-container {
     width:100vw;
     height:100vh;
+}
+
+mat-nav-list.sideNavLink {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+    justify-content: space-between;
+    row-gap: 0 auto;
+}
+
+mat-nav-list.sideNavLink > a {
+    align-self: flex-start;
+}
+
+mat-nav-list.sideNavLink > a:last-child{
+    margin-top: auto;
+    align-self: flex-end;
+    padding: 0 1em;
+    text-align: center;
 }
