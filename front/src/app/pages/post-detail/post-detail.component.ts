@@ -3,11 +3,10 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
 import { Author, NewReply, Post, PostsService, Reply } from 'src/app/core/modules/openapi';
@@ -19,7 +18,7 @@ import { SessionService } from 'src/app/services/session.service';
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule,  MatSelectModule, DatePipe],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatDividerModule, DatePipe],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss'
 })

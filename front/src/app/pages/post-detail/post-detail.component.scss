@@ -1,0 +1,119 @@
+.backBtn {
+    display: inline-block;
+}
+
+h1 {
+    display: inline-block;
+}
+
+h3 {
+    margin-top: 1em;
+}
+
+.postDetailContainer {
+    margin: 0 2em 2em 48px;
+}
+
+.postDetailContainer>span {
+    margin: 0 1em 2em 0;
+}
+
+p.postContent {
+    margin-bottom: 1.5em;
+}
+
+.reply {
+    display: flex;
+    // grid-template-columns: auto 1fr;
+    margin: 0 3em 0 2em;
+    column-gap: 1em;
+}
+
+.reply> span {
+    flex: 0 5em;
+}
+
+.reply>p {
+    flex: 1;
+    background-color: #eee;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.replyForm {
+    display: flex;
+    align-items: center;
+    margin: 1em 5em 0 4em;
+}
+
+.replyForm>mat-form-field {
+    width:100%
+}
+
+.sendBtn {
+    position: absolute;
+    transform: rotate(-45deg) ;
+    // width: 24px;
+    margin-left: 24px;
+}
+
+.postInfo {
+    display: flex;
+    justify-items: left;
+    margin: 1em 0;
+    column-gap: 1em;
+}
+
+.postInfo > span{
+    flex: 1 1 1;
+}
+
+@media screen and (max-width: 768px) {
+    .postDetailContainer {
+        margin: 0 1em 2em 1em;
+    }
+    .reply {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: end;
+
+        // grid-template-columns: auto 1fr;
+        margin: 1em 0;
+        column-gap: 1em;
+    }
+    
+    .reply> span {
+        flex: 1;
+        text-align: right;
+    }
+    
+    .reply>p {
+        flex: 1;
+        background-color: inherit;
+        padding: 1em;
+        border-radius: 0;
+        background-color: #eee;
+    }
+
+    .replyForm {
+        //position: absolute;
+        bottom: 0;
+        left:0;
+        margin: 0;
+        width: 100%;
+        background-color: white;
+    }
+
+    .sendBtn {
+        position: absolute;
+        margin-left: -50px;
+        z-index: 10000;
+        flex: 0;
+    }
+
+    .replyForm textarea {
+        background-color: aquamarine;
+        flex: 0;
+        z-index: -1;
+    }
+  }

@@ -1,42 +1,38 @@
-<button mat-icon-button routerLink="/feed">
+<button mat-icon-button routerLink="/feed" class="backBtn">
     <mat-icon>arrow_back</mat-icon>
 </button>
-<div class="postDetail">
-    <div class="form-flex-container">
-    @if(post) {
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <h1>{{post.title}}</h1>
-            </mat-card-title>
-        </mat-card-header>
 
-        <mat-card-content>
-            {{post.created_at | date}} {{post.author?.userName}} {{post.topic?.name}}
-        </mat-card-content>
-        <mat-card-content>
+    @if(post) {
+        <h1>{{post.title}}</h1>
+    <div class="postDetailContainer">
+        <div class="postInfo">
+            <span>{{post.created_at | date}}</span>
+            <span>{{post.author?.userName}}</span>
+            <span>{{post.topic?.name}}</span>
+        </div>
+        <p class="postContent">
             {{post.content}}
-        </mat-card-content>
-        <mat-card-content>
-            <h2>Commentaires :</h2>
-        </mat-card-content>
-        @for(reply of post.replies; track reply) {
-        <mat-card-content>
-            <span>{{reply.author?.userName}}</span>
-            <p>{{reply.content}}</p>
-        </mat-card-content>
-        }
-        <mat-card-content>
-            <form class="mt2" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
-                <mat-form-field appearance="outline" fxFlex>
-                    <textarea matInput rows="3" formControlName="message"></textarea>
-                </mat-form-field>
-                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-                    <mat-icon>send</mat-icon>
-                </button>
-            </form>
-        </mat-card-content>
-    </mat-card>
-    }
+        </p>
     
-</div>
+    <mat-divider></mat-divider>
+        <h3>Commentaires :</h3>
+        @for(reply of post.replies; track reply) {
+        <div class="reply">
+            <span>{{reply.author?.userName}}</span> 
+            <p>{{reply.content}}</p>
+        </div>
+        }
+        
+    </div>
+    <form class="replyForm" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+            
+        <mat-form-field appearance="outline" class="messageBox">
+            <mat-label>Ecrivez ici votre commentaire</mat-label>
+            <textarea matInput rows="3" formControlName="message"></textarea>
+            <button mat-icon-button color="primary" type="submit" [disabled]="form.invalid" class="sendBtn">
+                <mat-icon>send</mat-icon>
+            </button>
+        </mat-form-field>
+        
+    </form>
+    }
