@@ -12,11 +12,8 @@ export function jwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
   const token = inject(SessionService).token;
 
   if (!token) {
-    console.log("No token to inject");
     return next(req);
   }
-
-  console.log("Injecting token...");
 
   const newReq = req.clone({
     headers: req.headers.append('Authorization', `Bearer ${token}`)

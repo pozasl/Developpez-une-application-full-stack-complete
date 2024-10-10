@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '../core/modules/openapi';
-import { BehaviorSubject, map, mergeMap, Observable, take, tap } from 'rxjs';
+import { BehaviorSubject, distinct, map, mergeMap, Observable, skip, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,19 @@ export class SessionService {
   public logged = false;
   public user: User | undefined;
   private _token: string | null;
+  private _resuming!: boolean;
 
   private loggedSubject = new BehaviorSubject<boolean>(this.logged);
-  private resuming = false;
 
 
   constructor(private authService: AuthService) {
     this._token = localStorage.getItem('token');
+    this._resuming = this._token != null;
   };
+
+  public get resuming(): boolean {
+    return this._resuming;
+  }
 
   public set token(tokenStr: string) {
     localStorage.setItem('token', tokenStr);
@@ -29,26 +34,24 @@ export class SessionService {
   }
 
   public $logged(): Observable<boolean> {
-    const loggedObs = this.loggedSubject.asObservable();
-    return this.resuming ? loggedObs : this.$resume().pipe(take(1), mergeMap(() => loggedObs));
+    return this.loggedSubject.asObservable();
   }
 
-  public $resume() {
-      console.log("resuming...");
-      this.resuming = true
-      return this.authService.getMe().pipe(
-        tap({
-          next: user => {
-            console.log("Session resumed", user);
-            this.logIn(user);
-          },
-          error: (e) => {
-            console.log("Couldn't resume session", e);
-            this.logOut();
-          },
-        }),
-        map(user => user != null)
-      );    
+  public resume() {
+    console.log("resuming...");
+    return this.authService.getMe().pipe(take(1))
+      .subscribe({
+        next: user => {
+          console.log("Session resumed", user);
+          this._resuming = false;
+          this.logIn(user);
+        },
+        error: (e) => {
+          console.log("Couldn't resume session", e);
+          this._resuming = false;
+          this.logOut();
+        },
+      });
   }
 
   public logIn(user: User): void {

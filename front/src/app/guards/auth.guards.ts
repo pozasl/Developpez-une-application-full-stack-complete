@@ -11,19 +11,20 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
+    const skipNbr = this.sessionService.resuming ? 1 : 0;
+    
     return this.sessionService.$logged().pipe(
+      skip(skipNbr),
       take(1),
       map(isLogged => {
-        console.log("auth logged ?",isLogged);
         if (!isLogged) {
-          console.log("Nope")
           this.router.navigate(['/login']);
         }
         return isLogged
       }),
       catchError((err) => {
         this.router.navigate(['/login']);
-        console.log(err);
+        console.error(err);
         return of(false);
       })
     );

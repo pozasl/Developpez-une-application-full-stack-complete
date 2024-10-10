@@ -15,16 +15,12 @@ export class UnauthGuard implements CanActivate {
     return this.sessionService.$logged().pipe(
       take(1),
       map(isLogged => {
-        console.log("unauth logged ?",isLogged);
         if (isLogged) {
-          console.log("Ok");
           this.router.navigate(['/topics']);
         }
         return !isLogged
       }),
       catchError((err) => {
-        // this.router.navigate(['/login']);
-        console.log(err);
         return of(true);
       })
     );

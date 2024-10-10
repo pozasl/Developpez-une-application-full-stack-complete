@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from './services/session.service';
 import { NavigationStart, Router } from '@angular/router';
-import { filter, first, map, Observable } from 'rxjs';
+import { filter, map, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { filter, first, map, Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   public showNav!: boolean;
   public hideSmallMedia!: boolean
-  title = 'MDD';
+  public title = 'MDD';
 
   constructor(
     private sessionService: SessionService,
@@ -20,20 +20,23 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
+    if(this.sessionService.resuming) {
+      this.sessionService.resume();
+    }
     this.router.events.pipe(
       filter(e => e instanceof NavigationStart),
-      map(e => e.url)).subscribe({next: url => {
-        // Don't show nav at homepage
-        this.showNav = url != "/";
-        // Add css class switch for media sized show condition
-        console.log(url)
-        this.hideSmallMedia = ["/login", "/register"].indexOf(url) >= 0;
-      }});
-
+      map(e => e.url)).subscribe({
+        next: url => {
+          // Don't show nav at homepage
+          this.showNav = url != "/";
+          // Add css class switch for media sized show condition
+          this.hideSmallMedia = ["/login", "/register"].indexOf(url) >= 0;
+        }
+      });
   }
 
-  public $isLogged():Observable<boolean> {
+  public $isLogged(): Observable<boolean> {
     return this.sessionService.$logged()
   }
 }
