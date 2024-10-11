@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SessionService } from './services/session.service';
 import { NavigationStart, Router } from '@angular/router';
 import { filter, map, Observable, take } from 'rxjs';
@@ -11,7 +11,6 @@ import { AppError } from './model/AppError';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   public showNav!: boolean;

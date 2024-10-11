@@ -2,7 +2,6 @@ package com.openclassrooms.mdd.subscribtions_api.service;
 
 import java.util.Date;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
