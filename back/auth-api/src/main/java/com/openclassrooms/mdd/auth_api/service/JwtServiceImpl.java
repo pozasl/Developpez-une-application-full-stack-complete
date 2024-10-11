@@ -37,6 +37,13 @@ public class JwtServiceImpl implements JwtService {
     return createToken(userDetails, scope, this.encoder);
   }
 
+  public String generateTokenFromUserdetail(UserDetailEntity userDetails) {
+    String scope = userDetails.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.joining(" "));
+    return createToken(userDetails, scope , this.encoder);
+  }
+
   /**
    * Create a JWT Token.
    *
@@ -54,7 +61,7 @@ public class JwtServiceImpl implements JwtService {
     JwtClaimsSet claims = JwtClaimsSet.builder()
         .issuer("MDD")
         .issuedAt(now)
-        .expiresAt(now.plus(1, ChronoUnit.HOURS))
+        .expiresAt(now.plus(24, ChronoUnit.HOURS))
         .subject(userDetails.getEmail())
         .claim("scope", scope)
         .claim("userId", userDetails.getId())

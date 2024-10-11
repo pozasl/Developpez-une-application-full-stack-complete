@@ -1,0 +1,48 @@
+
+.feed {
+    padding : 0 2em 0 2em;
+}
+
+.feedBtnRow {
+    padding : 0 0 1.5em 0;
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+}
+
+.feedBtnRow > span {
+    margin-left: auto;
+}
+
+.postList {
+    display:grid;
+    row-gap: 1em;
+    column-gap: 0.5em;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .postList {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.postList > .mat-mdc-card {
+    background-color: #eee;
+    border-width: 0px;
+}
+
+
+.dateAuthor{
+    height: 2em;
+    align-items: start;
+}
+
+.dateAuthor > span{
+    flex: 1 1;
+}
+
+.sideNaveMenu {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,1 +1,36 @@
-<router-outlet></router-outlet>
+<div class="app">
+  <mat-drawer-container class="sidenav-container" autosize>
+    <mat-drawer #drawer mode="over" position="end">
+      @if($isLogged() | async) {
+        <mat-nav-list class="sideNavLink">
+          <a mat-list-item routerLink="feed" (click)="drawer.toggle()" routerLinkActive #rla1="routerLinkActive" [activated]="rla1.isActive">Articles</a>
+          <a mat-list-item routerLink="topics" (click)="drawer.toggle()" routerLinkActive #rla2="routerLinkActive" [activated]="rla2.isActive">Thèmes</a>
+          <a mat-list-item routerLink="me" (click)="drawer.toggle()" routerLinkActive #rla3="routerLinkActive" [activated]="rla3.isActive">
+            <mat-icon>account_circle</mat-icon>
+          </a>
+        </mat-nav-list>
+      }
+    </mat-drawer>
+    @if(showNav) {
+      <mat-toolbar class="mdd-toolbar" [class.hideSmallMedia]="hideSmallMedia ">
+          <img class="logo" src="/assets/logo_p6.png" alt="MDD" />
+          @if($isLogged() | async) {
+            <mat-nav-list class="hideSmallMedia navLink">
+              <a mat-list-item routerLink="feed" routerLinkActive #rla1="routerLinkActive" [activated]="rla1.isActive">Articles</a>
+              <a mat-list-item routerLink="topics" routerLinkActive #rla2="routerLinkActive" [activated]="rla2.isActive">Thèmes</a>
+              <a mat-list-item routerLink="me" routerLinkActive #rla3="routerLinkActive" [activated]="rla3.isActive">
+                <mat-icon>account_circle</mat-icon>
+              </a>
+            </mat-nav-list>
+              <button mat-icon-button class="navBtnMenu hideBigMedia" (click)="drawer.toggle()">
+                  <mat-icon>menu</mat-icon>
+              </button>
+          }
+      </mat-toolbar>
+    }
+    <div class="mainContent">
+        <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+</div>
+

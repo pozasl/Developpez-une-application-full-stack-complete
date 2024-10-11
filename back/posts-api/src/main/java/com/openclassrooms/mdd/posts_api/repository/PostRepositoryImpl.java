@@ -19,10 +19,33 @@ public class PostRepositoryImpl implements ReplyPostRepository{
         this.template = template;
     }
 
+    /**
+     * Add a reply to post by id
+     * 
+     * @param postId the post'id
+     * @param reply the reply Entity to add to the post's replies list
+     * @return the update resulte as Mono
+     */
     @Override
     public Mono<UpdateResult> addReplyToPostId(String postId, ReplyEntity reply) {
         Query query = Query.query(Criteria.where("id").is(postId));
         Update update = new Update().push("replies", reply);
         return template.updateFirst(query, update, PostEntity.class);
+    }
+
+    /**
+     * Update Author's name in the topic's replies replied by author.
+     * 
+     * @param postId the post'id
+     * @param userId the reply'author userId to search
+     * @param userName the userName to update
+     * @return the update resulte as Mono
+     */
+    @Override
+    public Mono<UpdateResult> findAndUpdatePostRepliesAuthorUserNameByPostId(String postId, Long userId, String userName) {
+        Query query = Query.query(Criteria.where("id").is(postId));
+        Update update = new Update().set("replies.$[reply].author.userName", userName);
+        update.filterArray("reply.author.userId", userId);
+        return template.updateMulti(query, update, PostEntity.class);
     }
 }

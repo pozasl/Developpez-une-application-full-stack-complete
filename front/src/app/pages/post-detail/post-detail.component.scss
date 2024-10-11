@@ -1,0 +1,114 @@
+.backBtn {
+    display: inline-block;
+}
+
+h1 {
+    display: inline-block;
+    margin-top: 0;
+}
+
+h3 {
+    margin-top: 1em;
+}
+
+.postDetailContainer {
+    margin: 0 2em 2em 48px;
+}
+
+.postDetailContainer>span {
+    margin: 0 1em 2em 0;
+}
+
+p.postContent {
+    margin-bottom: 1.5em;
+}
+
+.reply {
+    display: flex;
+    // grid-template-columns: auto 1fr;
+    margin: 0 3em 0 2em;
+    column-gap: 1em;
+}
+
+.reply> span {
+    flex: 0 5em;
+}
+
+.reply>p {
+    flex: 1;
+    background-color: #eee;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.replyForm {
+    display: flex;
+    align-items: center;
+    margin: 1em 5em 0 4em;
+}
+
+.replyForm>mat-form-field {
+    width:100%
+}
+
+.sendBtn {
+    position: absolute;
+    right:-3em;
+    transform: rotate(-45deg) scale(1.4);
+    // width: 24px;
+    margin-top: 12px;
+    margin-left: 24px;
+}
+
+.postInfo {
+    margin: 0.5em 0 1em 0;
+}
+
+.postInfo > span{
+    display: inline-block;
+    margin-right: 1em;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .repliesList {
+        margin-bottom: 7em;
+    }
+
+    .postDetailContainer {
+        margin: 0 1em 2em 1em;
+    }
+    .reply {
+        display: flex;
+        flex-direction: column-reverse;
+        margin: 0;
+    }
+    
+    .reply> span {
+        text-align: right;
+    }
+    
+    .reply>p {
+        background-color: inherit;
+        padding: 0.5em;
+        border-radius: 0;
+    }
+
+    .replyForm {
+        position: fixed;
+        bottom: -1.5em;
+        left:0;
+        margin: 0;
+        width: 100vw;
+        background-color: white;
+    }
+
+    .sendBtn {
+        position: relative;
+        right:auto;
+        margin: 12px 0 0 24px ;
+    }
+
+
+  }

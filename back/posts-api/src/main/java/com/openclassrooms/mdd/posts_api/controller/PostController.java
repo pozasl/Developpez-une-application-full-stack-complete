@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mdd.api.PostsApiDelegate;
 import com.openclassrooms.mdd.api.model.NewPost;
+import com.openclassrooms.mdd.api.model.NewReply;
 import com.openclassrooms.mdd.api.model.Post;
+import com.openclassrooms.mdd.api.model.ResponseMessage;
 import com.openclassrooms.mdd.posts_api.mapper.PostMapper;
 import com.openclassrooms.mdd.posts_api.mapper.PostMapperImpl;
+import com.openclassrooms.mdd.posts_api.mapper.ReplyMapper;
 import com.openclassrooms.mdd.posts_api.services.PostService;
 import com.openclassrooms.mdd.posts_api.services.ReactiveProducerService;
 
@@ -26,12 +29,19 @@ public class PostController implements PostsApiDelegate{
 
     private PostService postService;
     private PostMapper postMapper;
+    private ReplyMapper replyMapper;
     private ReactiveProducerService producerService;
 
-    PostController(PostService postService, PostMapperImpl postMapper, ReactiveProducerService producerService) {
+    PostController(
+            PostService postService,
+            PostMapperImpl postMapper,
+            ReplyMapper replyMapper,
+            ReactiveProducerService producerService
+    ) {
         this.postService = postService;
         this.postMapper = postMapper;
         this.producerService = producerService;
+        this.replyMapper = replyMapper;
     }
 
     @GetMapping("/api/posts/{id}")
@@ -51,6 +61,16 @@ public class PostController implements PostsApiDelegate{
         }
         else return Mono.error(new AccessDeniedException("Can't post with another user's id"));
         
+    }
+
+    @PostMapping("/api/posts/{id}/replies")
+    @SecurityRequirement(name = "Authorization")
+    Mono<ResponseMessage> createPost(
+            @PathVariable String id,
+            @Valid @RequestBody NewReply reply, @AuthenticationPrincipal Jwt jwt
+    ) {
+        return postService.addReplyToPostId(id, replyMapper.toEntity(reply))
+            .map(post -> new ResponseMessage().message("Reply added")); 
     }
     
 }

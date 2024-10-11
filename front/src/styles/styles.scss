@@ -1,4 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+img.bigLogo {
+  max-width: 80vmin;
+  margin-bottom: 4em;
+}
+
+.login .form-flex-container {
+  max-width: 20em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  row-gap: 2em;
+  column-gap: 2em;
+}
+
+.formflex-container > * {
+  flex: 1 1 0;
+  max-width: 80vw;
+}
+
+.w100p {
+  width: 100%;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .hideSmallMedia {
+    display: none !important; 
+  }
+}
+
+img.loginLogo {
+  max-width: 80vw;
+  max-height: 30vh;
+}
+
+@media screen and (min-width: 768px) {
+  img.loginLogo {
+      display: none;
+  }
+  .hideBigMedia {
+    display: none !important; 
+  }
+}
+
+.mdc-text-field {
+  border-color: purple;
+}
+
+.toTheRight {
+  margin-left: auto;
+}
+
+/*
+ * Need to be global to be effective
+ */
+mat-form-field.messageBox {
+  div.mat-mdc-form-field-infix{
+      display: flex !important;
+  }
+}

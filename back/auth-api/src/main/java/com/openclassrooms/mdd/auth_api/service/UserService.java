@@ -11,5 +11,9 @@ public interface UserService extends ReactiveUserDetailsService{
 
         Mono<UserDetailEntity> createUser(NewUser newUser);
 
-        Mono<Boolean> existsByEmail(String email); 
+        Mono<Boolean> existsByEmail(String email);
+
+        Mono<UserDetailEntity> updateUser(UserDetailEntity user, Boolean encodePass);
+
+        Mono<UserDetailEntity> findByEmail(String email);
 }

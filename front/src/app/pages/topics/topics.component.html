@@ -1,14 +1,19 @@
 @if($topics | async; as topics) {
-    <div>
-        <p>Topic list</p>
+    <div class="topicList">
     @for(topic of topics; track topic.ref) {
-        <div>
-            <h2 class="topicName">{{topic.name}}</h2>
-            <p class="topicDescription">
+        <mat-card color="tertiary" appearance="outlined" class="custom-mat-card">
+            <mat-card-header>
+                <mat-card-title class="topicName">
+                    {{topic.name}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 {{topic.description}}
-            </p>
-            <button (click)="subscribeToTopic(topic.ref)">S'abonner</button>
-        </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-flat-button color="primary" (click)="subscribeToTopic(topic.ref!)">S'abonner</button>
+            </mat-card-actions>
+        </mat-card>
     }
     </div>
 }

@@ -1,0 +1,24 @@
+.topicList {
+    display:grid;
+    row-gap: 1em;
+    column-gap: 0.5em;
+    padding: 1em 2em;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .topicList {
+        padding: 0 1em;
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.topicList > * {
+    flex: 1 1 0;
+    background-color: #eee;
+    border-width: 0px;
+}
+
+.topicList .mat-mdc-card-actions {
+    justify-content: center;
+}

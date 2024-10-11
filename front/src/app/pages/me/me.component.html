@@ -1,0 +1,46 @@
+<div class="login">
+    <div class="form-flex-container">
+        <h1>Profil utilisateur</h1>
+        <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline" class="w100p">
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w100p">
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w100p">
+                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
+            @if (onError) {
+            <p class="error">Une erreur est survenue</p>
+            }
+            <a class="logout" (click)="logout()">Se déconnecter</a>
+        </form>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div class="mySubs">
+    <h1>Abonnements</h1>
+    <div class="topicList">
+        @for(topic of $topics | async; track topic.ref) {
+        <mat-card color="tertiary" appearance="outlined" class="custom-mat-card">
+            <mat-card-header>
+                <mat-card-title class="topicName">
+                    {{topic.name}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                {{topic.description}}
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-flat-button color="primary" (click)="unsubscribeTopic(topic.ref!)">Se désabonner</button>
+            </mat-card-actions>
+        </mat-card>
+        }
+    </div>
+</div>

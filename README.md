@@ -1,25 +1,80 @@
-# P6-Full-Stack-reseau-dev
+# Mmd
+## Tech stack
 
-## Front
+Frontend
+* Node 22
+* Angular 18
+* Material-angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+Backend
+* Java 17
+* Spring-boot 3.3.4
+* Spring-Cloud Gateway
+* Webflux
+* PostgreSQL 17.0
+* MongoDB 8.0
+* Kafka 3.8
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Building
 
-### Development server
+### Generate OpenAPI Spring API source code
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+From **back** folder
 
-### Build
+```bash
+./mvnw generate-sources
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Build and install microservices'common configuration library
 
-### Where to start
+From **back/common**
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+```bash
+./mvnw clean install
+```
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+### Build all packages
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+You should have MongoDB & PostgreSQL configured and running to run the integration tests.
 
-Good luck!
+From **back** folder:
+
+```bash
+./mvnw clean package
+```
+
+### Build all docker images
+
+From the project root folder run the uild_back_images.sh script:
+
+```bash
+sh build_back_images.sh
+```
+
+### Generate OpenAPI Angular client source code
+
+From the **front** directory:
+
+```bash
+npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript-angular -o src/app/core/modules/openapi --additional-properties fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model
+```
+
+## Running
+
+### Run the complete stack localy
+
+Open a terminal in the **resources/compose/mdd** folder and run:
+
+```bash
+docker-compose up -d
+```
+
+Then go in the **front** folder and run:
+
+```bash
+npm run start
+```
+
+## Deploying
+
+TODO

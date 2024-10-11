@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS feeds;
 CREATE TABLE IF NOT EXISTS feeds(
     user_id BIGINT NOT NULL,
     post_ref VARCHAR(24) NOT NULL,
+    created_at TIMESTAMP DEFAULT now(),
     CONSTRAINT PK_FEED PRIMARY KEY (user_id, post_ref)
 );
 

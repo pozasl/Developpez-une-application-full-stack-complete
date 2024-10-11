@@ -22,7 +22,7 @@ import reactor.test.StepVerifier;
 public class SubscribtionRepositoryTest {
 
     @Autowired
-    private SubscribtionRepository subscriptionRepository;
+    private SubscribtionRepository subscribtionRepository;
 
     @Autowired
     private ReactiveMongoTemplate template;
@@ -38,7 +38,7 @@ public class SubscribtionRepositoryTest {
         SubscribtionEntity sub1 = new SubscribtionEntity(null,1L, "java", date);
         SubscribtionEntity sub2 = new SubscribtionEntity(null,1L, "angular", date);
         SubscribtionEntity sub3 = new SubscribtionEntity(null,2L, "angular", date);
-        subs = subscriptionRepository.saveAll(List.of(sub1, sub2, sub3)).collectList().block();
+        subs = subscribtionRepository.saveAll(List.of(sub1, sub2, sub3)).collectList().block();
     }
 
     @AfterEach
@@ -48,7 +48,7 @@ public class SubscribtionRepositoryTest {
 
     @Test
     void findByTopicRef_shouldReturnSubs() {
-        subscriptionRepository.findByTopicRef("angular").as(StepVerifier::create)
+        subscribtionRepository.findByTopicRef("angular").as(StepVerifier::create)
             .consumeNextWith(sub -> assertThat(sub).isEqualTo(subs.get(1)))
             .consumeNextWith(sub -> assertThat(sub).isEqualTo(subs.get(2)))
             .verifyComplete();
@@ -56,7 +56,7 @@ public class SubscribtionRepositoryTest {
 
     @Test
     void findByUserId_shouldReturnSubs() {
-        subscriptionRepository.findByUserId(1L).as(StepVerifier::create)
+        subscribtionRepository.findByUserId(1L).as(StepVerifier::create)
             .consumeNextWith(sub -> assertThat(sub).isEqualTo(subs.get(0)))
             .consumeNextWith(sub -> assertThat(sub).isEqualTo(subs.get(1)))
             .verifyComplete();
@@ -65,7 +65,7 @@ public class SubscribtionRepositoryTest {
 
     @Test
     void findByUserIdAndTopicRef_shouldReturnSub() {
-        subscriptionRepository.findByUserIdAndTopicRef(1L,"angular").as(StepVerifier::create)
+        subscribtionRepository.findByUserIdAndTopicRef(1L,"angular").as(StepVerifier::create)
             .consumeNextWith(sub -> assertThat(sub).isEqualTo(subs.get(1)))
             .verifyComplete();
     }

@@ -44,9 +44,9 @@ public class ReactiveConsumerService implements CommandLineRunner {
             .map(ConsumerRecord::value)
             .doOnNext(post -> {
                     log.info("successfully consumed {}={}", Post.class.getSimpleName(), post);
-                    subRepository.findByTopicRef(post.getTopic())
+                    subRepository.findByTopicRef(post.getTopic().getRef())
                     .map(sub -> {
-                        FeedPostModel feedPost = new FeedPostModel(sub.userId(), post.getId());
+                        FeedPostModel feedPost = new FeedPostModel(sub.userId(), post.getId(), post.getCreatedAt());
                         log.info("Sending post to feed  {}", feedPost.toString());
                         reactiveProducerService.send(feedPost);
                         return sub;

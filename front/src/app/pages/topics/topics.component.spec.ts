@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TopicsComponent } from './topics.component';
-import { TopicsService } from 'src/app/services/topics.service';
 import { Observable } from 'rxjs';
+import { TopicsService } from 'src/app/core/modules/openapi';
 
 describe('TopicsComponent', () => {
   let component: TopicsComponent;

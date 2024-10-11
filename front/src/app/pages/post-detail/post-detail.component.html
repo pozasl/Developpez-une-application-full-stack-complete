@@ -1,0 +1,40 @@
+<button mat-icon-button routerLink="/feed" class="backBtn">
+    <mat-icon>arrow_back</mat-icon>
+</button>
+
+    @if(post) {
+        <h1>{{post.title}}</h1>
+    <div class="postDetailContainer">
+        <div class="postInfo">
+            <span>{{post.created_at | date}}</span>
+            <span>{{post.author?.userName}}</span>
+            <span>{{post.topic?.name}}</span>
+        </div>
+        <p class="postContent">
+            {{post.content}}
+        </p>
+    
+    <mat-divider></mat-divider>
+        <div class="repliesList">
+            <h3>Commentaires :</h3>
+            @for(reply of post.replies; track reply) {
+            <div class="reply">
+                <span>{{reply.author?.userName}}</span> 
+                <p>{{reply.content}}</p>
+            </div>
+            }
+        </div>
+        
+    </div>
+    <form class="replyForm" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+            
+        <mat-form-field appearance="outline" class="messageBox">
+            <mat-label>Ecrivez ici votre commentaire</mat-label>
+            <textarea matInput rows="3" formControlName="message"></textarea>
+            <button mat-icon-button color="primary" type="submit" [disabled]="form.invalid" class="sendBtn">
+                <mat-icon>send</mat-icon>
+            </button>
+        </mat-form-field>
+        
+    </form>
+    }

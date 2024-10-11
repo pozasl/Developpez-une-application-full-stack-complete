@@ -17,8 +17,22 @@ public class FeedServiceImpl implements FeedService{
     }
 
     @Override
-    public Flux<FeedPostEntity> findPostByUserId(Long userId) {
-        return feedRepository.findByUserId(userId);
+    public Flux<FeedPostEntity> findPostByUserId(Long userId, String sort) {
+        Flux<FeedPostEntity> feedPostsFlux;
+        switch (sort) {
+            case "desc":
+                feedPostsFlux = feedRepository.findByUserIdOrderByCreatedAtDesc(userId);
+                break;
+
+            case "asc":
+                feedPostsFlux = feedRepository.findByUserIdOrderByCreatedAtAsc(userId);
+                break;
+        
+            default:
+                feedPostsFlux = feedRepository.findByUserId(userId);
+            break;
+        }
+        return feedPostsFlux;
     }
     
 }

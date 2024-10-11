@@ -1,0 +1,34 @@
+<div class="feed">
+    <div class="feedBtnRow">
+        <button mat-raised-button color="primary" [routerLink]="'/post'">Créer un article</button>
+        <span>Trier par</span>
+        <button mat-icon-button (click)="switchSort()">
+            @if(sort == "desc") {
+                <mat-icon>arrow_upward</mat-icon>
+            }
+            @else {
+                <mat-icon>arrow_downward</mat-icon>
+            }
+        </button>
+    </div>
+    @if($feed | async; as feed) {
+    <div class="postList">
+        @for(post of feed; track post.id) {
+        <mat-card color="tertiary" appearance="outlined" class="custom-mat-card" [routerLink]="'/post/' + post.id">
+            <mat-card-header>
+                <mat-card-title class="topicName">
+                    {{post.title}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-header class="dateAuthor">
+                <span>{{post.created_at | date}}</span>
+                <span>{{post.author?.userName}}</span>
+            </mat-card-header>
+            <mat-card-content fxLayout="column">
+                {{post.content}}
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+    }
+</div>

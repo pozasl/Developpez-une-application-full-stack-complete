@@ -7,6 +7,8 @@ import reactor.core.publisher.Mono;
 
 public interface ReplyPostRepository {
 
-    Mono<UpdateResult> addReplyToPostId(String postId, ReplyEntity reply1);
+    Mono<UpdateResult> addReplyToPostId(String postId, ReplyEntity reply);
+
+    Mono<UpdateResult> findAndUpdatePostRepliesAuthorUserNameByPostId(String postId, Long userId, String userName);
     
 }

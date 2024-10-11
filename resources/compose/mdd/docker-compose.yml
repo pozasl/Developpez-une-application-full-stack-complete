@@ -6,7 +6,7 @@ services:
     container_name: mdd-api-gateway
     env_file: "default.env"
     volumes:
-      - ./props/api-gateway-application.yml:/application.yml
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/api-gateway-application.yml:/application.yml
     ports:
       - 8080:8080
     networks:
@@ -18,7 +18,7 @@ services:
     container_name: mdd-auth-api
     env_file: "default.env"
     volumes:
-      - ./props/auth-api-application.properties:/application.properties
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/auth-api-application.properties:/application.properties
     ports:
       - 8080
     networks:
@@ -32,7 +32,7 @@ services:
     container_name:  mdd-users-api
     env_file: "default.env"
     volumes:
-      - ./props/users-api-application.properties:/application.properties
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/users-api-application.properties:/application.properties
     ports:
       - 8080
     networks:
@@ -41,26 +41,12 @@ services:
       mdd-postgres:
         condition: service_started
 
-  mdd-topics-api:
-    image: mdd-topics-api:0.0.1-SNAPSHOT
-    container_name: mdd-topics-api
-    env_file: "default.env"
-    volumes:
-      - ./props/topics-api-application.properties:/application.properties
-    ports:
-      - 8080
-    networks:
-      - backend
-    depends_on:
-      mdd-mongodb:
-        condition: service_started
-
   mdd-posts-api:
     image: mdd-posts-api:0.0.1-SNAPSHOT
     container_name: mdd-posts-api
     env_file: "default.env"
     volumes:
-      - ./props/posts-api-application.properties:/application.properties
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/posts-api-application.properties:/application.properties
     ports:
       - 8080
     networks:
@@ -74,7 +60,7 @@ services:
     container_name: mdd-subs-api
     env_file: "default.env"
     volumes:
-      - ./props/subs-api-application.properties:/application.properties
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/subs-api-application.properties:/application.properties
     ports:
       - 8080
     networks:
@@ -88,7 +74,7 @@ services:
     container_name: mdd-feeds-api
     env_file: "default.env"
     volumes:
-      - ./props/subsfeeds-api-application.properties:/application.properties
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/feeds-api-application.properties:/application.properties
     ports:
       - 8080
     networks:
@@ -103,7 +89,7 @@ services:
     env_file: "default.env"
     volumes:
       - data-mongodb:/data/db
-      - ./init-db/mongo-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/init-db/mongo-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 27017:27017
     networks:
@@ -115,7 +101,7 @@ services:
     env_file: "default.env"
     volumes:
       - data-postgres:/var/lib/postgresql/data
-      - ./init-db/postgres-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/init-db/postgres-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 5432
     networks:
