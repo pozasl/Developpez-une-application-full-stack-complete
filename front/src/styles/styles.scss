@@ -75,3 +75,12 @@ img.loginLogo {
 .toTheRight {
   margin-left: auto;
 }
+
+/*
+ * Need to be global to be effective
+ */
+mat-form-field.messageBox {
+  div.mat-mdc-form-field-infix{
+      display: flex !important;
+  }
+}

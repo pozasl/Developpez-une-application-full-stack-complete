@@ -15,13 +15,15 @@
         </p>
     
     <mat-divider></mat-divider>
-        <h3>Commentaires :</h3>
-        @for(reply of post.replies; track reply) {
-        <div class="reply">
-            <span>{{reply.author?.userName}}</span> 
-            <p>{{reply.content}}</p>
+        <div class="repliesList">
+            <h3>Commentaires :</h3>
+            @for(reply of post.replies; track reply) {
+            <div class="reply">
+                <span>{{reply.author?.userName}}</span> 
+                <p>{{reply.content}}</p>
+            </div>
+            }
         </div>
-        }
         
     </div>
     <form class="replyForm" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
