@@ -4,6 +4,7 @@
 
 h1 {
     display: inline-block;
+    margin-top: 0;
 }
 
 h3 {
@@ -60,15 +61,14 @@ p.postContent {
 }
 
 .postInfo {
-    display: flex;
-    justify-items: left;
-    margin: 1em 0;
-    column-gap: 1em;
+    margin: 0.5em 0 1em 0;
 }
 
 .postInfo > span{
-    flex: 1 1 1;
+    display: inline-block;
+    margin-right: 1em;
 }
+
 
 @media screen and (max-width: 768px) {
 
