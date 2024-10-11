@@ -6,11 +6,22 @@ img.logo {
     margin-top: 5em;
 }
 
+@media screen and (max-width: 768px) {
+    .hideSmallMedia {
+        display: none !important;
+    }
+
+    .withNav {
+        margin-top: 0em !important;
+    }
+        
+}
+
 .mdd-toolbar {
     background-color: white;
     border-bottom: solid 1px darkgrey;
     position: fixed;
-    z-index:200;
+    z-index: 200;
     height: 2.5em;
 }
 
@@ -21,32 +32,32 @@ mat-nav-list.navLink {
     margin-left: auto;
 }
 
-mat-nav-list.navLink > *{
+mat-nav-list.navLink>* {
     margin: 0;
     padding: 0 0.5em;
-    width:auto;
+    width: auto;
     flex: 1 1 1
 }
 
-mat-nav-list.navLink mat-icon{
+mat-nav-list.navLink mat-icon {
     margin-top: 0.5em;
     //padding-top: 0.5em;
     //width:auto;
     flex: 1 1 1
 }
 
-.navLink  a {
+.navLink a {
     font-size: medium;
     cursor: pointer;
 }
 
 .navBtnMenu {
-    margin-left:auto;
+    margin-left: auto;
 }
 
 .sidenav-container {
-    width:100vw;
-    height:100vh;
+    width: 100vw;
+    height: 100vh;
 }
 
 mat-nav-list.sideNavLink {
@@ -54,16 +65,16 @@ mat-nav-list.sideNavLink {
     padding: 0;
     display: flex;
     flex-direction: column;
-    height:100vh;
+    height: 100vh;
     justify-content: space-between;
     row-gap: 0 auto;
 }
 
-mat-nav-list.sideNavLink > a {
+mat-nav-list.sideNavLink>a {
     align-self: flex-start;
 }
 
-mat-nav-list.sideNavLink > a:last-child{
+mat-nav-list.sideNavLink>a:last-child {
     margin-top: auto;
     align-self: flex-end;
     padding: 0 1em;
