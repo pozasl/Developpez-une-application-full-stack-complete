@@ -12,6 +12,7 @@ import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { emptyOrMinSizeValidators } from 'src/app/shared/validators/emptyOrMinSizeValidators';
 import { MatButtonModule } from '@angular/material/button';
+import { NotificationService } from 'src/app/services/notification.service';
 
 /**
  * User's informations page with subscribed topics
@@ -41,7 +42,8 @@ export class MeComponent implements OnInit {
     private authService: AuthService,
     private sessionService: SessionService,
     private subsService: SubscribtionsService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class MeComponent implements OnInit {
               console.log("No new token");
             }
           },
-          error: console.log
+          error: err => this.notificationService.notifyError("Erreur", err.message)
         }),
         mergeMap(jwt => this.authService.getMe()),
         take(1),
@@ -79,7 +81,7 @@ export class MeComponent implements OnInit {
           this.sessionService.logIn(user);
           this.loadUserData();
         },
-        error: console.log
+        error: err => this.notificationService.notifyError("Erreur", err.message)
       });
     }
   }

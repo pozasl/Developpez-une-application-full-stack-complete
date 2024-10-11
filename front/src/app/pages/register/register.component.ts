@@ -9,6 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
 import { take } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificationService
   ) { }
 
   public submit() {
@@ -41,7 +43,7 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.log(err);
+        this.notificationService.notifyError("Erreur", err.message);
         this.onError = true;
       }
     });

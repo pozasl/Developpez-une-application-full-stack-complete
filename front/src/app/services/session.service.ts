@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '../core/modules/openapi';
 import { BehaviorSubject, distinct, map, mergeMap, Observable, skip, take, tap } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class SessionService {
   private loggedSubject = new BehaviorSubject<boolean>(this.logged);
 
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private notificationService: NotificationService) {
     this._token = localStorage.getItem('token');
     this._resuming = this._token != null;
   };
