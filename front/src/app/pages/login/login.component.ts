@@ -8,7 +8,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
-import { first, mergeMap, take} from 'rxjs';
+import { mergeMap, take} from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from 'src/app/services/notification.service';
 

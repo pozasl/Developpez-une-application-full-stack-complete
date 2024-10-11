@@ -43,7 +43,7 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        this.notificationService.notifyError("Erreur", err.message);
+        this.notificationService.notifyError("Erreur d'enregistrement", err.message);
         this.onError = true;
       }
     });
