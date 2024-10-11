@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
 import { Author, NewReply, Post, PostsService, Reply } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
@@ -37,7 +37,8 @@ export class PostDetailComponent implements OnInit{
     private postsService: PostsService,
     private sessionService: SessionService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -79,11 +80,15 @@ export class PostDetailComponent implements OnInit{
   private loadPost() {
     this.postsService.getPostById(this.postId).pipe(take(1)).subscribe({
       next: post=> {
-        console.log("Post loaded", post);
         this.post = post
       },
       error: e => {
         console.log(e);
+        if ( !(e.error instanceof ErrorEvent)) {
+          if (e.status === 404) {
+            this.router.navigate(["/404"]);
+          }
+        }
         this.onError = true;
       }
     })
