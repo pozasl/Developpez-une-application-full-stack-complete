@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiModule, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
-import { mergeMap, Observable, take, tap } from 'rxjs';
+import { mergeMap, take, tap } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -29,7 +29,7 @@ export class MeComponent implements OnInit {
   public hide: Boolean = true;
   private userId!: number;
   public user!: User;
-  public $topics!: Observable<Topic[]>;
+  public topics!: Topic[];
 
   public form = this.fb.group({
     name: ['', [Validators.required, Validators.required]],
@@ -92,8 +92,12 @@ export class MeComponent implements OnInit {
    */
   public unsubscribeTopic(ref: string) {
     console.log("unsub", ref)
-    this.subsService.unsubscribe(this.userId, ref).subscribe(response => {
-      this.getTopics();
+    this.subsService.unsubscribe(this.userId, ref).subscribe({
+      next: response => {
+        console.log(response);
+        this.getTopics();
+      },
+      error: err => this.notificationService.notifyError("Erreur", err.message)
     });
   }
 
@@ -124,7 +128,10 @@ export class MeComponent implements OnInit {
    * Get user's subscribed topics
    */
   private getTopics() {
-    this.$topics = this.subsService.getUserSubscribtions(this.userId);
+    this.subsService.getUserSubscribtions(this.userId).pipe(take(1)).subscribe({
+      next: topics => this.topics = topics,
+      error: err => this.notificationService.notifyError("Erreur de chargement", err.message)
+    });
   }
 
 }
