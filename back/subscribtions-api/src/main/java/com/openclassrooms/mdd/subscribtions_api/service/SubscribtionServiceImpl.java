@@ -2,9 +2,9 @@ package com.openclassrooms.mdd.subscribtions_api.service;
 
 import java.util.Date;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 import com.openclassrooms.mdd.subscribtions_api.model.SubscribtionEntity;
 import com.openclassrooms.mdd.subscribtions_api.repository.SubscribtionRepository;
 
@@ -30,7 +30,7 @@ public class SubscribtionServiceImpl implements SubscribtionService {
     @Override
     public Mono<Void> unsubscribeUserToTopic(Long userId, String topicRef) {
         return subRepository.findByUserIdAndTopicRef(userId, topicRef)
-        .switchIfEmpty(Mono.error(new NotFoundException()))
+        .switchIfEmpty(Mono.error(new ResourceNotFoundException("No suscribed user found")))
         .flatMap(sub -> subRepository.delete(sub));
     }
 

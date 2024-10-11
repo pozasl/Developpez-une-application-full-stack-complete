@@ -22,7 +22,7 @@ import com.openclassrooms.mdd.common.configuration.SecurityConfiguration;
 @Configuration
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 @EnableConfigurationProperties(RsaKeyProperties.class)
-@ComponentScan("com.openclassrooms.mdd.common.configuration")
+@ComponentScan({"com.openclassrooms.mdd.common.configuration", "com.openclassrooms.mdd.common.exception"})
 public class ExtraSecurityConfiguration extends SecurityConfiguration {
 
     @Autowired

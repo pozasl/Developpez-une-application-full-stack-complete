@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mdd.api.TopicsApiDelegate;
 import com.openclassrooms.mdd.api.model.Topic;
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 import com.openclassrooms.mdd.posts_api.mapper.TopicMapper;
 import com.openclassrooms.mdd.posts_api.services.TopicService;
 
@@ -36,7 +37,7 @@ public class TopicController implements TopicsApiDelegate {
     @GetMapping("/api/topics/{ref}")
     @SecurityRequirement(name = "Authorization")
     Mono<Topic> getTopicByRef(@PathVariable String ref) {
-        return topicMapper.toModel(topicService.findByRef(ref)).switchIfEmpty(Mono.error(new NotFoundException()));
+        return topicMapper.toModel(topicService.findByRef(ref)).switchIfEmpty(Mono.error(new ResourceNotFoundException()));
     }
 
 }

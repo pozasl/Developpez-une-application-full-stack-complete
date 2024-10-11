@@ -8,8 +8,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
-import { first, mergeMap, take} from 'rxjs';
+import { mergeMap, take} from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ export class LoginComponent {
     private authService: AuthService,
     private sessionService: SessionService,
     private usersService: UsersService,
+    private notificationservice: NotificationService,
   ) {}
 
   public submit() {
@@ -41,7 +43,6 @@ export class LoginComponent {
       take(1),
       mergeMap(jwtInfo => {
         if (jwtInfo && jwtInfo.token && jwtInfo.userId) {
-          console.log("got token", jwtInfo.token);
           this.sessionService.token = jwtInfo.token;
           return this.usersService.getUserById(jwtInfo.userId);
         }
@@ -54,11 +55,13 @@ export class LoginComponent {
           this.sessionService.logIn(user);
           this.router.navigate(['/topics']);
         }
-        else console.error("Empty user recieved");
+        else {
+          this.notificationservice.notifyError("Login failed", "Empty user recieved");
+        }
       },
-      error: (err) => {
-        console.log(err);
+      error: (err: Error) => {
         this.onError = true;
+        this.notificationservice.notifyError("Login failed", err.message);
       }
     })
   }

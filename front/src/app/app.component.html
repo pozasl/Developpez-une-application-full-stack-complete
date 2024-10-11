@@ -28,7 +28,7 @@
           }
       </mat-toolbar>
     }
-    <div class="mainContent">
+    <div class="mainContent" [class.withNav]="showNav && hideSmallMedia">
         <router-outlet></router-outlet>
     </div>
   </mat-drawer-container>

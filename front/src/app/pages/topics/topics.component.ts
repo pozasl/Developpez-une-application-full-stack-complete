@@ -6,6 +6,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-topics',
@@ -22,7 +23,8 @@ export class TopicsComponent implements OnInit {
   constructor(
     private topicService: TopicsService,
     private subsService: SubscribtionsService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class TopicsComponent implements OnInit {
             if (this.userId)
               this.loadUnsubscribedTopics(this.userId)
           },
-          error: console.error
+          error: err => this.notificationService.notifyError("Erreur d'inscription", err.message)
         });
     }
   }
@@ -62,7 +64,7 @@ export class TopicsComponent implements OnInit {
         console.info("Topic data loaded");
       },
       error: (e: Error) => {
-        console.error(e.message)
+        this.notificationService.notifyError("Erreur de chargement", e.message);
       },
     });
 

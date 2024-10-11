@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 import com.openclassrooms.mdd.posts_api.model.PostEntity;
 import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
@@ -28,7 +29,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Mono<PostEntity> getPostById(String id) {
-        return postRepository.findById(id).switchIfEmpty(Mono.error(new NotFoundException()));
+        return postRepository.findById(id).switchIfEmpty(Mono.error(new ResourceNotFoundException("No post with id " + id)));
     }
 
     /**
@@ -64,7 +65,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public Mono<PostEntity> addReplyToPostId(String id, ReplyEntity reply) {
         return postRepository.findById(id)
-            .switchIfEmpty(Mono.error(new NotFoundException()))
+            .switchIfEmpty(Mono.error(new ResourceNotFoundException("Nos post found with id " + id)))
             .flatMap(p -> {
                 return postRepository.addReplyToPostId(id, reply).then(postRepository.findById(id));
             })

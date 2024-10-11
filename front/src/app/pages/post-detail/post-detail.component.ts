@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
 import { Author, NewReply, Post, PostsService, Reply } from 'src/app/core/modules/openapi';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SessionService } from 'src/app/services/session.service';
 
 /**
@@ -36,6 +37,7 @@ export class PostDetailComponent implements OnInit{
   constructor(
     private postsService: PostsService,
     private sessionService: SessionService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router
@@ -67,7 +69,7 @@ export class PostDetailComponent implements OnInit{
           this.loadPost();
         },
         error: e => {
-          console.log(e);
+          this.notificationService.notifyError("Erreur d'envoie", e.message);
           this.onError = true;
         }
       })
@@ -83,12 +85,7 @@ export class PostDetailComponent implements OnInit{
         this.post = post
       },
       error: e => {
-        console.log(e);
-        if ( !(e.error instanceof ErrorEvent)) {
-          if (e.status === 404) {
-            this.router.navigate(["/404"]);
-          }
-        }
+        this.notificationService.notifyError("Erreur de chargement", e.message);
         this.onError = true;
       }
     })

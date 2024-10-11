@@ -27,7 +27,7 @@
 <div class="mySubs">
     <h1>Abonnements</h1>
     <div class="topicList">
-        @for(topic of $topics | async; track topic.ref) {
+        @for(topic of topics; track topic.ref) {
         <mat-card color="tertiary" appearance="outlined" class="custom-mat-card">
             <mat-card-header>
                 <mat-card-title class="topicName">

@@ -11,6 +11,7 @@ import { Author, NewPost, PostsService, ResponseMessage, Topic, TopicsService } 
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-post',
@@ -38,7 +39,8 @@ export class PostComponent implements OnInit{
     private sessionService: SessionService,
     private topicsService: TopicsService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +63,10 @@ export class PostComponent implements OnInit{
       };
       this.postsService.createPost(post).pipe(take(1)).subscribe({
         next: (response: ResponseMessage) => {
-          console.log(response);
           this.router.navigate(['/feed']);
         },
         error: (err) => {
-          console.log(err);
+          this.notificationService.notifyError("Erreur", err.message);
           this.onError = true;
         }
       });
@@ -83,7 +84,7 @@ export class PostComponent implements OnInit{
         topics.forEach(topic => this.topicsMap.set(topic.ref!, topic));
       },
       error: e => {
-        console.log(e);
+        this.notificationService.notifyError("Erreur", e.message);
         this.onError = true;
       }
     })

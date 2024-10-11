@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -22,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatSidenavModule,
     MatToolbarModule, 
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   providers: [
     provideHttpClient(withInterceptors([jwtInterceptor])),

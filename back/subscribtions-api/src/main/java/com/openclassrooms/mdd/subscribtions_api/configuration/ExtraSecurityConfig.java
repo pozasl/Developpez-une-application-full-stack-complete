@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.openclassrooms.mdd.common.configuration.RsaKeyProperties;
 
 @Configuration
-@ComponentScan("com.openclassrooms.mdd.common.configuration")
+@ComponentScan({"com.openclassrooms.mdd.common.configuration", "com.openclassrooms.mdd.common.exception"})
 @EnableConfigurationProperties(RsaKeyProperties.class)
 public class ExtraSecurityConfig {
 

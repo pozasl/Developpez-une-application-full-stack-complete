@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 import com.openclassrooms.mdd.auth_api.repository.UserRepository;
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
+import com.openclassrooms.mdd.common.exception.UserAlreadyExistsException;
 
 import reactor.core.publisher.Mono;
 
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService{
         String encodedPass = passwordEncoder.encode(newUser.getPassword());
         UserDetailEntity user = new UserDetailEntity(newUser.getName(), newUser.getEmail(), encodedPass);
         return existsByEmail(newUser.getEmail())
-            .flatMap(exists -> exists ? Mono.error(new BadCredentialsException("email already used")) : userRepository.save(user));
+            .flatMap(exists -> exists ? Mono.error(new UserAlreadyExistsException("email already used")) : userRepository.save(user));
     }
 
     @Override
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService{
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         }
         return this.userRepository.existsById(newUser.getId())
-            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new NotFoundException()));
+            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new ResourceNotFoundException()));
     }
     
 }
