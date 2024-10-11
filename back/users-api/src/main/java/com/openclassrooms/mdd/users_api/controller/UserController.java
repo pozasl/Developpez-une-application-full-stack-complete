@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mdd.api.UsersApiDelegate;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.api.model.User;
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 import com.openclassrooms.mdd.users_api.mapper.UserMapper;
 import com.openclassrooms.mdd.users_api.mapper.UserMapperImpl;
 import com.openclassrooms.mdd.users_api.service.UserService;
@@ -37,7 +38,7 @@ public class UserController implements UsersApiDelegate {
     public Mono<User> getUserById(@PathVariable Long id) {
         return userMapper.toModel(
             userService.findById(id))
-            .switchIfEmpty(Mono.error(new NotFoundException())
+            .switchIfEmpty(Mono.error(new ResourceNotFoundException("No such user"))
         );
     }
 

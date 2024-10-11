@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mdd.api.model.NewUser;
 import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 import com.openclassrooms.mdd.auth_api.repository.UserRepository;
+import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 
 import reactor.core.publisher.Mono;
 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService{
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         }
         return this.userRepository.existsById(newUser.getId())
-            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new NotFoundException()));
+            .flatMap(exists -> exists ? userRepository.save(newUser) : Mono.error(new ResourceNotFoundException()));
     }
     
 }

@@ -65,7 +65,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public Mono<PostEntity> addReplyToPostId(String id, ReplyEntity reply) {
         return postRepository.findById(id)
-            .switchIfEmpty(Mono.error(new NotFoundException()))
+            .switchIfEmpty(Mono.error(new ResourceNotFoundException("Nos post found with id " + id)))
             .flatMap(p -> {
                 return postRepository.addReplyToPostId(id, reply).then(postRepository.findById(id));
             })
