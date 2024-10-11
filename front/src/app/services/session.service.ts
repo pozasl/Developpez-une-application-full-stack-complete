@@ -42,12 +42,12 @@ export class SessionService {
     return this.authService.getMe().pipe(take(1))
       .subscribe({
         next: user => {
-          console.log("Session resumed", user);
+          console.info("Session resumed");
           this._resuming = false;
           this.logIn(user);
         },
         error: (e) => {
-          console.log("Couldn't resume session", e);
+          console.info("Couldn't resume session", e);
           this._resuming = false;
           this.logOut();
         },
