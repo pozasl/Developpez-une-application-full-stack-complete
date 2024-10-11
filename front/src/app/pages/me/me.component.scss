@@ -1,15 +1,19 @@
+h1 {
+    margin: 0.5em 0 0 0;
+}
+
+.me{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .topicList {
     display:grid;
     row-gap: 1em;
     column-gap: 0.5em;
-    padding: 2em;
+    padding: 1em 2em;
     grid-template-columns: 1fr 1fr;
-}
-
-@media screen and (max-width: 768px) {
-    .topicList {
-        grid-template-columns: 1fr !important;
-    }
 }
 
 .topicList > * {
@@ -29,12 +33,30 @@
     cursor: pointer;
 }
 
-.me {
+.mySubs {
     display: flex;
     align-items: center;
     flex-direction: column;
+    h1 {
+        margin-top: 1em;
+    }
 }
 
-h1 {
-    margin: 1em 0 0 0;
+mat-divider {
+    margin: 0 6em;
+}
+
+@media screen and (max-width: 768px) {
+
+    .topicList {
+        padding: 1em;
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media screen and (max-width: 20em) {
+    .login .form-flex-container {
+        max-width: none;
+        margin: 0 1em;;
+    }
 }
