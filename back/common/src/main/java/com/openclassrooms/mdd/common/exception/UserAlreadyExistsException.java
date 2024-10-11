@@ -4,12 +4,12 @@ public class UserAlreadyExistsException extends RuntimeException {
 
     public static final String DEFAUL_ERR_MSG = "A user with the same e-mail already exists";
 
-    UserAlreadyExistsException(String errorMessage) {
+    public UserAlreadyExistsException(String errorMessage) {
         super(errorMessage);
     }
 
 
-    UserAlreadyExistsException() {
+    public UserAlreadyExistsException() {
         this(DEFAUL_ERR_MSG);
     }
 

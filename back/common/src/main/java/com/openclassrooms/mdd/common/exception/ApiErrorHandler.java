@@ -9,6 +9,7 @@ import java.nio.file.AccessDeniedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -45,6 +46,14 @@ public class ApiErrorHandler {
    @ExceptionHandler(AccessDeniedException.class)
    @ResponseStatus(HttpStatus.UNAUTHORIZED)
    public ResponseMessage handleAccessDeniedException(final Exception ex) {
+      LOGGER.error(ex.getMessage(), ex);
+      return this.createResponseMessage(ex.getMessage());
+   }
+
+   // 401
+   @ExceptionHandler(BadCredentialsException.class)
+   @ResponseStatus(HttpStatus.UNAUTHORIZED)
+   public ResponseMessage handleBadCredentialsException(final Exception ex) {
       LOGGER.error(ex.getMessage(), ex);
       return this.createResponseMessage(ex.getMessage());
    }
