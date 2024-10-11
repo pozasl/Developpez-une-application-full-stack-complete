@@ -8,7 +8,7 @@ import com.openclassrooms.mdd.common.configuration.RsaKeyProperties;
 
 @Configuration
 @EnableConfigurationProperties(RsaKeyProperties.class)
-@ComponentScan("com.openclassrooms.mdd.common.configuration")
+@ComponentScan({"com.openclassrooms.mdd.common.configuration", "com.openclassrooms.mdd.common.exception"})
 public class ExtraSecurityConfiguration {
     
 }
