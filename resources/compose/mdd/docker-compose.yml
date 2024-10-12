@@ -1,17 +1,6 @@
 version: '3.8'
 
 services:
-  mdd-api-gateway:
-    image: mdd-api-gateway:0.0.1-SNAPSHOT
-    container_name: mdd-api-gateway
-    env_file: "default.env"
-    volumes:
-      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/api-gateway-application.yml:/application.yml
-    ports:
-      - 8080:8080
-    networks:
-      - frontend
-      - backend
   
   mdd-auth-api:
     image: mdd-auth-api:0.0.1-SNAPSHOT
@@ -81,6 +70,44 @@ services:
       - backend
     depends_on:
       mdd-postgres:
+        condition: service_started
+        
+  mdd-api-gateway:
+    image: mdd-api-gateway:0.0.1-SNAPSHOT
+    container_name: mdd-api-gateway
+    env_file: "default.env"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/api-gateway-application.yml:/application.yml
+    ports:
+      - 8080
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      mdd-auth-api:
+        condition: service_started
+      mdd-feeds-api:
+        condition: service_started
+      mdd-posts-api:
+        condition: service_started
+      mdd-subs-api:
+        condition: service_started
+      mdd-users-api:
+        condition: service_started
+
+  mdd-front:
+    image: mdd-front-end:0.0.1
+    container_name: mdd-front-end
+    env_file: "default.env"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/resources/compose/mdd/props/front-nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      mdd-api-gateway:
         condition: service_started
 
   mdd-mongodb:

@@ -4,6 +4,10 @@ spring:
   cloud:
     gateway:
       routes:
+      - id: posts_route
+        uri: http://localhost:8081
+        predicates:
+        - Path=/api/posts/**
       - id: topics_route
         uri: http://localhost:8081
         predicates:
@@ -12,10 +16,6 @@ spring:
         uri: http://localhost:8082
         predicates:
         - Path=/api/user/**
-      - id: posts_route
-        uri: http://localhost:8081
-        predicates:
-        - Path=/api/posts/**
       - id: subscribtions_route
         uri: http://localhost:8084
         predicates:

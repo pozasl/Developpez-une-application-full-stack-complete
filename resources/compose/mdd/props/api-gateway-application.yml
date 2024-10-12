@@ -5,17 +5,17 @@ spring:
     gateway:
       routes:
       - id: topics_route
-        uri: http://mdd-topics-api:8080
-        predicates:
-        - Path=/api/topics/**
-      - id: user_route
         uri: http://mdd-posts-api:8080
         predicates:
-        - Path=/api/user/**
+        - Path=/api/topics/**
       - id: posts_route
         uri: http://mdd-posts-api:8080
         predicates:
         - Path=/api/posts/**
+      - id: user_route
+        uri: http://mdd-users-api:8080
+        predicates:
+        - Path=/api/user/**
       - id: subscribtions_route
         uri: http://mdd-subs-api:8080
         predicates:
