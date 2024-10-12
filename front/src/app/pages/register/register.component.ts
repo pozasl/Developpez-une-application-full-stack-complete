@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
 import { take } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
+import { passwordStrengthReg } from 'src/app/shared/validators/passwordStrengthReg';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterComponent {
   public form = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.min(6)]]
+    password: ['', [Validators.required, Validators.pattern(passwordStrengthReg)]]
   });
 
   constructor(

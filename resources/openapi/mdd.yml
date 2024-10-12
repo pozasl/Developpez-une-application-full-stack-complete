@@ -779,8 +779,8 @@ components:
           type: string
         password:
           maxLength: 255
-          minLength: 6
           type: string
+          pattern: '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$'
     JwtInfo:
       type: object
       properties:
@@ -805,8 +805,8 @@ components:
           type: string
         password:
           maxLength: 255
-          minLength: 6
           type: string
+          pattern: '^$|^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$'
     AuthInfo:
       required:
         - email
@@ -817,6 +817,7 @@ components:
           type: string
         password:
           type: string
+          pattern: '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$'
     User:
       type: object
       properties:
