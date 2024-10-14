@@ -6,12 +6,14 @@
                 <mat-card-title class="topicName">
                     {{topic.name}}
                 </mat-card-title>
-            </mat-card-header>
+            </mat-card-header>  
             <mat-card-content>
                 {{topic.description}}
             </mat-card-content>
             <mat-card-actions>
-                <button mat-flat-button color="primary" (click)="subscribeToTopic(topic.ref!)">S'abonner</button>
+                @if(topicSubs.get(topic.ref!)) {
+                    <button mat-flat-button color="primary" (click)="subscribeToTopic(topic.ref!)">S'abonner</button>
+                }
             </mat-card-actions>
         </mat-card>
     }

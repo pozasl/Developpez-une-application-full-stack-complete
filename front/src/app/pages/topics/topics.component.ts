@@ -16,6 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./topics.component.scss']
 })
 export class TopicsComponent implements OnInit {
+  topicSubs: Map<string, boolean> = new Map();
   $topics!: Observable<Topic[]>;
 
   private userId: number | null = null;
@@ -55,10 +56,11 @@ export class TopicsComponent implements OnInit {
       this.subsService.getUserSubscribtions(userId)
     ).pipe(
       map(
-        ([topics, subs]) => topics.filter(
-          t => subs.map(s => s.ref).indexOf(t.ref) < 0)
-        ),
-    );
+        ([topics, subs]) => {
+          topics.forEach(t => this.topicSubs.set(t.ref!, subs.map(s => s.ref).indexOf(t.ref) < 0));
+          return topics;
+        },
+      ));
     this.$topics.pipe(take(1)).subscribe({
       next: () => {
         console.info("Topic data loaded");
