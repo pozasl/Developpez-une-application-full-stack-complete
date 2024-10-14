@@ -74,6 +74,10 @@ mat-nav-list.sideNavLink>a {
     align-self: flex-start;
 }
 
+mat-nav-list.sideNavLink>a:first-child {
+    margin-top: 3.5em;
+}
+
 mat-nav-list.sideNavLink>a:last-child {
     margin-top: auto;
     align-self: flex-end;
