@@ -22,8 +22,24 @@ h1 {
     border-width: 0px;
 }
 
-.topicList .mat-mdc-card-actions {
+.topicList mat-card-title {
+    margin-bottom: 0.5em;
+}
+
+.topicList mat-card-content {
+    display: -webkit-box;
+    word-wrap:break-word;
+    overflow: hidden;
+    line-clamp: 3;
+    box-orient: vertical;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    height: 4em;
+}
+
+.topicList mat-card-actions {
     justify-content: center;
+    padding: 1em;
 }
 
 .logout {
