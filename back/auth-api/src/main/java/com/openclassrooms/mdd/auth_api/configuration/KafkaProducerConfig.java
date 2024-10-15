@@ -15,15 +15,23 @@ import com.openclassrooms.mdd.api.model.Author;
 
 import reactor.kafka.sender.SenderOptions;
 
+/**
+ * Kafka producer configuration
+ */
 @Configuration
 public class KafkaProducerConfig {
 
     @Value(value = "${kafka.host}")
     private String kafkaHost;
 
+    /**
+     * Instantiate a ReactiveKafkaProducerTemplate to send author's username update
+     *
+     * @param properties the default kafka properties
+     * @return A reactive Kafka template
+     */
     @Bean
     public ReactiveKafkaProducerTemplate<String, Author> reactiveKafkaProducer(KafkaProperties properties) {
-        // TODO: SSL or spring.kafka properties;
         Map<String, Object> props = properties.buildProducerProperties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost + ":9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -31,5 +39,5 @@ public class KafkaProducerConfig {
 
         return new ReactiveKafkaProducerTemplate<String, Author>(SenderOptions.create(props));
     }
-    
+
 }

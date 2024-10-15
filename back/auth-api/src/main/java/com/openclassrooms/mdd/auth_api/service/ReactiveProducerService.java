@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mdd.api.model.Author;
 
+/**
+ * Service to signal username's modification using Kafka.
+ */
 @Service
 public class ReactiveProducerService {
 
@@ -18,6 +21,10 @@ public class ReactiveProducerService {
         this.reactiveKafkaProducer = reactiveKafkaProducer;
     }
 
+    /**
+     * Send an author with its new username
+     * @param author
+     */
     public void send(Author author) {
         String topicName = "authors";
         log.info("send to topic={}, {}={},", topicName, Author.class.getSimpleName(), author);

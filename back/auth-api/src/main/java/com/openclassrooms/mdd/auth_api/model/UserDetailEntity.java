@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-
+/**
+ * Extended User Detail entity
+ */
 @AllArgsConstructor
 public class UserDetailEntity extends UserEntity implements UserDetails {
 
