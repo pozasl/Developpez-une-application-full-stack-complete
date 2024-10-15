@@ -25,8 +25,8 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrl: './me.component.scss'
 })
 export class MeComponent implements OnInit {
-  public onError: Boolean = false;
-  public hide: Boolean = true;
+  public onError = false;
+  public hide = true;
   private userId!: number;
   public user!: User;
   public topics!: Topic[];
@@ -34,7 +34,7 @@ export class MeComponent implements OnInit {
   public form = this.fb.group({
     name: ['', [Validators.required, Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [emptyOrMinSizeValidators(6)]],
+    password: ['', [emptyOrMinSizeValidators()]],
   });
 
   constructor(
@@ -74,7 +74,7 @@ export class MeComponent implements OnInit {
           },
           error: err => this.notificationService.notifyError("Erreur", err.message)
         }),
-        mergeMap(jwt => this.authService.getMe()),
+        mergeMap(() => this.authService.getMe()),
         take(1),
       ).subscribe({
         next: user => {

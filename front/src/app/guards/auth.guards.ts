@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from "@angular/router";
+import { CanActivate, GuardResult, MaybeAsync, Router } from "@angular/router";
 import { SessionService } from "../services/session.service";
 import { catchError, map, of, skip, take } from "rxjs";
 @Injectable({ providedIn: 'root' })
@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
     private sessionService: SessionService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
+  canActivate(): MaybeAsync<GuardResult> {
     const skipNbr = this.sessionService.resuming ? 1 : 0;
     
     return this.sessionService.$logged().pipe(

@@ -19,7 +19,7 @@ export interface Post {
     topic?: Topic;
     content?: string;
     author?: Author;
-    replies?: Array<Reply>;
+    replies?: Reply[];
     created_at?: string;
 }
 

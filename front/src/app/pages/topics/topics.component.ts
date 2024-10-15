@@ -16,7 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./topics.component.scss']
 })
 export class TopicsComponent implements OnInit {
-  topicSubs: Map<string, boolean> = new Map();
+  topicSubs = new Map<string, boolean>();
   $topics!: Observable<Topic[]>;
 
   private userId: number | null = null;

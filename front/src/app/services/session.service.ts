@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '../core/modules/openapi';
-import { BehaviorSubject, distinct, map, mergeMap, Observable, skip, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, take} from 'rxjs';
 import { NotificationService } from './notification.service';
 
 @Injectable({

@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
-import { Author, NewReply, Post, PostsService, Reply } from 'src/app/core/modules/openapi';
+import { Author, NewReply, Post, PostsService } from 'src/app/core/modules/openapi';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SessionService } from 'src/app/services/session.service';
 

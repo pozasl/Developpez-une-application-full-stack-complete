@@ -3,7 +3,7 @@
         <button mat-raised-button color="primary" [routerLink]="'/post'">Créer un article</button>
         <span>Trier par</span>
         <button mat-icon-button (click)="switchSort()">
-            @if(sort == "desc") {
+            @if(sort === "desc") {
                 <mat-icon>arrow_upward</mat-icon>
             }
             @else {
