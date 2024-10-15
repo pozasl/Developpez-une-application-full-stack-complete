@@ -13,6 +13,9 @@ import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from 'src/app/services/notification.service';
 
+/**
+ * Post creation page component
+ */
 @Component({
   selector: 'app-post',
   standalone: true,
@@ -53,6 +56,9 @@ export class PostComponent implements OnInit{
     this.loadTopics();
   }
 
+  /**
+   * Submit the pots data from the form
+   */
   public submit() {
     if (this.form.value.topic && this.form.value.title && this.form.value.content) {
       const post: NewPost = {
@@ -73,6 +79,9 @@ export class PostComponent implements OnInit{
     }  
   }
 
+  /**
+   * Load the topics lits
+   */
   private loadTopics() {
     this.$topics = this.topicsService.getAllTopics();
     this.$topics.pipe(
