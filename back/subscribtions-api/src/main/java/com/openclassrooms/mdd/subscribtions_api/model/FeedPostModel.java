@@ -3,6 +3,9 @@ package com.openclassrooms.mdd.subscribtions_api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
 
+/**
+ * Feed's post model
+ */
 public record FeedPostModel(
     @JsonProperty("user_id")
     Long userId,

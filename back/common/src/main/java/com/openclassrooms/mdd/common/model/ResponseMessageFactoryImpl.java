@@ -2,6 +2,9 @@ package com.openclassrooms.mdd.common.model;
 
 import com.openclassrooms.mdd.api.model.ResponseMessage;
 
+/**
+ * Response message model factory implementation
+ */
 public class ResponseMessageFactoryImpl implements ResponseMessageFactory {
 
     ResponseMessageFactoryImpl() {}

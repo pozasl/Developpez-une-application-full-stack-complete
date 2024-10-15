@@ -7,6 +7,9 @@ import com.openclassrooms.mdd.feeds_api.repository.FeedRepository;
 
 import reactor.core.publisher.Flux;
 
+/**
+ * Feed service implementation
+ */
 @Service
 public class FeedServiceImpl implements FeedService{
 

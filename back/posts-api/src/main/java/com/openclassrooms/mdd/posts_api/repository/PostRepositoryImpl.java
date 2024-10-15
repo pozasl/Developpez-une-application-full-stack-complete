@@ -11,6 +11,9 @@ import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Reply-Post repository implementation
+ */
 public class PostRepositoryImpl implements ReplyPostRepository{
 
     private ReactiveMongoTemplate template;
@@ -19,13 +22,6 @@ public class PostRepositoryImpl implements ReplyPostRepository{
         this.template = template;
     }
 
-    /**
-     * Add a reply to post by id
-     * 
-     * @param postId the post'id
-     * @param reply the reply Entity to add to the post's replies list
-     * @return the update resulte as Mono
-     */
     @Override
     public Mono<UpdateResult> addReplyToPostId(String postId, ReplyEntity reply) {
         Query query = Query.query(Criteria.where("id").is(postId));
@@ -33,14 +29,7 @@ public class PostRepositoryImpl implements ReplyPostRepository{
         return template.updateFirst(query, update, PostEntity.class);
     }
 
-    /**
-     * Update Author's name in the topic's replies replied by author.
-     * 
-     * @param postId the post'id
-     * @param userId the reply'author userId to search
-     * @param userName the userName to update
-     * @return the update resulte as Mono
-     */
+    
     @Override
     public Mono<UpdateResult> findAndUpdatePostRepliesAuthorUserNameByPostId(String postId, Long userId, String userName) {
         Query query = Query.query(Criteria.where("id").is(postId));

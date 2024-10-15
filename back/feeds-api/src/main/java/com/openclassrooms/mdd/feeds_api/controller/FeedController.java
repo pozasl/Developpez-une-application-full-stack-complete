@@ -22,6 +22,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Feeds API controller
+ */
 @RestController
 @SecurityRequirement(name = "Authorization")
 public class FeedController implements FeedsApiDelegate {
@@ -37,6 +40,14 @@ public class FeedController implements FeedsApiDelegate {
         this.webClient = webClient;
     }
 
+    /**
+     * Get the user's feed posts
+     * @param userid The user id
+     * @param jwt The jwt authentication
+     * @param headers The request header
+     * @param sort The sort order
+     * @return
+     */
     @GetMapping("/api/feeds/{userid}")
     Flux<Post> getUserFeed(
             @PathVariable Long userid,
@@ -53,6 +64,12 @@ public class FeedController implements FeedsApiDelegate {
                 .flatMapSequential(feedPost -> fetchPost(feedPost.getPostRef(), tokenBearer));
     }
 
+    /**
+     * fetch a post by its reference from the Posts API
+     * @param postRef Post reference
+     * @param token Jwt token
+     * @return the post
+     */
     private Mono<Post> fetchPost(String postRef, String token) {
         String url = postServiceUrl + "/" + postRef;
         return webClient.get().uri(url)

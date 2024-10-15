@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Reply entity
+ */
 @Document
 public record ReplyEntity(
     String content,

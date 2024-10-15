@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mdd.subscribtions_api.model.FeedPostModel;
 
+/**
+ * Reactive fedd-post ProducerService
+ */
 @Service
 public class ReactiveProducerService {
 
@@ -18,6 +21,11 @@ public class ReactiveProducerService {
         this.reactiveKafkaProducer = reactiveKafkaProducer;
     }
 
+    /**
+     * Send feed's post
+     *
+     * @param feedPost the feed's post
+     */
     public void send(FeedPostModel feedPost) {
         String topicName = "feeds";
         log.info("send to topic={}, {}={},", topicName, FeedPostModel.class.getSimpleName(), feedPost);

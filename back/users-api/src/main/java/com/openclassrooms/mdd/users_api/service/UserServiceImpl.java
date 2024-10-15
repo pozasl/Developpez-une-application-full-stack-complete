@@ -1,6 +1,5 @@
 package com.openclassrooms.mdd.users_api.service;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
@@ -9,6 +8,9 @@ import com.openclassrooms.mdd.users_api.repository.UserRepository;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * User service implementation
+ */
 @Service
 public class UserServiceImpl implements UserService{
 

@@ -56,6 +56,11 @@ public class ExtraSecurityConfiguration extends SecurityConfiguration {
                 .build();
     }
 
+    /**
+     * Instantiate the password encoder
+     *
+     * @return the password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

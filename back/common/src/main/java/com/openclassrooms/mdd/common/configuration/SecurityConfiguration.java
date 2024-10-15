@@ -46,22 +46,31 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(ex -> ex
-                .pathMatchers(
-                    "/v3/api-docs/**",
-                    "/webjars/swagger-ui/**"
-                ).permitAll()
-                .anyExchange().authenticated())
+                        .pathMatchers(
+                                "/v3/api-docs/**",
+                                "/webjars/swagger-ui/**")
+                        .permitAll()
+                        .anyExchange().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2
-				    .jwt(Customizer.withDefaults())
-			    )
+                        .jwt(Customizer.withDefaults()))
                 .build();
     }
 
+    /**
+     * Instantiate a jwt decoder
+     *
+     * @return The jwt decoder
+     */
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
         return NimbusReactiveJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
     }
 
+    /**
+     * Instantiate a jwt encoder
+     *
+     * @return The jwt encoder
+     */
     @Bean
     JwtEncoder jwtEncoder() {
         JWK jwKeys = new RSAKey.Builder(rsaKeys.publicKey())

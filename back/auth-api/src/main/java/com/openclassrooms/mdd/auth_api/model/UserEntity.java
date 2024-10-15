@@ -15,6 +15,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+/**
+ * Basic user entity
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

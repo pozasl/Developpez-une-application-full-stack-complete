@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * User entity
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -50,6 +53,5 @@ public class UserEntity {
     @Column("updated_at")
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
 
 }

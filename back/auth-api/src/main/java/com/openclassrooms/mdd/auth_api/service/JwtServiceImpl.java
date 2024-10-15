@@ -20,12 +20,10 @@ import com.openclassrooms.mdd.auth_api.model.UserDetailEntity;
 public class JwtServiceImpl implements JwtService {
 
   private final JwtEncoder encoder;
-  // private final JwtDecoder decoder;
 
   @Autowired
-  public JwtServiceImpl(JwtEncoder encoder) { //}, JwtDecoder decoder) {
+  public JwtServiceImpl(JwtEncoder encoder) {
     this.encoder = encoder;
-    // this.decoder = decoder;
   }
 
   @Override
@@ -45,7 +43,7 @@ public class JwtServiceImpl implements JwtService {
   }
 
   /**
-   * Create a JWT Token.
+   * Static method to create a JWT Token.
    *
    * @param userDetails the user details
    * @param scope the user's authorities scope

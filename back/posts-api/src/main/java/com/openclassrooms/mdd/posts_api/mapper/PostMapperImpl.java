@@ -11,6 +11,9 @@ import com.openclassrooms.mdd.posts_api.model.PostEntity;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Post mapper implementation
+ */
 @Component
 public class PostMapperImpl extends AbstractMapper implements PostMapper {
 

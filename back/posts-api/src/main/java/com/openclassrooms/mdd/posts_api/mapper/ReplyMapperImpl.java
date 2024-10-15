@@ -8,6 +8,9 @@ import com.openclassrooms.mdd.api.model.NewReply;
 import com.openclassrooms.mdd.api.model.Reply;
 import com.openclassrooms.mdd.posts_api.model.ReplyEntity;
 
+/**
+ * Reply mapper implementation
+ */
 @Component
 public class ReplyMapperImpl extends AbstractMapper implements ReplyMapper{
 

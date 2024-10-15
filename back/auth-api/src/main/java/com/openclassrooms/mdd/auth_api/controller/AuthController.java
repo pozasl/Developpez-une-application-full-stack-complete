@@ -29,6 +29,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
+/**
+ * Authentication controller
+ */
 @RestController
 public class AuthController implements AuthApiDelegate{
 
@@ -53,11 +56,23 @@ public class AuthController implements AuthApiDelegate{
         this.producerService = producerService;
     }
 
+    /**
+     * Register a new User
+     *
+     * @param newUser the new user tyo register
+     * @return a response message
+     */
     @PostMapping("/api/auth/register")
     Mono<ResponseMessage> register(@Valid @RequestBody NewUser newUser ) {
         return userService.createUser(newUser).then(Mono.just(new ResponseMessage().message("Account created")));
     }
 
+    /**
+     * Authenticate a user with login and password
+     *
+     * @param authInfo The user login and password
+     * @return A response with a JWT token and the user id
+     */
     @PostMapping("/api/auth/login")
     Mono<JwtInfo> login(@Valid @RequestBody AuthInfo authInfo ) {
         return authenticationManager.authenticate(
@@ -71,12 +86,25 @@ public class AuthController implements AuthApiDelegate{
         });
     }
 
+    /**
+     * Authenticated user info
+     *
+     * @param auth the jwt authentication
+     * @return User's info
+     */
     @GetMapping("/api/auth/me")
     @SecurityRequirement(name = "Authorization")
     Mono<User> getMe(Authentication auth) {
         return userService.findByEmail(auth.getName()).map(userDetailMapper::toUserModel);
     }
 
+    /**
+     * Update the user credential
+     *
+     * @param me The new User credential
+     * @param auth The jwt authentication 
+     * @return the new jwt with updated credential and the user id
+     */
     @PutMapping("/api/auth/me")
     @SecurityRequirement(name = "Authorization")
     Mono<JwtInfo> updateMe(@RequestBody NewMe me, Authentication auth) {

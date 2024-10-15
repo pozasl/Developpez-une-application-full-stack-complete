@@ -22,6 +22,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Subscribtions API controller
+ */
 @RestController
 @SecurityRequirement(name = "Authorization")
 public class SubscribtionController implements SubscribtionsApiDelegate{
@@ -32,43 +35,71 @@ public class SubscribtionController implements SubscribtionsApiDelegate{
     @Value("${service.topics.base-url}")
     private String topicServiceUrl;
 
-
     SubscribtionController(SubscribtionService subService,  WebClient webClient) {
         this.subService = subService;
         this.webClient = webClient;
     }
 
+    /**
+     * Subscribe to Topic
+     *
+     * @param userid Subscriber user id
+     * @param ref Topic's ref
+     * @param jwt Jwt authentication
+     * @return Response message
+     */
     @PostMapping("/api/subscribtions/user/{userid}/topics/{ref}")
     Mono<ResponseMessage> subscribeToTopic(@PathVariable Long userid, @PathVariable String ref, @AuthenticationPrincipal Jwt jwt) {
         if (!jwt.getClaim("userId").equals(userid)) {
             return Mono.error(new AccessDeniedException("Can't subscribe another user"));
         }
-        // TODO: check if already subscribed
         return subService.subscribeUserToTopic(userid, ref).then(Mono.just(new ResponseMessage().message("Subscribtion succeeded")));
     }
 
+    /**
+     * Unsubscribe to Topic
+     *
+     * @param userid Subscriber user id
+     * @param ref Topic's ref
+     * @param jwt Jwt authentication
+     * @return Response message
+     */
     @DeleteMapping("/api/subscribtions/user/{userid}/topics/{ref}")
     Mono<ResponseMessage> unsubscribe(@PathVariable Long userid, @PathVariable String ref, @AuthenticationPrincipal Jwt jwt) {
         if (!jwt.getClaim("userId").equals(userid)) {
             return Mono.error(new AccessDeniedException("Can't unsubscribe another user"));
         }
-        // TODO: check if already subscribed
         return subService.unsubscribeUserToTopic(userid, ref).then(Mono.just(new ResponseMessage().message("Subscribtion removed")));
     }
 
+    /**
+     * Get a user's subscribed topics
+     *
+     * @param userid the user id
+     * @param jwt Jwt authentication
+     * @param headers request headers
+     * @return
+     */
     @GetMapping("/api/subscribtions/user/{userid}/topics")
     Flux<Topic> getUserSubscribtions(@PathVariable Long userid,
         @AuthenticationPrincipal Jwt jwt,
         @RequestHeader Map<String, String> headers) {
+        // Sometimes headers key are converted to lower case by proxy
         String tokenBearer =  (headers.get("Authorization") != null) ? headers.get("Authorization") : headers.get("authorization");
         if (!jwt.getClaim("userId").equals(userid)) {
             return Flux.error(new AccessDeniedException("Can't see another user subs"));
         }
-        // Sometimes headers key are converted to lower case by proxy
         return subService.findSubsByUserId(userid)
             .flatMapSequential(sub -> fetchTopic(sub.topicRef(), tokenBearer));
     }
 
+    /**
+     * Fetch a topic data by its ref with Topics API
+     *
+     * @param topicRef the topic's ref
+     * @param token jwt token
+     * @return a Topic
+     */
     private Mono<Topic> fetchTopic(String topicRef, String token) {
         String url = topicServiceUrl + "/" + topicRef;
         return webClient.get().uri(url)

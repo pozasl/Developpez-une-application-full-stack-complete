@@ -1,6 +1,6 @@
 package com.openclassrooms.mdd.posts_api.services;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mdd.common.exception.ResourceNotFoundException;
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
@@ -8,6 +8,10 @@ import com.openclassrooms.mdd.posts_api.repository.AuthorRepository;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Author service implementation
+ */
+@Service
 public class AuthorServiceImpl implements AuthorService{
 
     private AuthorRepository authorRepository;

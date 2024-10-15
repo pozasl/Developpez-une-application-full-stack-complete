@@ -11,6 +11,9 @@ import com.openclassrooms.mdd.auth_api.repository.UserRepository;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Custom reactive authentification manager to authenticate by email
+ */
 @Component
 public class UserDetailsReactiveAuthenticationManager implements ReactiveAuthenticationManager {
 

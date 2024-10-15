@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+/**
+ * Post reference entity for a user's feed
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

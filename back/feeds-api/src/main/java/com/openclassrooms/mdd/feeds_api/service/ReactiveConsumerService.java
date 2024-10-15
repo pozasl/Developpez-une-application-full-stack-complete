@@ -1,7 +1,5 @@
 package com.openclassrooms.mdd.feeds_api.service;
 
-import java.time.LocalDateTime;
-
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +15,9 @@ import reactor.core.publisher.Flux;
 
 @Service
 @Slf4j
+/**
+ * Reactive consumer service to update post in feeds from Kafka
+ */
 public class ReactiveConsumerService implements CommandLineRunner{
 
     private final ReactiveKafkaConsumerTemplate<String, FeedPostModel> reactiveKafkaConsumer;
@@ -31,6 +32,11 @@ public class ReactiveConsumerService implements CommandLineRunner{
         this.feedRepository = feedRepository;
     }
 
+    /**
+     * Consume the feeds topic in Kafka and insert post in feeds
+     *
+     * @return Feeds' posts
+     */
     private Flux<FeedPostModel> consume() {
         log.info("=== Consuming Kafka ====");
         return reactiveKafkaConsumer
@@ -54,6 +60,9 @@ public class ReactiveConsumerService implements CommandLineRunner{
         ;
     }
 
+    /**
+     * Launch feeds consumption at runtime
+     */
     @Override
     public void run(String... args) throws Exception {
         consume().subscribe();

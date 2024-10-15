@@ -9,6 +9,9 @@ import com.openclassrooms.mdd.posts_api.repository.TopicRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Topic service implementation
+ */
 @Service
 public class TopicServiceImpl implements TopicService {
 
