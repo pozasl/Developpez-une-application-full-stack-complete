@@ -1,6 +1,5 @@
 package com.openclassrooms.mdd.users_api.controller;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -22,7 +21,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
+/**
+ * Users API controller
+ */
 @RestController
+@SecurityRequirement(name = "Authorization")
 public class UserController implements UsersApiDelegate {
 
     private UserService userService;
@@ -33,8 +36,13 @@ public class UserController implements UsersApiDelegate {
         this.userMapper = userMapper;
     }
 
+    /**
+     * Get User's data by its id
+     *
+     * @param id User's id
+     * @return User data
+     */
     @GetMapping("/api/user/{id}")
-    @SecurityRequirement(name = "Authorization")
     public Mono<User> getUserById(@PathVariable Long id) {
         return userMapper.toModel(
             userService.findById(id))
@@ -42,8 +50,15 @@ public class UserController implements UsersApiDelegate {
         );
     }
 
+    /**
+     * Update user by its id
+     *
+     * @param id The user id
+     * @param newUser the new user
+     * @param jwt Jwt authentication
+     * @return Updated user
+     */
     @PutMapping("/api/user/{id}")
-    @SecurityRequirement(name = "Authorization")
     public Mono<User> updateUserById(@PathVariable Long id, @Valid @RequestBody NewUser newUser, @AuthenticationPrincipal Jwt jwt) {
         if (jwt.getClaim("userId").equals(id))
         {
@@ -53,6 +68,5 @@ public class UserController implements UsersApiDelegate {
         }
         else return Mono.error(new AccessDeniedException("Unauthorized access"));
     }
-    
     
 }

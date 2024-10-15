@@ -13,6 +13,9 @@ import com.openclassrooms.mdd.users_api.model.UserEntity;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * User mapper implementation
+ */
 @Component
 public class UserMapperImpl implements UserMapper{
 
@@ -39,8 +42,8 @@ public class UserMapperImpl implements UserMapper{
     /**
      * Convert LocalDateTime to OffsetDateTime
      *
-     * @param date
-     * @return
+     * @param date LocalDateTime
+     * @return OffsetDateTime
      */
     private OffsetDateTime convertDate(LocalDateTime date) {
         if (date == null) {
