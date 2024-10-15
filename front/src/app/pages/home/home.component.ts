@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * The Home/landing page
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

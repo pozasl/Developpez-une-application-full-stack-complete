@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SessionService } from './session.service';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('SessionService', () => {
   let service: SessionService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient()]
+    });
     service = TestBed.inject(SessionService);
   });
 

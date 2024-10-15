@@ -6,18 +6,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
-import { ApiModule, AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
+import { AuthInfo, AuthService, User, UsersService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 import { mergeMap, take} from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from 'src/app/services/notification.service';
 
+/**
+ * Login page component
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ApiModule]
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule]
 })
 export class LoginComponent {
   public hide = true;
@@ -37,6 +40,9 @@ export class LoginComponent {
     private notificationservice: NotificationService,
   ) {}
 
+  /**
+   * Log the user
+   */
   public submit() {
     const authInfo: AuthInfo = this.form.value as AuthInfo;
     this.authService.login(authInfo).pipe(

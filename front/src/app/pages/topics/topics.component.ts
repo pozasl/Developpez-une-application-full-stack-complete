@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NotificationService } from 'src/app/services/notification.service';
 
+/**
+ * Topics component displays the Topics list for subscribtions
+ */
 @Component({
   selector: 'app-topics',
   standalone: true,
@@ -35,6 +38,11 @@ export class TopicsComponent implements OnInit {
     }
   }
 
+  /**
+   * Subscribe to a Topic
+   *
+   * @param ref The topic ref
+   */
   subscribeToTopic(ref: string): void {
     console.info(ref);
     if (this.userId && ref) {
@@ -50,6 +58,11 @@ export class TopicsComponent implements OnInit {
     }
   }
 
+  /**
+   * Load the Topics and create mapping for subscribed ones
+   *
+   * @param userId 
+   */
   private loadUnsubscribedTopics(userId: number) {
     this.$topics = zip(
       this.topicService.getAllTopics(),
