@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.resource.NoResourceFoundException;
 
+/**
+ * API error handling
+ */
 @RestControllerAdvice
 public class ApiErrorHandler {
 
@@ -26,7 +29,11 @@ public class ApiErrorHandler {
       this.responseMessageFactory = ResponseMessageFactoryImpl.create();
    }
 
-   // 500
+   /**
+    * 500 - Handle most Exception
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(Exception.class)
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    public ResponseMessage handleException(final Exception ex) {
@@ -34,7 +41,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 400
+   /**
+    * 400 - BAD REQUEST
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(MethodArgumentNotValidException.class)
    @ResponseStatus(HttpStatus.BAD_REQUEST)
    public ResponseMessage handleMethodArgumentNotValidException(final Exception ex) {
@@ -42,7 +53,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 401
+   /**
+    * 401 - ACCESS DENIED
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(AccessDeniedException.class)
    @ResponseStatus(HttpStatus.UNAUTHORIZED)
    public ResponseMessage handleAccessDeniedException(final Exception ex) {
@@ -50,7 +65,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 401
+   /**
+    * 401 - BAD CREDENTIAL
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(BadCredentialsException.class)
    @ResponseStatus(HttpStatus.UNAUTHORIZED)
    public ResponseMessage handleBadCredentialsException(final Exception ex) {
@@ -58,7 +77,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 404 Dynamic resource not found
+   /**
+    * 404 Dynamic resource NOT FOUND
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(ResourceNotFoundException.class)
    @ResponseStatus(HttpStatus.NOT_FOUND)
    public ResponseMessage handleResourceNotFoundException(final Exception ex) {
@@ -66,7 +89,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 404 Static resource not found
+   /**
+    * 404 Static resource NOT FOUND
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(NoResourceFoundException.class)
    @ResponseStatus(HttpStatus.NOT_FOUND)
    public ResponseMessage handleNoResourceFoundException(final Exception ex) {
@@ -74,7 +101,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
-   // 409
+   /**
+    * 404 CONFLICT
+    * @param ex the exception
+    * @return Reponse message with error message
+    */
    @ExceptionHandler(UserAlreadyExistsException.class)
    @ResponseStatus(HttpStatus.CONFLICT)
    public ResponseMessage handleUserAlreadyExistsException(final Exception ex) {
@@ -82,6 +113,11 @@ public class ApiErrorHandler {
       return this.createResponseMessage(ex.getMessage());
    }
 
+   /**
+    * Create a Response message
+    * @param message The message
+    * @return The response message
+    */
    private ResponseMessage createResponseMessage(String message) {
       return this.responseMessageFactory.makeResponseMessage(message);
    }
