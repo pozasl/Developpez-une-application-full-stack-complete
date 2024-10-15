@@ -17,12 +17,21 @@ import com.openclassrooms.mdd.feeds_api.model.FeedPostModel;
 
 import reactor.kafka.receiver.ReceiverOptions;
 
+/**
+ * Reactive Kafka receiver configuration 
+ */
 @Configuration
 public class ReactiveKafkaConfiguration {
 
     @Value(value = "${kafka.host}")
     private String kafkaHost;
 
+    /**
+     * Kafka receiver Options
+     * @param topic Kafka topic to subscribe
+     * @param kafkaProperties Default kafka properties
+     * @return Receiver options
+     */
     @Bean
     public ReceiverOptions<String, FeedPostModel> kafkaReceiverOptions(@Value(value = "${topic.feeds.name}") String topic, KafkaProperties kafkaProperties) {
         Map<String, Object> config = new HashMap<>();
@@ -40,6 +49,11 @@ public class ReactiveKafkaConfiguration {
 
     }
 
+    /**
+     * Instantiate a Reactive KafkaConsumerTemplate
+     * @param kafkaReceiverOptions Receiver options
+     * @return a ReactiveKafkaConsumerTemplate
+     */
     @Bean
     public ReactiveKafkaConsumerTemplate<String, FeedPostModel> reactiveKafkaConsumer(
             ReceiverOptions<String, FeedPostModel> kafkaReceiverOptions) {
