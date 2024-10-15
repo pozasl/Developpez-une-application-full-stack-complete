@@ -11,6 +11,9 @@ import com.openclassrooms.mdd.subscribtions_api.repository.SubscribtionRepositor
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Subscribtion service implementation
+ */
 @Service
 public class SubscribtionServiceImpl implements SubscribtionService {
 

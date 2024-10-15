@@ -17,12 +17,22 @@ import com.openclassrooms.mdd.api.model.Post;
 
 import reactor.kafka.receiver.ReceiverOptions;
 
+/**
+ * Kafka posts consumer configuration
+ */
 @Configuration
 public class KafkaConsumerConfig {
 
     @Value(value = "${kafka.host}")
     private String kafkaHost;
 
+    /**
+     * Kafka receiver options
+     *
+     * @param topic Posts's topic
+     * @param kafkaProperties Default kafka properties
+     * @return Receiver options
+     */
     @Bean
     public ReceiverOptions<String, Post> kafkaReceiverOptions(@Value(value = "${topic.posts.name}") String topic,
             KafkaProperties kafkaProperties) {
@@ -40,6 +50,12 @@ public class KafkaConsumerConfig {
         return basicReceiverOptions.subscription(Collections.singletonList(topic));
     }
 
+    /**
+     * Instantiate a ReactiveKafkaConsumerTemplate
+     *
+     * @param kafkaReceiverOptions Receiver options
+     * @return a ReactiveKafkaConsumerTemplate
+     */
     @Bean
     public ReactiveKafkaConsumerTemplate<String, Post> reactiveKafkaConsumer(
             ReceiverOptions<String, Post> kafkaReceiverOptions) {

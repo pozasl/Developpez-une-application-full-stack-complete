@@ -13,6 +13,9 @@ import com.openclassrooms.mdd.subscribtions_api.repository.SubscribtionRepositor
 
 import reactor.core.publisher.Flux;
 
+/**
+ * Reactive Posts Consumer Service
+ */
 @Service
 public class ReactiveConsumerService implements CommandLineRunner {
 
@@ -31,19 +34,18 @@ public class ReactiveConsumerService implements CommandLineRunner {
         this.reactiveProducerService = reactiveProducerService;
         this.subRepository = subRepository;
     }
-
+    /**
+     * Consume the posts topic and sends post to users'feeds
+     *
+     * @return The received Posts
+     */
     private Flux<Post> consume() {
         log.info("==== Consuming Kafka... ===");
         return reactiveKafkaConsumer
             .receiveAutoAck()
-            .doOnNext(consumerRecord -> log.info("received key={}, value={} from topic={}, offset={}",
-                    consumerRecord.key(),
-                    consumerRecord.value(),
-                    consumerRecord.topic(),
-                    consumerRecord.offset()))
             .map(ConsumerRecord::value)
             .doOnNext(post -> {
-                    log.info("successfully consumed {}={}", Post.class.getSimpleName(), post);
+                    log.info("successfully consumed {}={}", Post.class.getSimpleName(), post.getId());
                     subRepository.findByTopicRef(post.getTopic().getRef())
                     .map(sub -> {
                         FeedPostModel feedPost = new FeedPostModel(sub.userId(), post.getId(), post.getCreatedAt());
@@ -58,6 +60,9 @@ public class ReactiveConsumerService implements CommandLineRunner {
                     throwable -> log.error("something bad happened while consuming : {}", throwable.getMessage()));
     }
 
+    /**
+     * Launch consumer at runtime
+     */
     @Override
     public void run(String... args) throws Exception {
         consume().subscribe();
