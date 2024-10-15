@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import com.openclassrooms.mdd.api.model.Author;
 import com.openclassrooms.mdd.posts_api.model.AuthorEntity;
 
+/**
+ * Author mapper's implementation
+ */
 @Component
 public class AuthorMapperImpl  implements AuthorMapper{
 

@@ -14,6 +14,9 @@ import com.openclassrooms.mdd.posts_api.repository.PostRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Reactive Consumer Service for author's topic
+ */
 @Service
 public class ReactiveConsumerService implements CommandLineRunner {
 
@@ -34,18 +37,18 @@ public class ReactiveConsumerService implements CommandLineRunner {
         this.postRepository = postRepository;
     }
 
+    /**
+     * Consume the author topic and update Author's username in author, posts and replies
+     *
+     * @return Authors
+     */
     private Flux<Author> consume() {
         log.info("==== Consuming Kafka... ===");
         return reactiveKafkaConsumer
             .receiveAutoAck()
-            .doOnNext(consumerRecord -> log.info("received key={}, value={} from topic={}, offset={}",
-                    consumerRecord.key(),
-                    consumerRecord.value(),
-                    consumerRecord.topic(),
-                    consumerRecord.offset()))
             .map(ConsumerRecord::value)
             .doOnNext(author -> {
-                    log.info("successfully consumed {}={}", Author.class.getSimpleName(), author);
+                    log.info("successfully consumed {}={}", Author.class.getSimpleName(), author.getUserId());
                     authorRepository.findAndUpdateUserNameByUserId(author.getUserId(), author.getUserName())
                         .switchIfEmpty(Mono.just(0L))
                         .subscribe((userId) -> log.info("Author's username updated for {}", userId));
@@ -66,6 +69,9 @@ public class ReactiveConsumerService implements CommandLineRunner {
                     throwable -> log.error("something bad happened while consuming : {}", throwable.getMessage()));
     }
 
+    /*
+     * Launch consumer at runtime
+     */
     @Override
     public void run(String... args) throws Exception {
         consume().subscribe();

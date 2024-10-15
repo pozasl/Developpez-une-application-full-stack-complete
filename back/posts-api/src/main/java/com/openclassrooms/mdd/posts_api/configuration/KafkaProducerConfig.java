@@ -15,15 +15,22 @@ import com.openclassrooms.mdd.api.model.Post;
 
 import reactor.kafka.sender.SenderOptions;
 
+/**
+ * Kafka producer configuration
+ */
 @Configuration
 public class KafkaProducerConfig {
 
     @Value(value = "${kafka.host}")
     private String kafkaHost;
 
+    /**
+     * Instantiate a Kafka consumer
+     * @param properties Default kafka properties
+     * @return Kafka consumer
+     */
     @Bean
     public ReactiveKafkaProducerTemplate<String, Post> reactiveKafkaProducer(KafkaProperties properties) {
-        // TODO: SSL or spring.kafka properties;
         Map<String, Object> props = properties.buildProducerProperties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost + ":9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

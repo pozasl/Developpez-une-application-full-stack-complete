@@ -1,7 +1,6 @@
 package com.openclassrooms.mdd.posts_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +15,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Topics API controller
+ */
 @RestController
+@SecurityRequirement(name = "Authorization")
 public class TopicController implements TopicsApiDelegate {
 
     private TopicService topicService;
@@ -28,14 +31,23 @@ public class TopicController implements TopicsApiDelegate {
         this.topicMapper = topicMapper;
     }
 
+    /**
+     * Get All Topics
+     *
+     * @return A list of Topics
+     */
     @GetMapping("/api/topics")
-    @SecurityRequirement(name = "Authorization")
     Flux<Topic> getTopics() {
         return topicMapper.toModel(topicService.findAll());
     }
 
+    /**
+     * Get a topic by its ref
+     *
+     * @param ref the topic's ref
+     * @return The topic
+     */
     @GetMapping("/api/topics/{ref}")
-    @SecurityRequirement(name = "Authorization")
     Mono<Topic> getTopicByRef(@PathVariable String ref) {
         return topicMapper.toModel(topicService.findByRef(ref)).switchIfEmpty(Mono.error(new ResourceNotFoundException()));
     }
