@@ -1,16 +1,19 @@
-# Mmd
+# MDD
+
+MDD is a social network for developpers
+
 ## Tech stack
 
 Frontend
 * Node 22
 * Angular 18
-* Material-angular
+* Material-angular 18
 
 Backend
 * Java 17
 * Spring-boot 3.3.4
 * Spring-Cloud Gateway
-* Webflux
+* Spring Webflux
 * PostgreSQL 17.0
 * MongoDB 8.0
 * Kafka 3.8
@@ -27,7 +30,7 @@ From **back** folder
 
 ### Build and install microservices'common configuration library
 
-From **back/common**
+From **back** folder run
 
 ```bash
 ./mvnw clean install
@@ -43,12 +46,12 @@ From **back** folder:
 ./mvnw clean package
 ```
 
-### Build all docker images
+### Build all docker images (Back & Front)
 
 From the project root folder run the uild_back_images.sh script:
 
 ```bash
-sh build_back_images.sh
+sh build_fullstack_images.sh
 ```
 
 ### Generate OpenAPI Angular client source code
@@ -61,20 +64,81 @@ npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript
 
 ## Running
 
-### Run the complete stack localy
+### Running the complete stack in dev environnement
+
+**If you don't use the provided devcontainer** you'll need to setup Kafka, MongoDB and PostgreSQL localy and set those environment variables:
+
+```
+MONGO_INITDB_ROOT_USERNAME=AN_ADMIN_NAME
+MONGO_INITDB_ROOT_PASSWORD=AN_ADMIN_PASS
+MONGO_INITDB_DATABASE=mdd
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_USERNAME=A_MONGO_USER
+MONGO_PASSWORD=A_MONGO_PASS
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_PASSWORD=A_POSTGRES_PASS
+POSTGRES_USER=A_POSTGRES_USER
+POSTGRES_DB=mdd
+KAFKA_HOST=localhost
+```
+
+Then init the database wit the provided scripts in resources/compose/mdd/init-db
+- setup.js for mongodb
+- 01-schema.sql for postgresql
+
+You'll need to open several terminals in each microservices folder and in this order
+
+```bash
+cd back/auth-api
+./mvnw spring-boot:run
+```
+swagger-ui available at http://localhost:8088/webjars/swagger-ui/index.html
+
+
+```bash
+cd back/feeds-api
+./mvnw spring-boot:run
+```
+swagger-ui available at http://localhost:8085/webjars/swagger-ui/index.html
+
+```bash
+cd back/posts-api
+./mvnw spring-boot:run
+```
+swagger-ui available at http://localhost:8081/webjars/swagger-ui/index.html
+
+```bash
+cd back/subscribtions-api
+./mvnw spring-boot:run
+```
+swagger-ui available at http://localhost:8084/webjars/swagger-ui/index.html
+
+```bash
+cd back/users-api
+./mvnw spring-boot:run
+```
+swagger-ui available at http://localhost:8082/webjars/swagger-ui/index.html
+
+```bash
+cd back/api-gateway
+./mvnw spring-boot:run
+```
+
+```bash
+cd front
+ng serve
+```
+The application will be accessible from http://127.0.0.1:4200
+
+### Run the complete compose stack localy
+
+If you have docker-compose installed, you may run the full stack
 
 Open a terminal in the **resources/compose/mdd** folder and run:
 
 ```bash
 docker-compose up -d
 ```
-
-Then go in the **front** folder and run:
-
-```bash
-npm run start
-```
-
-## Deploying
-
-TODO
+The application will be accessible from http://localhost
