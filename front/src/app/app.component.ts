@@ -8,7 +8,7 @@ import { NotificationService } from './services/notification.service';
 import { AppError } from './model/AppError';
 
 /**
- * Main component
+ * Main App component
  */
 @Component({
   selector: 'app-root',
@@ -46,10 +46,20 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /**
+   * Return a boolean on user logged status
+   *
+   * @returns logged status
+   */
   public $isLogged(): Observable<boolean> {
     return this.sessionService.$logged()
   }
 
+  /**
+   * Open an error dialog for the provided error
+   *
+   * @param error
+   */
   private openErrorDialog(error: AppError) {
     this.dialog.open(ErrorDialogComponent, {data : error});
   }
