@@ -23,7 +23,6 @@ export class BackBtnComponent {
    */
   public goBack() {
     if (window.history.length > 1) {
-      console.log(window.history)
       this.location.back()
     } else {
       this.router.navigate(['/'])

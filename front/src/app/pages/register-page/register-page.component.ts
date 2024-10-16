@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
+import { AuthService, NewUser } from 'src/app/core/modules/openapi';
 import { take } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { passwordStrengthReg } from 'src/app/shared/validators/passwordStrengthReg';
@@ -45,8 +45,7 @@ export class RegisterPageComponent {
   public submit() {
     const newUser: NewUser = this.form.value as NewUser;
     this.authService.register(newUser).pipe(take(1)).subscribe({
-      next: (response: ResponseMessage) => {
-        console.log(response);
+      next: () => {
         this.router.navigate(['/login']);
       },
       error: (err) => {

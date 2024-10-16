@@ -88,7 +88,6 @@ export class PostComponent implements OnInit{
       take(1)
     ).subscribe({
       next: topics => {
-        console.log("topics loaded", topics);
         this.topicsMap = new Map<string, Topic>;
         topics.forEach(topic => this.topicsMap.set(topic.ref!, topic));
       },

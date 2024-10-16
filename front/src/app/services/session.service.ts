@@ -53,7 +53,7 @@ export class SessionService {
    * @returns the resume subscription
    */
   public resume() {
-    console.log("resuming...");
+    console.info("Resuming session...");
     return this.authService.getMe().pipe(take(1))
       .subscribe({
         next: user => {
@@ -74,7 +74,6 @@ export class SessionService {
    * @param user the user
    */
   public logIn(user: User): void {
-    console.log("logging in");
     this.user = user;
     this.logged = true;
     this.next();
@@ -84,7 +83,6 @@ export class SessionService {
    * Logout
    */
   public logOut(): void {
-    console.log("logging out");
     this._token = null;
     localStorage.removeItem('token');
     this.user = undefined;

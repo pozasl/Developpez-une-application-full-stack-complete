@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { FeedsService, Post } from 'src/app/core/modules/openapi';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SessionService } from 'src/app/services/session.service';
 
 
@@ -33,7 +34,8 @@ export class FeedComponent implements OnInit{
 
   constructor(
     private sessionService: SessionService,
-    private feedsService: FeedsService
+    private feedsService: FeedsService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +59,7 @@ export class FeedComponent implements OnInit{
   private loadFeed() {
     this.$feed = this.feedsService.getUserFeed(this.userId, this.sort);
     this.$feed.pipe(take(1)).subscribe({
-      next: (posts) => {
-        console.log("loaded feed's posts",posts);
-      },
-      error : console.error
+      error : err => this.notificationService.notifyError("Erreur de chargement",err.message)
     })
   }
 

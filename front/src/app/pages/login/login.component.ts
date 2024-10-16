@@ -56,7 +56,6 @@ export class LoginComponent {
       }),
     ).subscribe({
       next: (user: User) => {
-        console.log(user);
         if (user) {
           this.sessionService.logIn(user);
           this.router.navigate(['/topics']);
