@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.openclassrooms.mdd</groupId>
 	<artifactId>subscribtions-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>subscribtions-api</name>
 	<description>MDD subscribtion API</description>
 	<url/>

@@ -3,7 +3,7 @@ version: '3.8'
 services:
   
   mdd-auth-api:
-    image: mdd-auth-api:0.0.1-SNAPSHOT
+    image: mdd-auth-api:0.0.1
     container_name: mdd-auth-api
     env_file: "default.env"
     volumes:
@@ -17,7 +17,7 @@ services:
         condition: service_started
 
   mdd-users-api:
-    image: mdd-users-api:0.0.1-SNAPSHOT
+    image: mdd-users-api:0.0.1
     container_name:  mdd-users-api
     env_file: "default.env"
     volumes:
@@ -31,7 +31,7 @@ services:
         condition: service_started
 
   mdd-posts-api:
-    image: mdd-posts-api:0.0.1-SNAPSHOT
+    image: mdd-posts-api:0.0.1
     container_name: mdd-posts-api
     env_file: "default.env"
     volumes:
@@ -45,7 +45,7 @@ services:
         condition: service_started
 
   mdd-subs-api:
-    image: mdd-subs-api:0.0.1-SNAPSHOT
+    image: mdd-subs-api:0.0.1
     container_name: mdd-subs-api
     env_file: "default.env"
     volumes:
@@ -59,7 +59,7 @@ services:
         condition: service_started
 
   mdd-feeds-api:
-    image: mdd-feeds-api:0.0.1-SNAPSHOT
+    image: mdd-feeds-api:0.0.1
     container_name: mdd-feeds-api
     env_file: "default.env"
     volumes:
@@ -73,7 +73,7 @@ services:
         condition: service_started
         
   mdd-api-gateway:
-    image: mdd-api-gateway:0.0.1-SNAPSHOT
+    image: mdd-api-gateway:0.0.1
     container_name: mdd-api-gateway
     env_file: "default.env"
     volumes:
