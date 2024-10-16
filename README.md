@@ -64,7 +64,7 @@ npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript
 
 ## Running
 
-### Running the complete stack in dev environnement
+### Running the stack localy in dev environment
 
 **If you don't use the provided devcontainer** you'll need to setup Kafka, MongoDB and PostgreSQL localy and set those environment variables:
 
@@ -84,7 +84,7 @@ POSTGRES_DB=mdd
 KAFKA_HOST=localhost
 ```
 
-Then init the database wit the provided scripts in resources/compose/mdd/init-db
+Then init the database with the provided scripts in resources/compose/mdd/init-db
 - setup.js for mongodb
 - 01-schema.sql for postgresql
 
@@ -134,7 +134,11 @@ The application will be accessible from http://127.0.0.1:4200
 
 ### Run the complete compose stack localy
 
-If you have docker-compose installed, you may run the full stack
+**if you're not using a devcontainer** setup the LOCAL_WORKSPACE_FOLDER environment var
+
+```bash
+export LOCAL_WORKSPACE_FOLDER=/where/this/project/is
+```
 
 Open a terminal in the **resources/compose/mdd** folder and run:
 
