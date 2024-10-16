@@ -92,6 +92,9 @@ export class SessionService {
     this.next();
   }
 
+  /**
+   * Trigger logged status mutation
+   */
   private next() {
     this.loggedSubject.next(this.logged);
   }

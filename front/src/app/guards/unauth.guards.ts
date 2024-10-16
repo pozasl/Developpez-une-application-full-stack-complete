@@ -3,6 +3,9 @@ import { CanActivate, GuardResult, MaybeAsync, Router } from "@angular/router";
 import { SessionService } from "../services/session.service";
 import { catchError, map, of, skip, take } from "rxjs";
 
+/**
+ * Route guard for anonymous user
+ */
 @Injectable({ providedIn: 'root' })
 export class UnauthGuard implements CanActivate {
 

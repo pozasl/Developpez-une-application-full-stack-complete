@@ -39,6 +39,9 @@ export class RegisterPageComponent {
     private notificationService: NotificationService
   ) { }
 
+  /**
+   * Send registration
+   */
   public submit() {
     const newUser: NewUser = this.form.value as NewUser;
     this.authService.register(newUser).pipe(take(1)).subscribe({

@@ -8,6 +8,9 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 
+/**
+ *  Display an error dialog with the error name and message
+ */
 @Component({
   selector: 'app-error-dialog',
   standalone: true,
