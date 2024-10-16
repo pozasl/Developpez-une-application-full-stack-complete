@@ -7,19 +7,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
-import { ApiModule, AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
+import { AuthService, NewUser, ResponseMessage } from 'src/app/core/modules/openapi';
 import { take } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { passwordStrengthReg } from 'src/app/shared/validators/passwordStrengthReg';
 
+/**
+ * Account registration page component
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, ApiModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule],
+  templateUrl: './register-page.component.html',
+  styleUrls: ['./register-page.component.scss'],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, RouterLink, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule],
 })
-export class RegisterComponent {
+export class RegisterPageComponent {
   public hide = true;
   public onError = false;
 
@@ -36,6 +39,9 @@ export class RegisterComponent {
     private notificationService: NotificationService
   ) { }
 
+  /**
+   * Send registration
+   */
   public submit() {
     const newUser: NewUser = this.form.value as NewUser;
     this.authService.register(newUser).pipe(take(1)).subscribe({

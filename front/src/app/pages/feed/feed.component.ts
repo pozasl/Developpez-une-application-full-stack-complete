@@ -14,6 +14,9 @@ const enum Sort {
   DESC = 'desc'
 }
 
+/**
+ * Display the user's feed posts
+ */
 @Component({
   selector: 'app-feed',
   standalone: true,
@@ -40,11 +43,17 @@ export class FeedComponent implements OnInit{
     }
   }
 
+  /**
+   * Switch the sorting order
+   */
   public switchSort() {
     this.sort = this.sort == Sort.DESC ? Sort.ASC : Sort.DESC
     this.loadFeed();
   }
   
+  /**
+   * Load the feed's posts
+   */
   private loadFeed() {
     this.$feed = this.feedsService.getUserFeed(this.userId, this.sort);
     this.$feed.pipe(take(1)).subscribe({

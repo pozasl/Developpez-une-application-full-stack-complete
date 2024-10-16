@@ -4,6 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 
+/**
+ * Generic Back button to go to previous page
+ */
 @Component({
   selector: 'app-back-btn',
   standalone: true,
@@ -15,6 +18,9 @@ export class BackBtnComponent {
 
   constructor(private location: Location, private router: Router) { }
 
+  /**
+   * Go back in history or to home page
+   */
   public goBack() {
     if (window.history.length > 1) {
       console.log(window.history)

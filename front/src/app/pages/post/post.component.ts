@@ -7,12 +7,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { Observable, take } from 'rxjs';
-import { Author, NewPost, PostsService, ResponseMessage, Topic, TopicsService } from 'src/app/core/modules/openapi';
+import { Author, NewPost, PostsService, Topic, TopicsService } from 'src/app/core/modules/openapi';
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from 'src/app/services/notification.service';
 
+/**
+ * Post creation page component
+ */
 @Component({
   selector: 'app-post',
   standalone: true,
@@ -22,9 +25,9 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class PostComponent implements OnInit{
 
-  public onError: boolean = false;
+  public onError = false;
   public $topics!: Observable<Topic[]>;
-  private topicsMap!: Map<String, Topic>;
+  private topicsMap!: Map<string, Topic>;
 
   private author!: Author;
   
@@ -53,6 +56,9 @@ export class PostComponent implements OnInit{
     this.loadTopics();
   }
 
+  /**
+   * Submit the pots data from the form
+   */
   public submit() {
     if (this.form.value.topic && this.form.value.title && this.form.value.content) {
       const post: NewPost = {
@@ -62,7 +68,7 @@ export class PostComponent implements OnInit{
         author: this.author
       };
       this.postsService.createPost(post).pipe(take(1)).subscribe({
-        next: (response: ResponseMessage) => {
+        next: () => {
           this.router.navigate(['/feed']);
         },
         error: (err) => {
@@ -73,6 +79,9 @@ export class PostComponent implements OnInit{
     }  
   }
 
+  /**
+   * Load the topics lits
+   */
   private loadTopics() {
     this.$topics = this.topicsService.getAllTopics();
     this.$topics.pipe(
@@ -80,7 +89,7 @@ export class PostComponent implements OnInit{
     ).subscribe({
       next: topics => {
         console.log("topics loaded", topics);
-        this.topicsMap = new Map<String, Topic>;
+        this.topicsMap = new Map<string, Topic>;
         topics.forEach(topic => this.topicsMap.set(topic.ref!, topic));
       },
       error: e => {

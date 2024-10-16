@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from './services/session.service';
 import { NavigationStart, Router } from '@angular/router';
-import { filter, map, Observable, take } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { ErrorDialogComponent } from './components/ui/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from './services/notification.service';
 import { AppError } from './model/AppError';
 
+/**
+ * Main App component
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -43,10 +46,20 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /**
+   * Return a boolean on user logged status
+   *
+   * @returns logged status
+   */
   public $isLogged(): Observable<boolean> {
     return this.sessionService.$logged()
   }
 
+  /**
+   * Open an error dialog for the provided error
+   *
+   * @param error
+   */
   private openErrorDialog(error: AppError) {
     this.dialog.open(ErrorDialogComponent, {data : error});
   }

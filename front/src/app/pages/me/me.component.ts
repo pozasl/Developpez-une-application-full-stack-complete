@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiModule, User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
+import { User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
 import { mergeMap, take, tap } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
@@ -20,13 +20,13 @@ import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'app-me',
   standalone: true,
-  imports: [FormsModule, MatCardModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, ApiModule, MatButtonModule, MatDividerModule, AsyncPipe],
+  imports: [FormsModule, MatCardModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatDividerModule, AsyncPipe],
   templateUrl: './me.component.html',
   styleUrl: './me.component.scss'
 })
 export class MeComponent implements OnInit {
-  public onError: Boolean = false;
-  public hide: Boolean = true;
+  public onError = false;
+  public hide = true;
   private userId!: number;
   public user!: User;
   public topics!: Topic[];
@@ -34,7 +34,7 @@ export class MeComponent implements OnInit {
   public form = this.fb.group({
     name: ['', [Validators.required, Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [emptyOrMinSizeValidators(6)]],
+    password: ['', [emptyOrMinSizeValidators()]],
   });
 
   constructor(
@@ -74,7 +74,7 @@ export class MeComponent implements OnInit {
           },
           error: err => this.notificationService.notifyError("Erreur", err.message)
         }),
-        mergeMap(jwt => this.authService.getMe()),
+        mergeMap(() => this.authService.getMe()),
         take(1),
       ).subscribe({
         next: user => {
