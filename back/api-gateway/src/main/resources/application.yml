@@ -1,0 +1,35 @@
+spring:
+  application:
+    name:api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: posts_route
+        uri: http://localhost:8081
+        predicates:
+        - Path=/api/posts/**
+      - id: topics_route
+        uri: http://localhost:8081
+        predicates:
+        - Path=/api/topics/**
+      - id: user_route
+        uri: http://localhost:8082
+        predicates:
+        - Path=/api/user/**
+      - id: subscribtions_route
+        uri: http://localhost:8084
+        predicates:
+        - Path=/api/subscribtions/**
+      - id: feeds_route
+        uri: http://localhost:8085
+        predicates:
+        - Path=/api/feeds/**
+      - id: auth_route
+        uri: http://localhost:8088
+        predicates:
+        - Path=/api/auth/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

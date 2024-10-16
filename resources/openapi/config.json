@@ -1,0 +1,14 @@
+{
+    "library": "spring-boot",
+    "dateLibrary": "java8",
+    "hideGenerationTimestamp": true,
+    "modelPackage": "com.openclassrooms.mdd.api.model",
+    "apiPackage": "com.openclassrooms.mdd.api",
+    "invokerPackage": "com.openclassrooms.mdd",
+    "serializableModel": true,
+    "useTags": true,
+    "useGzipFeature" : true,
+    "jakarta": true,
+    "reactive": true,
+    "delegatePattern": true
+}

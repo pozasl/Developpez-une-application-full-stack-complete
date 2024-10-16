@@ -1,0 +1,78 @@
+h1 {
+    margin: 0.5em 0 0 0;
+}
+
+.me{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.topicList {
+    display:grid;
+    row-gap: 1em;
+    column-gap: 0.5em;
+    padding: 1em 2em;
+    grid-template-columns: 1fr 1fr;
+}
+
+.topicList > * {
+    flex: 1 1 0;
+    background-color: #eee;
+    border-width: 0px;
+}
+
+.topicList mat-card-title {
+    margin-bottom: 0.5em;
+}
+
+.topicList mat-card-content {
+    display: -webkit-box;
+    word-wrap:break-word;
+    overflow: hidden;
+    line-clamp: 3;
+    box-orient: vertical;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    height: 4em;
+}
+
+.topicList mat-card-actions {
+    justify-content: center;
+    padding: 1em;
+}
+
+.logout {
+    color: darkred;
+    display: inline-block;
+    margin: 1em;
+    cursor: pointer;
+}
+
+.mySubs {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    h1 {
+        margin-top: 1em;
+    }
+}
+
+mat-divider {
+    margin: 0 6em;
+}
+
+@media screen and (max-width: 768px) {
+
+    .topicList {
+        padding: 1em;
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media screen and (max-width: 20em) {
+    .login .form-flex-container {
+        max-width: none;
+        margin: 0 1em;;
+    }
+}

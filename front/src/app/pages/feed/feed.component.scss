@@ -1,0 +1,59 @@
+
+.feed {
+    padding : 0 2em 0 2em;
+}
+
+.feedBtnRow {
+    padding : 0 0 1.5em 0;
+    display: flex;
+    align-items: center;
+}
+
+.feedBtnRow > span {
+    margin-left: auto;
+}
+
+.postList {
+    display:grid;
+    row-gap: 1em;
+    column-gap: 3em;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .postList {
+     grid-template-columns: 1fr !important;
+    }
+}
+
+.postList > .mat-mdc-card {
+    background-color: #eee;
+    border-width: 0px;
+    padding-bottom: 1em;
+    mat-card-content {
+        display: -webkit-box;
+        word-wrap:break-word;
+        overflow: hidden;
+        line-clamp: 5;
+        box-orient: vertical;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        height: 6em;
+    }
+
+}
+
+.dateAuthor{
+    height: 1em;
+    align-items: start;
+    padding: 1em;
+}
+
+.dateAuthor > span{
+    flex: 1 1;
+}
+
+.sideNaveMenu {
+    display: flex;
+    flex-direction: column;
+}
