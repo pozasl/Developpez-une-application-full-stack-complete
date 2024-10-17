@@ -48,7 +48,7 @@ From **back** folder:
 
 ### Build all docker images (Back & Front)
 
-From the project root folder run the uild_back_images.sh script:
+From the project root folder run the build_fullstack_images.sh script
 
 ```bash
 sh build_fullstack_images.sh
