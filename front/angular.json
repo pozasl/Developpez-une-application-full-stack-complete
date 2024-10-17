@@ -95,6 +95,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverageExclude": ["src/app/core/modules/openapi/**"],
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.png",
