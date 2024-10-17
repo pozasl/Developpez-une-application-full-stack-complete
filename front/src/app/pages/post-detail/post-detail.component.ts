@@ -63,8 +63,8 @@ export class PostDetailComponent implements OnInit{
         author: this.author
       }
       this.postsService.createReply(this.post.id ,  reply).pipe(take(1)).subscribe({
-        next: response => {
-          console.log(response);
+        next: () => {
+          this.form.reset();
           this.loadPost();
         },
         error: e => {

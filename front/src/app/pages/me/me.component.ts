@@ -69,7 +69,7 @@ export class MeComponent implements OnInit {
               this.sessionService.token = jwt.token;
             }
             else {
-              console.log("No new token");
+              this.notificationService.notifyError("Erreur","Token vide");
             }
           },
           error: err => this.notificationService.notifyError("Erreur", err.message)
@@ -91,10 +91,8 @@ export class MeComponent implements OnInit {
    * @param ref Topic's reference
    */
   public unsubscribeTopic(ref: string) {
-    console.log("unsub", ref)
     this.subsService.unsubscribe(this.userId, ref).subscribe({
-      next: response => {
-        console.log(response);
+      next: () => {
         this.getTopics();
       },
       error: err => this.notificationService.notifyError("Erreur", err.message)

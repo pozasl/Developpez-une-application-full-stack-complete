@@ -48,8 +48,7 @@ export class TopicsComponent implements OnInit {
     if (this.userId && ref) {
       this.subsService.subscribeToTopic(this.userId, ref)
         .subscribe({
-          next: msg => {
-            console.log(msg);
+          next: () => {
             if (this.userId)
               this.loadUnsubscribedTopics(this.userId)
           },
