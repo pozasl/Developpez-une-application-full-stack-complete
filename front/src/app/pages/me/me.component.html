@@ -16,9 +16,6 @@
                 </button>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
-            @if (onError) {
-            <p class="error">Une erreur est survenue</p>
-            }
             <button mat-button color="warn" class="logout" (click)="logout()">Se déconnecter</button>
         </form>
     </div>
