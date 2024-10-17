@@ -62,9 +62,14 @@ export class SessionService {
           this.logIn(user);
         },
         error: (e) => {
-          console.info("Couldn't resume session", e);
           this._resuming = false;
           this.logOut();
+          if (e.status === 401) {
+            console.info("Couldn't resume session", e);
+          }
+          else {
+            this.notificationService.notifyError("Error", e.message)
+          }
         },
       });
   }
