@@ -21,7 +21,6 @@ export class BackBtnComponent {
    * Go back in history or to home page
    */
   public goBack() {
-    console.log(window.history.length)
     if (window.history.length > 1) {
       window.history.back();
     } else {
