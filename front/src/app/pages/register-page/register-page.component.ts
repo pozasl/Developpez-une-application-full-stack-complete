@@ -24,7 +24,6 @@ import { passwordStrengthReg } from 'src/app/shared/validators/passwordStrengthR
 })
 export class RegisterPageComponent {
   public hide = true;
-  public onError = false;
 
   public form = this.fb.group({
     name: ['', [Validators.required]],
@@ -50,7 +49,6 @@ export class RegisterPageComponent {
       },
       error: (err) => {
         this.notificationService.notifyError("Erreur d'enregistrement", err.message);
-        this.onError = true;
       }
     });
 
