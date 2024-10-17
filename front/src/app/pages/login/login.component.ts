@@ -61,7 +61,7 @@ export class LoginComponent {
           this.router.navigate(['/topics']);
         }
         else {
-          this.notificationservice.notifyError("Login failed", "Empty user recieved");
+          this.notificationservice.notifyError("Login failed", "Empty user received");
         }
       },
       error: (err: Error) => {

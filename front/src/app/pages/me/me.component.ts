@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User, SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
+import { SubscribtionsService, Topic, NewUser, AuthService } from 'src/app/core/modules/openapi';
 import { mergeMap, take, tap } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
 import { AsyncPipe } from '@angular/common';
@@ -25,10 +25,8 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrl: './me.component.scss'
 })
 export class MeComponent implements OnInit {
-  public onError = false;
   public hide = true;
   private userId!: number;
-  public user!: User;
   public topics!: Topic[];
 
   public form = this.fb.group({
@@ -112,11 +110,10 @@ export class MeComponent implements OnInit {
    */
   private loadUserData() {
     if (this.sessionService.user && this.sessionService.user.id) {
-      this.user = this.sessionService.user;
       this.userId = this.sessionService.user.id;
       this.form.setValue({
-        name: this.user.name || "",
-        email: this.user.email || "",
+        name: this.sessionService.user.name || "",
+        email: this.sessionService.user.email || "",
         password: ''
       })
     }

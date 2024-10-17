@@ -24,8 +24,7 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrl: './post-detail.component.scss'
 })
 export class PostDetailComponent implements OnInit{
-
-  public onError = false;
+  
   public post!: Post;
   public form = this.fb.group({
     message: ['', [Validators.required, Validators.min(2), Validators.max(255)]]
@@ -69,7 +68,6 @@ export class PostDetailComponent implements OnInit{
         },
         error: e => {
           this.notificationService.notifyError("Erreur d'envoie", e.message);
-          this.onError = true;
         }
       })
     }
@@ -85,7 +83,6 @@ export class PostDetailComponent implements OnInit{
       },
       error: e => {
         this.notificationService.notifyError("Erreur de chargement", e.message);
-        this.onError = true;
       }
     })
   } 

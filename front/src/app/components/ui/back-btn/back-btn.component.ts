@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -16,14 +15,14 @@ import { Router } from '@angular/router';
 })
 export class BackBtnComponent {
 
-  constructor(private location: Location, private router: Router) { }
+  constructor(private router: Router) { }
 
   /**
    * Go back in history or to home page
    */
   public goBack() {
     if (window.history.length > 1) {
-      this.location.back()
+      window.history.back();
     } else {
       this.router.navigate(['/'])
     }
