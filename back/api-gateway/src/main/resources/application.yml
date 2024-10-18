@@ -1,9 +1,16 @@
 spring:
   application:
-    name:api-gateway
+    name: api-gateway
   cloud:
     gateway:
       routes:
+      ## Posts & Topic API
+      - id: posts_api_docs
+        uri: http://localhost:8081
+        predicates:
+        - Path=/api/posts/v3/api-docs
+        filters:
+        - StripPrefix=2
       - id: posts_route
         uri: http://localhost:8081
         predicates:
@@ -12,22 +19,80 @@ spring:
         uri: http://localhost:8081
         predicates:
         - Path=/api/topics/**
+      ## Users API
+      - id: users_api_docs
+        uri: http://localhost:8082
+        predicates:
+        - Path=/api/users/v3/api-docs
+        filters:
+        - StripPrefix=2
       - id: user_route
         uri: http://localhost:8082
         predicates:
         - Path=/api/user/**
+      ## Subs API
+      - id: subscribtions_api_docs
+        uri: http://localhost:8084
+        predicates:
+        - Path=/api/subscribtions/v3/api-docs
+        filters:
+        - StripPrefix=2
       - id: subscribtions_route
         uri: http://localhost:8084
         predicates:
         - Path=/api/subscribtions/**
+      ## Feeds API
+      - id: feeds_api_docs
+        uri: http://localhost:8085
+        predicates:
+        - Path=/api/feeds/v3/api-docs
+        filters:
+        - StripPrefix=2
       - id: feeds_route
         uri: http://localhost:8085
         predicates:
         - Path=/api/feeds/**
+      ## Auth API
+      - id: auth_api_docs
+        uri: http://localhost:8088
+        predicates:
+        - Path=/api/auth/v3/api-docs
+        filters:
+        - StripPrefix=2
       - id: auth_route
         uri: http://localhost:8088
         predicates:
         - Path=/api/auth/**
+  main:
+    web-application-type: reactive
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /api/swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway
+        primaryName: API Gateway Service
+      - url: /api/posts/v3/api-docs
+        name: Posts API
+        primaryName: Posts API
+      - url: /api/feeds/v3/api-docs
+        name: Feeds API
+        primaryName: Feeds API
+      - url: /api/subscribtions/v3/api-docs
+        name: Subs API
+        primaryName: Subs API
+      - url: /api/auth/v3/api-docs
+        name: Auth API
+        primaryName: Auth API
+      - url: /api/users/v3/api-docs
+        name: Users API
+        primaryName: Users API
 management:
   endpoints:
     web:
