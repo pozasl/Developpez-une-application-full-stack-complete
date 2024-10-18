@@ -10,10 +10,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="w100p">
                 <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
             <button mat-button color="warn" class="logout" (click)="logout()">Se déconnecter</button>

@@ -17,10 +17,7 @@
             <mat-form-field appearance="outline" class="w100p">
                 <mat-label>Mot de passe</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </mat-form-field>
             <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
         </form>
