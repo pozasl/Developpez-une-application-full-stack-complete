@@ -25,7 +25,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class PostComponent implements OnInit{
 
-  public onError = false;
   public $topics!: Observable<Topic[]>;
   private topicsMap!: Map<string, Topic>;
 
@@ -73,7 +72,6 @@ export class PostComponent implements OnInit{
         },
         error: (err) => {
           this.notificationService.notifyError("Erreur", err.message);
-          this.onError = true;
         }
       });
     }  
@@ -88,13 +86,11 @@ export class PostComponent implements OnInit{
       take(1)
     ).subscribe({
       next: topics => {
-        console.log("topics loaded", topics);
         this.topicsMap = new Map<string, Topic>;
         topics.forEach(topic => this.topicsMap.set(topic.ref!, topic));
       },
       error: e => {
         this.notificationService.notifyError("Erreur", e.message);
-        this.onError = true;
       }
     })
   }

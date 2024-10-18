@@ -56,13 +56,12 @@ export class LoginComponent {
       }),
     ).subscribe({
       next: (user: User) => {
-        console.log(user);
         if (user) {
           this.sessionService.logIn(user);
           this.router.navigate(['/topics']);
         }
         else {
-          this.notificationservice.notifyError("Login failed", "Empty user recieved");
+          this.notificationservice.notifyError("Login failed", "Empty user received");
         }
       },
       error: (err: Error) => {

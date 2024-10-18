@@ -16,7 +16,6 @@ export class UnauthGuard implements CanActivate {
 
   canActivate(): MaybeAsync<GuardResult> {
     const skipNbr = this.sessionService.resuming ? 1 : 0
-    console.log("auth");
     return this.sessionService.$logged().pipe(
       skip(skipNbr),
       take(1),

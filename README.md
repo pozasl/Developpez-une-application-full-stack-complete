@@ -17,8 +17,20 @@ Backend
 * PostgreSQL 17.0
 * MongoDB 8.0
 * Kafka 3.8
+* Docker-compose
 
 ## Building
+
+### Prerequisite
+
+if you're not using the provided dev container you'll need to install the following:
+
+- Java JDK 17
+- NodeJS 22 et npm
+- MongoDB
+- PostgreSQL
+- Kafka
+
 
 ### Generate OpenAPI Spring API source code
 
@@ -30,36 +42,39 @@ From **back** folder
 
 ### Build and install microservices'common configuration library
 
-From **back** folder run
+**If you don't use the provided devcontainer**
+* You should have Kafka, MongoDB & PostgreSQL configured and running to run the system integration tests.
+* You need to setup a bunch of environnment variables ([see running section](#running))
+
+From the **back** folder run
 
 ```bash
 ./mvnw clean install
 ```
 
-### Build all packages
+From the **front** folder:
 
-You should have MongoDB & PostgreSQL configured and running to run the integration tests.
-
-From **back** folder:
-
+Install dependencies
 ```bash
-./mvnw clean package
+npm install
+```
+
+Generate OpenAPI Angular client source code
+```bash
+npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript-angular -o src/app/core/modules/openapi --additional-properties fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model
+```
+
+Build 
+```bash
+npm run build
 ```
 
 ### Build all docker images (Back & Front)
 
-From the project root folder run the uild_back_images.sh script:
+From the project root folder run the build_fullstack_images.sh script
 
 ```bash
 sh build_fullstack_images.sh
-```
-
-### Generate OpenAPI Angular client source code
-
-From the **front** directory:
-
-```bash
-npx openapi-generator-cli generate -i ../resources/openapi/mdd.yml -g typescript-angular -o src/app/core/modules/openapi --additional-properties fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model
 ```
 
 ## Running
@@ -134,7 +149,7 @@ The application will be accessible from http://127.0.0.1:4200
 
 ### Run the complete compose stack localy
 
-**if you're not using a devcontainer** setup the LOCAL_WORKSPACE_FOLDER environment var
+**if you're not using a devcontainer** setup the LOCAL_WORKSPACE_FOLDER environment variables
 
 ```bash
 export LOCAL_WORKSPACE_FOLDER=/where/this/project/is
