@@ -140,6 +140,7 @@ swagger-ui available at http://localhost:8082/webjars/swagger-ui/index.html
 cd back/api-gateway
 ./mvnw spring-boot:run
 ```
+swagger-ui available at http://localhost:8080/api/swagger-ui.html
 
 ```bash
 cd front
@@ -161,3 +162,5 @@ Open a terminal in the **resources/compose/mdd** folder and run:
 docker-compose up -d
 ```
 The application will be accessible from http://localhost
+
+And swagger ui from http://localhost/api/swagger-ui.html

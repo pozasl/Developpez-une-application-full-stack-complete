@@ -65,16 +65,18 @@ spring:
         - Path=/api/auth/**
   main:
     web-application-type: reactive
+
 springdoc:
   enable-native-support: true
   api-docs:
     enabled: true
+    path: /api/v3/api-docs
   swagger-ui:
     enabled: true
     path: /api/swagger-ui.html
-    config-url: /v3/api-docs/swagger-config
+    config-url: /api/v3/api-docs/swagger-config
     urls:
-      - url: /v3/api-docs
+      - url: /api/v3/api-docs
         name: API Gateway
         primaryName: API Gateway Service
       - url: /api/posts/v3/api-docs
@@ -92,6 +94,7 @@ springdoc:
       - url: /api/users/v3/api-docs
         name: Users API
         primaryName: Users API
+
 management:
   endpoints:
     web:
